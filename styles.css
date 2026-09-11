@@ -1,0 +1,588 @@
+/* ============================================
+   Tokens
+   ============================================ */
+:root {
+  --ink: #2E2517;
+  --paper: #F2ECDD;
+  --steel: #B08F52;
+  --signal: #5D6A39;
+  --rule: #E0D5B8;
+  --paper-raised: #F8F3E6;
+  --tag-bg: #EAE8CC;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Source Serif 4", serif;
+  --font-masthead: "Playfair Display", serif;
+
+  --max-width: 1200px;
+}
+
+/* Same palette, inverted: paper/ink swap roles, --signal and --steel stay
+   the accent anchors (brightened so they still hold contrast against a
+   dark paper) rather than introducing a separate dark-mode color scheme. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #EDE6D6;
+    --paper: #211C13;
+    --steel: #D4B67F;
+    --signal: #8FA35E;
+    --rule: #453B28;
+    --paper-raised: #2A2318;
+    --tag-bg: #322A1B;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+[id] {
+  /* Clears the sticky header (.site-header) so anchor jumps land below it
+     instead of underneath it — sized for the header's taller wrapped state
+     on narrow viewports, with a little breathing room on top of that. */
+  scroll-margin-top: 90px;
+}
+
+/* Hides the page while it jumps to a URL hash on load, so no section
+   flashes by before blog.js lands on the right one. See index.html's
+   inline guard script and blog.js's revealPage(). */
+html.hash-loading body {
+  visibility: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1, h2, h3, .wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+a {
+  color: var(--steel);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-color: var(--steel);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  /* Fixed colors, not theme tokens — needs to stay readable regardless of
+     which way --ink/--paper are currently pointing. */
+  background: #111;
+  color: #fff;
+  padding: 10px 16px;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+}
+
+/* ============================================
+   Header / Nav
+   ============================================ */
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.wordmark-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  font-family: var(--font-display);
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--steel);
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+  color: var(--signal);
+}
+
+nav a.legal-link {
+  color: var(--signal);
+  font-weight: 600;
+}
+
+/* ============================================
+   Section rhythm
+   ============================================ */
+section {
+  padding: 56px 24px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.section-title {
+  font-family: var(--font-masthead);
+  font-size: clamp(26px, 3.6vw, 38px);
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0 0 28px;
+  padding-bottom: 0;
+  border-bottom: none;
+  display: block;
+}
+
+/* ============================================
+   Intro text (About / Creator sections)
+   ============================================ */
+.intro-lead {
+  max-width: 60ch;
+  font-size: 19px;
+  color: var(--ink);
+}
+
+.about-intro-heading {
+  font-family: var(--font-masthead);
+  font-size: clamp(26px, 3.6vw, 38px);
+  line-height: 1.2;
+  margin: 0 0 16px;
+  padding-bottom: 0;
+  border-bottom: none;
+  display: block;
+  color: var(--ink);
+}
+
+/* ============================================
+   Skills / Projects grid
+   ============================================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 40px;
+}
+
+.skills-group h3 {
+  font-size: 15px;
+  color: var(--steel);
+  margin: 0 0 8px;
+}
+
+.skills-group p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* ============================================
+   Post meta chips (shared: homepage grid card date line,
+   tag pills on the featured post / grid cards)
+   ============================================ */
+.slide-meta {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--steel);
+  margin: 0 0 6px;
+}
+
+.tag-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  font-family: var(--font-display);
+  font-size: 11px;
+  background: var(--tag-bg);
+  color: var(--steel);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+/* ============================================
+   About the Company (Home page, logo + intro)
+   ============================================ */
+.company-about-inner {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.company-logo-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-logo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .company-about-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .company-logo-placeholder {
+    width: 160px;
+    margin: 0 auto;
+  }
+}
+
+/* ============================================
+   Creator (Home page, below Blog)
+   ============================================ */
+.about-preview {
+  padding: 56px 24px;
+}
+
+/* #creator stacks the bio and Side projects blocks as sibling .wrap
+   elements in one section — space them like separate sections used to. */
+.about-preview > .wrap + .wrap {
+  margin-top: 56px;
+}
+
+.about-preview-inner {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.about-preview-photo .img-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 4px;
+}
+
+.about-preview-text p {
+  max-width: 52ch;
+  margin: 0 0 20px;
+}
+
+@media (max-width: 640px) {
+  .about-preview-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   Single post page
+   ============================================ */
+.disclosure-banner {
+  background: var(--tag-bg);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 14px 18px;
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
+.disclosure-banner a {
+  color: var(--signal);
+}
+
+/* ============================================
+   Contact buttons
+   ============================================ */
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  text-decoration-color: transparent;
+  color: var(--ink);
+  background: var(--paper-raised);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.contact-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration-color: transparent;
+}
+
+.contact-btn-primary {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--paper);
+}
+
+.contact-btn-primary:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* ============================================
+   Mail-in sheets (Contact form + mailing list signup)
+   ============================================ */
+.mail-sheets {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+.mail-sheet {
+  position: relative;
+  background: var(--paper-raised);
+  border: 2px dashed var(--steel);
+  border-radius: 4px;
+  padding: 28px 24px 24px;
+}
+
+.mail-sheet-stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 60px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-raised);
+  border: 2px dashed var(--steel);
+  border-radius: 2px;
+  text-align: center;
+  transform: rotate(3deg);
+}
+
+.stamp-mark {
+  display: block;
+  font-size: 20px;
+  color: var(--signal);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.postmark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--steel);
+  line-height: 1.3;
+}
+
+.mail-sheet-label {
+  font-family: var(--font-masthead);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--ink);
+  /* Right padding clears the corner sticker (.mail-sheet-stamp), which now
+     sits inside the card rather than hanging above its border. */
+  padding-right: 84px;
+  margin: 0 0 20px;
+}
+
+.mail-sheet-field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.mail-sheet-field span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 6px;
+}
+
+.mail-sheet-field input,
+.mail-sheet-field textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 6px 2px;
+  resize: vertical;
+}
+
+.mail-sheet-field input:focus,
+.mail-sheet-field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--signal);
+}
+
+.mail-sheet-perforation {
+  border: none;
+  border-top: 1px dashed var(--rule);
+  margin: 4px 0 18px;
+}
+
+.mail-sheet-submit {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--signal);
+  border: 1.5px solid var(--signal);
+  border-radius: 3px;
+  padding: 10px 22px;
+  cursor: pointer;
+}
+
+.mail-sheet-submit:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.mail-sheet-note {
+  font-size: 13px;
+  color: var(--steel);
+  margin: 14px 0 0;
+}
+
+@media (max-width: 640px) {
+  .mail-sheets {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   Legal page
+   ============================================ */
+.legal-toc {
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+
+.legal-toc h3 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--steel);
+  margin: 0 0 12px;
+}
+
+.legal-toc ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.legal-section h3 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer {
+  padding: 32px 24px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--steel);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.site-footer nav {
+  gap: 16px;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 640px) {
+  nav {
+    gap: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

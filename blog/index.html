@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Roberto Jimenez-Martinez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../blog-zine.css">
+</head>
+<body class="zine">
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="../index.html" class="wordmark"><img src="../images/logo.svg" alt="" class="wordmark-logo">THE SATURNO PROJECT</a>
+    <nav aria-label="Primary">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#blog" aria-current="page">Blog</a>
+      <a href="../index.html#creator">Creator</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="../index.html#legal" class="legal-link">Legal</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="masthead">
+    <div class="masthead-row">
+      <span>Issue No. <span id="issue-count"></span></span>
+      <span>Affiliate Content</span>
+      <span id="masthead-date"></span>
+    </div>
+    <hr class="double-rule">
+    <div class="masthead-body">
+      <h1 class="masthead-title">The Saturno Project</h1>
+      <p class="masthead-tagline">Welcome to The Saturno Project.</p>
+    </div>
+    <div class="masthead-band" id="masthead-band" role="img" aria-label="Featured post image">Featured</div>
+    <p class="category-line" id="category-line"></p>
+  </div>
+
+  <div class="wrap" style="max-width:900px; padding:16px 24px 0;">
+    <p class="disclosure-banner">This blog contains affiliate links. If you make a purchase through one, I may earn a commission at no extra cost to you. See the <a href="../legal.html#affiliate-disclosure">full affiliate disclosure</a>.</p>
+  </div>
+
+  <div class="zine-controls">
+    <input type="search" id="search-input" class="zine-search" placeholder="Search posts&hellip;" aria-label="Search posts">
+    <p class="explore-heading">explore</p>
+    <div class="zine-tags" id="tag-filter" role="group" aria-label="Filter by tag">
+      <button class="zine-tag-btn is-active" data-tag="all">
+        <span class="zine-tag-circle">&#9733;</span>
+        <span class="zine-tag-label">all</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="post-grid" aria-live="polite">
+    <!-- Populated by blog.js from posts-index.json: one featured post + a labeled grid -->
+  </div>
+
+  <p class="zine-empty-state" id="empty-state" hidden>No posts match your search or filter.</p>
+
+</main>
+
+<footer class="site-footer wrap">
+  <p>&copy; 2026 Roberto Jimenez-Martinez</p>
+  <nav aria-label="Footer">
+    <a href="../legal.html">Legal &amp; Disclosures</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script src="../blog.js"></script>
+</body>
+</html>

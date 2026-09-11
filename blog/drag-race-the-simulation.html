@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag Race: The Simulator — Roberto Jimenez-Martinez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../blog-zine.css">
+</head>
+<body class="zine">
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="../index.html" class="wordmark"><img src="../images/logo.svg" alt="" class="wordmark-logo">THE SATURNO PROJECT</a>
+    <nav aria-label="Primary">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#blog" aria-current="page">Blog</a>
+      <a href="../index.html#creator">Creator</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="../index.html#legal" class="legal-link">Legal</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+
+  <div class="masthead">
+    <div class="masthead-row">
+      <span>Grand Rapids, MI</span>
+      <span>Est. 2026</span>
+    </div>
+    <hr class="masthead-rule">
+    <div class="masthead-body">
+      <h1 class="zine-post-title">Drag Race: The Simulator</h1>
+      <p class="zine-post-meta">By Roberto Jimenez-Martinez</p>
+    </div>
+    <hr class="masthead-rule">
+    <div class="masthead-row">
+      <span>Issue No. 04</span>
+      <span>2026-09-04</span>
+    </div>
+    <hr class="masthead-rule">
+  </div>
+
+
+  <div class="zine-hero-image" style="background-image:url(''); background-size:cover; background-position:center;" role="img" aria-label="Placeholder photo of a quiet evening at home"></div>
+
+  <div class="wrap" style="max-width:640px;">
+    <p class="disclosure-banner">This post may contain affiliate links. If you make a purchase through one, I may earn a commission at no extra cost to you. See the <a href="../index.html#affiliate-disclosure">full affiliate disclosure</a>.</p>
+  </div>
+
+  <div class="zine-post-body">
+<p class="post-paragraph">Charisma. Uniqueness. Talent. Nerve. Long ago in the year 2013, I had none of these qualities. I came across a Q&amp;A video on the web. The question asked: “Are you watching the current season of Drag Race? If so, who are you rooting for to snatch the crown?” A crown? For drag racing? No, this was something much much gayer. </p>
+<h2 class="post-heading">Let's Get Sickening</h2>
+<p class="post-paragraph">As you know, my first time experiencing the show was in 2013. I was on a journey of self discovering my sexuality and I coped by watching videos online of people like me living their gayest lives online. I discovered many things about what other gay people liked like what they watched on television. I found a competition show about people just like me. The personalities were infectious, the art was extravagant, the outfits radiating eleganza. The challenges? A challenge for sure. I was hooked immediately. Season 5 was wrapping up and the big question was are you #TeamJinkx? Or are you wrong? But as I was watching the show, the topic of “Track Records” would come up amongst the competitors during their run in the competition and the gears began to turn in my head. Racers start your engines for one of the most sickening sexy spreads of data of all time. And it all started with one file:</p>
+<h2 class="post-heading">The Spreadsheet</h2>
+<p class="post-paragraph">I started documenting every track record, for each queen, for every season, for every version of Drag Race. As the show began branching into different countries, the database began to grow exponentially. All Stars started releasing a season annually, then Drag Race branched to Thailand and the UK. After that the name went global. Today, we see seasons from several countries around the world. All stars for each country, royale style seasons that feature contestants from all franchises. And I kept documenting those track records. Let's take a looksy at our first schemas, shall we?:</p>
+
+    <figure class="post-code">
+      <pre class="post-code-block"><code>Queens: [QID, QUEEN_NAME]
+Seasons: [SID, SEASON, VERSION]
+Track_Records: [TID, SID, POSITION, QID, EP_01, EP_02…]</code></pre>
+      <figcaption class="block-caption">A database schema is the blueprint of the structure of how data is organized and stored. For my spreadsheet I started with this as my core elements for the track records.</figcaption>
+    </figure>
+<p class="post-paragraph">Let's take a look into the data of Season 5 for the United States Version of Drag Race:</p>
+
+    <figure class="post-spreadsheet">
+      <div class="post-spreadsheet-scroll">
+        <table class="post-spreadsheet-table">
+          <thead><tr class="post-spreadsheet-letters"><th></th><th>A</th><th>B</th></tr><tr class="post-spreadsheet-headers"><th></th><th>QID</th><th>QUEEN_NAME</th></tr></thead>
+          <tbody>
+      <tr>
+        <th class="post-spreadsheet-rownum">1</th>
+        <td>0046</td><td>Alaska</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">2</th>
+        <td>0047</td><td>Alyssa Edwards</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">3</th>
+        <td>0048</td><td>Coco Montrese</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">4</th>
+        <td>0049</td><td>Detox</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">5</th>
+        <td>0050</td><td>Honey Mahogany</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">6</th>
+        <td>0051</td><td>Ivy Winters</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">7</th>
+        <td>0052</td><td>Jade Jolie</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">8</th>
+        <td>0053</td><td>Jinkx Monsoon</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">9</th>
+        <td>0054</td><td>Lineysha Sparx</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">10</th>
+        <td>0055</td><td>Monica Beverly Hillz</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">11</th>
+        <td>0056</td><td>Penny Tration</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">12</th>
+        <td>0057</td><td>Roxxxy Andrews</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">13</th>
+        <td>0058</td><td>Serena ChaCha</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">14</th>
+        <td>0059</td><td>Vivienne Pinay</td>
+      </tr></tbody>
+        </table>
+      </div>
+      <figcaption class="block-caption">Season 5 Drag Race US Queens</figcaption>
+    </figure>
+
+    <figure class="post-spreadsheet">
+      <div class="post-spreadsheet-scroll">
+        <table class="post-spreadsheet-table">
+          <thead><tr class="post-spreadsheet-letters"><th></th><th>A</th><th>B</th><th>C</th></tr><tr class="post-spreadsheet-headers"><th></th><th>SID</th><th>SEASON</th><th>VERSION</th></tr></thead>
+          <tbody>
+      <tr>
+        <th class="post-spreadsheet-rownum">1</th>
+        <td>0501</td><td>05</td><td>01</td>
+      </tr></tbody>
+        </table>
+      </div>
+      <figcaption class="block-caption">Season 5, Regular Version [01: Regular Version], [02: All Stars], [03: Vs. The World]...</figcaption>
+    </figure>
+
+    <figure class="post-spreadsheet">
+      <div class="post-spreadsheet-scroll">
+        <table class="post-spreadsheet-table">
+          <thead><tr class="post-spreadsheet-letters"><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr><tr class="post-spreadsheet-headers"><th></th><th>TID</th><th>SID</th><th>POS</th><th>QID</th><th>EP_01</th><th>...</th></tr></thead>
+          <tbody>
+      <tr>
+        <th class="post-spreadsheet-rownum">1</th>
+        <td>050105301</td><td>0501</td><td>1</td><td>0053: [Jinkx Monsoon]</td><td>SAFE</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">2</th>
+        <td>050104603</td><td>0501</td><td>3</td><td>0046: [Alaska]</td><td>TOP</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">3</th>
+        <td>050105703</td><td>0501</td><td>3</td><td>0057: [Roxxxy Andrews]</td><td>WIN</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">4</th>
+        <td>050104904</td><td>0501</td><td>4</td><td>0049: [Detox]</td><td>SAFE</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">5</th>
+        <td>050104805</td><td>0501</td><td>5</td><td>0048: [Coco Montrese]</td><td>SAFE</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">6</th>
+        <td>050104706</td><td>0501</td><td>6</td><td>0047: [Alyssa Edwards]</td><td>SAFE</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">7</th>
+        <td>050105107</td><td>0501</td><td>7</td><td>0051: [Ivy Winter]</td><td>TOP</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">8</th>
+        <td>050105208</td><td>0501</td><td>8</td><td>0052: [Jade Jolie]</td><td>LOW</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">9</th>
+        <td>050105409</td><td>0501</td><td>9</td><td>0054: [Lineysha Sparx]</td><td>TOP</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">10</th>
+        <td>050105011</td><td>0501</td><td>11</td><td>0050: [Honey Mahogany]</td><td>SAFE</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">11</th>
+        <td>050105911</td><td>0501</td><td>11</td><td>0059: [Vivienne Pinay]</td><td>SAFE</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">12</th>
+        <td>050105512</td><td>0501</td><td>12</td><td>0055: [Monica Beverly Hillz]</td><td>SAFE</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">13</th>
+        <td>050105813</td><td>0501</td><td>13</td><td>0058: [Serena ChaCha]</td><td>BTM</td><td>...</td>
+      </tr>
+      <tr>
+        <th class="post-spreadsheet-rownum">14</th>
+        <td>050105614</td><td>0501</td><td>14</td><td>0056: [Penny Tration]</td><td>ELIM</td><td></td>
+      </tr></tbody>
+        </table>
+      </div>
+      <figcaption class="block-caption">Track Records for Season 5, Regular Version. Each row represents a queen's placement in a season for every episode. The 'POS' column indicates their final position in the competition. Spoiler Alert: Alaska and Roxxxy tied for Top 3.</figcaption>
+    </figure>
+<p class="post-paragraph">Of the many things I forgot about my time as a computer scientist, database management systems was definitely not one of them. This was one of the few classes I was fully engaged in when I took it over Zoom University during the Winter of 2021. The principles of keeping a good database tickled my brains. Another thing I was fully engaged in was Drag Race. 2021 saw a total of 8 seasons released that year. Naturally, a major overhaul to my spreadsheet came after this resulting in the design today. I began applying the principles I learned in database management to plan my database even further. With the track records set up now, I then started adding data on episodes, challenges, the lip syncs, all leading to the creation of a simulator for a show I loved watching since I was a teenager.</p>
+  </div>
+
+  <div class="wrap post-tags-footer">
+    <p class="zine-byline">TAGS: <span class="tag">Entertainment</span><span class="tag">Web Dev</span></p>
+  </div>
+
+
+
+
+  <section class="related-posts">
+    <div class="wrap" style="max-width:900px;">
+      <h2 class="section-title">Related Reading</h2>
+      <div class="related-posts-scroll">
+        
+      <article class="zine-card related-card">
+        <div class="img-placeholder" role="img" aria-label="Post image placeholder">Image</div>
+        <p class="zine-byline">Issue No. 03</p>
+        <h3><a href="my-second-post.html">My Second Post</a></h3>
+        <p class="zine-series"> Day In the Life Part 2</p>
+        <p>Hello World! This is my SECOND official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond.</p>
+        <ul class="tag-list"><li class="tag">Lifestyle</li><li class="tag">Spirituality</li><li class="tag">Web Dev</li></ul>
+      </article>
+      <article class="zine-card related-card">
+        <div class="img-placeholder" role="img" aria-label="Post image placeholder">Image</div>
+        <p class="zine-byline">Issue No. 02</p>
+        <h3><a href="my-first-post.html">My First Post</a></h3>
+        <p class="zine-series"> Day In the Life Part 1</p>
+        <p>Hello World! This is my first official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond.</p>
+        <ul class="tag-list"><li class="tag">Lifestyle</li><li class="tag">Spirituality</li><li class="tag">Web Dev</li></ul>
+      </article>
+      <article class="zine-card related-card">
+        <div class="img-placeholder" role="img" aria-label="Post image placeholder">Image</div>
+        <p class="zine-byline">Issue No. 01</p>
+        <h3><a href="block-type-showcase.html">Block Type Showcase</a></h3>
+        <p class="zine-series">  </p>
+        <p>A reference post demonstrating every content block type supported by the blog build system, with placeholder content for each.</p>
+        <ul class="tag-list"><li class="tag">Web Dev</li></ul>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <a href="../index.html#blog" class="post-back-link">&larr; Back to all posts</a>
+
+</main>
+
+<footer class="site-footer wrap">
+  <p>&copy; 2026 Roberto Jimenez-Martinez</p>
+  <nav aria-label="Footer">
+    <a href="../index.html#contact">Contact</a>
+    <a href="../index.html#legal">Legal &amp; Disclosures</a>
+  </nav>
+</footer>
+
+<script src="../post-links.js"></script>
+<script src="../recipe-hotspots.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,153 @@
+{
+  "slug": "block-type-showcase",
+  "title": "Block Type Showcase",
+  "author": "Roberto Jimenez-Martinez",
+  "date": "1999-01-19",
+  "location": "Grand Rapids, MI",
+  "issue": 0,
+  "tags": ["Web Dev"],
+  "excerpt": "A reference post demonstrating every content block type supported by the blog build system, with placeholder content for each.",
+  "heroImage": {
+    "src": "",
+    "alt": "Placeholder hero image for the block type showcase"
+  },
+  "body": [
+    { "type": "paragraph", "runs": [
+      { "text": "This post exists purely as a reference. Every block type the build system supports appears below, once, with placeholder content." }
+    ]},
+
+    { "type": "heading", "text": "Heading Block" },
+    { "type": "paragraph", "runs": [
+      { "text": "The block above this paragraph is a heading block. It renders as an h2 and is typically used to break a post into sections." }
+    ]},
+
+    { "type": "paragraph", "runs": [
+      { "text": "This paragraph block demonstrates every inline run style: plain text, " },
+      { "text": "bold", "bold": true },
+      { "text": ", " },
+      { "text": "italic", "italic": true },
+      { "text": ", " },
+      { "text": "bold italic", "bold": true, "italic": true },
+      { "text": ", a " },
+      { "text": "regular external link", "link": "https://example.com" },
+      { "text": ", an " },
+      { "text": "affiliate link", "link": "https://example.com/product", "affiliate": true },
+      { "text": ", and an " },
+      { "text": "internal post link", "postLink": "my-first-post" },
+      { "text": "." }
+    ]},
+
+    { "type": "pullquote", "text": "Placeholder pullquote text goes here.", "attribution": "Placeholder Attribution" },
+
+    { "type": "image", "src": "", "alt": "Placeholder single image", "caption": "Placeholder caption for a single image block." },
+
+    { "type": "imageGroup", "images": [
+      { "src": "", "alt": "Placeholder photo one", "caption": "Placeholder caption one" },
+      { "src": "", "alt": "Placeholder photo two", "caption": "Placeholder caption two" }
+    ]},
+
+    { "type": "image", "src": "../images/logo.svg", "alt": "Placeholder single image with SVG", "caption": "Placeholder caption for a single image block with an SVG.", "width": "200px" },
+
+    { "type": "imageGroup", "images": [
+      { "src": "../images/logo.svg", "alt": "Placeholder SVG photo one", "caption": "Placeholder caption one with an SVG.", "width": "200px" },
+      { "src": "../images/logo.svg", "alt": "Placeholder SVG photo two", "caption": "Placeholder caption two with an SVG.", "width": "200px" }
+    ]},
+
+    { "type": "imageGroup", "divider": true, "images": [
+      { "src": "../images/logo.svg", "alt": "Divided group photo one", "caption": "With a divider line between images." },
+      { "src": "../images/logo.svg", "alt": "Divided group photo two", "caption": "Second image in the divided group." }
+    ]},
+
+    { "type": "imageGroup", "images": [
+      { "src": "../images/logo.svg", "alt": "Three-image group photo one", "caption": "First of three." },
+      { "src": "../images/logo.svg", "alt": "Three-image group photo two", "caption": "Second of three." },
+      { "src": "../images/logo.svg", "alt": "Three-image group photo three", "caption": "Third of three." }
+    ]},
+
+    { "type": "list", "style": "unordered", "items": [
+      { "runs": [{ "text": "Placeholder unordered list item one" }] },
+      { "runs": [{ "text": "Placeholder unordered list item two" }] },
+      { "runs": [{ "text": "Placeholder unordered list item three" }] }
+    ]},
+
+    { "type": "list", "style": "ordered", "items": [
+      { "runs": [{ "text": "Placeholder ordered list item one" }] },
+      { "runs": [{ "text": "Placeholder ordered list item two" }] },
+      { "runs": [{ "text": "Placeholder ordered list item three" }] }
+    ]},
+
+    { "type": "columns", "columns": [
+      { "runs": [{ "text": "Placeholder text for the left column. Placeholder text for the left column. Placeholder text for the left column. Placeholder text for the left column. Placeholder text for the left column. " }] },
+      { "runs": [{ "text": "Placeholder text for the right column. Placeholder text for the right column. Placeholder text for the right column. Placeholder text for the right column. Placeholder text for the right column. " }] }
+    ]},
+
+    { "type": "textImage", "imagePosition": "right", "runs": [
+        { "text": "Placeholder text sitting beside an image on the right." }
+      ],
+      "image": { "src": "", "alt": "Placeholder text-image (right)", "caption": "Placeholder caption" }
+    },
+
+    { "type": "textImage", "imagePosition": "left", "runs": [
+        { "text": "Placeholder text sitting beside an image on the left." }
+      ],
+      "image": { "src": "", "alt": "Placeholder text-image (left)", "caption": "Placeholder caption" }
+    },
+
+    { "type": "textImage", "imagePosition": "right", "runs": [
+      { "text": "Placeholder text sitting beside an image on the right, with a custom width."}
+    ],
+      "image": { "src": "../images/logo.svg", "alt": "Placeholder text-image (right) with custom width", "caption": "Placeholder caption", "width": "500px" }
+  },
+    { "type": "textImage", "imagePosition": "left", "runs": [
+      { "text": "Placeholder text sitting beside an image on the left, with a custom width."}
+    ],
+      "image": { "src": "../images/logo.svg", "alt": "Placeholder text-image (left) with custom width", "caption": "Placeholder caption", "width": "500px" }
+    },
+
+    { "type": "code",
+      "code": "function placeholder() {\n  return \"Placeholder code block\";\n}",
+      "caption": "Placeholder caption describing the code snippet above."
+    },
+
+    { "type": "spreadsheet",
+      "headers": ["COL_A", "COL_B", "COL_C"],
+      "rows": [
+        ["row1-a", "row1-b", "row1-c"],
+        ["row2-a", "row2-b", "row2-c"]
+      ],
+      "caption": "Placeholder spreadsheet caption."
+    },
+
+    { "type": "recipeImage",
+      "image": { "src": "../images/logo.svg", "alt": "Placeholder meal photo with recipe hotspots", "caption": "Placeholder caption for a recipe-hotspot image." },
+      "hotspots": [
+        { "x": 30, "y": 55, "label": "Placeholder item one", "recipe": {
+          "title": "Placeholder Quick Recipe One",
+          "ingredients": ["Placeholder ingredient A", "Placeholder ingredient B"],
+          "steps": ["Placeholder step one", "Placeholder step two"]
+        }},
+        { "x": 70, "y": 40, "label": "Placeholder item two", "recipe": {
+          "title": "Placeholder Quick Recipe Two",
+          "ingredients": ["Placeholder ingredient C", "Placeholder ingredient D"],
+          "steps": ["Placeholder step one", "Placeholder step two"]
+        }}
+      ]
+    },
+
+    { "type": "paragraph", "runs": [
+      { "text": "The image above is a recipeImage block — clickable hotspots over individual items, each surfacing a quick recipe." }
+    ]},
+
+    { "type": "divider" },
+
+    { "type": "paragraph", "runs": [
+      { "text": "The horizontal rule above is a divider block, used to separate sections without a heading." }
+    ]},
+
+    { "type": "embed", "provider": "youtube", "url": "https://example.com/embed" },
+
+    { "type": "paragraph", "runs": [
+      { "text": "That covers every block type currently supported by the build system." }
+    ]}
+  ]
+}
