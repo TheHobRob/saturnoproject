@@ -1,0 +1,13 @@
+# Claude Code local tooling (settings, worktrees, launch config) — dev-only, never deploy
+.claude/
+
+# Stray generated/output artifacts that ended up inside the repo — not site content
+mnt/
+
+# Internal content-strategy doc (name-pun bank, voice notes, Easter-egg planning) —
+# keep it locally for your own reference, never commit/deploy it
+BRANDING.md
+
+# OS junk
+.DS_Store
+Thumbs.db

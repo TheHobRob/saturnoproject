@@ -1,0 +1,1017 @@
+/* ============================================
+   Blog / Zine theme
+   Layered on top of styles.css — reuses the site's
+   existing color tokens (--ink, --paper, --steel,
+   --signal, --rule, --tag-bg) so the Blog section
+   shares one palette with the rest of the site. Only
+   the layout (masthead, columns, drop caps, bordered
+   bands) is newspaper-inspired, not the colors.
+   ============================================ */
+
+:root {
+  --font-masthead: "Playfair Display", serif;
+}
+
+.zine {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ============================================
+   Masthead
+   ============================================ */
+.masthead {
+  padding: 0;
+}
+
+.masthead-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.double-rule {
+  border: none;
+  border-top: 4px double var(--rule);
+  margin: 0;
+}
+
+.masthead-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+.masthead-meta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 16px 24px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--steel);
+  text-align: center;
+}
+
+.masthead-meta .meta-sep {
+  color: var(--rule);
+}
+
+.masthead-body {
+  padding: 32px 24px 28px;
+  text-align: center;
+}
+
+.masthead-title {
+  font-family: var(--font-masthead);
+  font-weight: 900;
+  font-size: clamp(40px, 8vw, 72px);
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.masthead-tagline {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0;
+}
+
+.masthead-band {
+  width: 100%;
+  aspect-ratio: 16 / 5;
+  background: var(--tag-bg);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--steel);
+  background-size: cover;
+  background-position: center;
+}
+
+.category-line {
+  text-align: center;
+  padding: 18px 24px;
+  font-family: var(--font-masthead);
+  font-weight: 700;
+  font-size: clamp(15px, 2.2vw, 20px);
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ============================================
+   Search + tag filter bar
+   ============================================ */
+.zine-controls {
+  padding: 32px 24px 8px;
+  text-align: center;
+}
+
+.zine-search {
+  font-family: var(--font-body);
+  font-size: 15px;
+  border: none;
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 4px;
+  width: 260px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.zine-search::placeholder {
+  color: var(--steel);
+}
+
+.explore-heading {
+  font-family: var(--font-masthead);
+  font-style: italic;
+  font-size: 20px;
+  margin: 28px 0 18px;
+  color: var(--ink);
+}
+
+.zine-tags {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 24px 28px;
+}
+
+.zine-tag-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-display);
+  width: 84px;
+}
+
+.zine-tag-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-masthead);
+  font-size: 18px;
+  color: var(--ink);
+  background: var(--paper);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.zine-tag-btn:hover .zine-tag-circle {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.zine-tag-btn.is-active .zine-tag-circle {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--paper);
+}
+
+.zine-tag-label {
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.zine-empty-state {
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--steel);
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+/* ============================================
+   Featured post (Blog index — leads the grid)
+   ============================================ */
+.zine-feature {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  padding: 32px 24px 40px;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+
+.zine-feature-media img,
+.zine-feature-media .img-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--tag-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--steel);
+}
+
+.zine-feature-title {
+  font-family: var(--font-masthead);
+  font-size: clamp(26px, 3.6vw, 38px);
+  line-height: 1.15;
+  margin: 0 0 14px;
+}
+
+.zine-feature-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.zine-feature-title a:hover {
+  color: var(--signal);
+}
+
+.zine-feature-excerpt {
+  font-size: 17px;
+  max-width: 60ch;
+  margin: 0 0 16px;
+}
+
+.zine-feature-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.zine-feature-link {
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 1px solid var(--signal);
+  padding-bottom: 2px;
+}
+
+.zine-feature-link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* ============================================
+   Post grid (Blog index — "front page" teasers)
+   ============================================ */
+
+/* Homepage: everything below the featured post scrolls inside its own
+   bounded panel instead of growing the page — browsing "all" (or a
+   filtered tag) happens by scrolling this box, not the whole site. */
+.zine-grid-scroll {
+  max-height: 720px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom: 1px solid var(--rule);
+  scrollbar-gutter: stable;
+}
+
+.zine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.zine-card {
+  padding: 28px 24px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.zine-card:nth-child(3n) {
+  border-right: none;
+}
+
+/* Related Reading (bottom of every post) — a horizontally scrollable
+   strip instead of the homepage's dense grid, so "related first, then
+   everything else" (see build.js's getRelatedPosts) reads as one ordered
+   row you scroll through left to right. */
+.related-posts-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 12px;
+  scroll-snap-type: x proximity;
+  scrollbar-gutter: stable;
+}
+
+.related-posts-scroll .related-card {
+  flex: 0 0 280px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  scroll-snap-align: start;
+}
+
+.zine-card .img-placeholder,
+.zine-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--tag-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--steel);
+  margin-bottom: 14px;
+}
+
+.zine-byline {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin: 0 0 8px;
+}
+
+.zine-card .zine-series,
+.zine-feature .zine-series {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0 0 8px;
+}
+
+.zine-card h3 {
+  font-family: var(--font-masthead);
+  font-size: 22px;
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.zine-card h3 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.zine-card h3 a:hover {
+  color: var(--signal);
+}
+
+.zine-card p {
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.zine-card .tag-list {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.zine-card .tag {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule);
+  padding: 2px 8px;
+  color: var(--steel);
+}
+
+/* ============================================
+   Single post page
+   ============================================ */
+.zine-post-title {
+  font-family: var(--font-masthead);
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+/* In-article H2 subheadings, rendered by build.js's "heading" block type */
+.post-heading {
+  font-family: var(--font-masthead);
+  font-size: clamp(22px, 3.4vw, 28px);
+  line-height: 1.25;
+  margin: 36px 0 14px;
+}
+
+.zine-post-meta {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0 0 16px;
+}
+
+.zine-hero-image {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 8;
+  margin: 32px auto;
+  background: var(--tag-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--steel);
+}
+
+/* Photo-essay template — a bigger, taller-leaning hero to carry more
+   visual weight than the standard-article treatment. First-pass sizing,
+   not final. */
+.zine-hero-image--tall {
+  max-width: 1100px;
+  aspect-ratio: 4 / 5;
+}
+
+.zine-post-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  column-count: 1;
+}
+
+.post-paragraph {
+  font-size: 18px;
+  line-height: 1.75;
+  margin: 0 0 20px;
+}
+
+/* Sits right after an affiliate link (see build.js's renderRuns) so the
+   disclosure is visible at the point of the link, not just in the banner. */
+.affiliate-marker {
+  color: var(--signal);
+  font-size: 0.7em;
+  vertical-align: super;
+  margin-left: 1px;
+  cursor: help;
+}
+
+/* Internal cross-reference link (build.js's "postLink" runs, see
+   post-links.js for the hover/tap preview behavior). Dotted underline and
+   signal color distinguish it at a glance from a plain link (steel, solid
+   underline) and an affiliate link (solid underline + trailing asterisk). */
+.post-link {
+  color: var(--signal);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.post-link:hover,
+.post-link:focus-visible {
+  text-decoration-style: solid;
+}
+
+/* Hover/tap preview card — positioned by post-links.js, content filled in
+   from posts-index.json client-side (no post data duplicated at build time). */
+.post-link-preview {
+  position: absolute;
+  z-index: 50;
+  width: min(300px, calc(100vw - 32px));
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(28, 43, 57, 0.18);
+  overflow: hidden;
+}
+
+.post-link-preview[hidden] {
+  display: none;
+}
+
+.post-link-preview-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.post-link-preview-media img,
+.post-link-preview-media .img-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tag-bg);
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--steel);
+}
+
+.post-link-preview-body {
+  padding: 14px 16px 16px;
+}
+
+.post-link-preview-series {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--signal);
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.post-link-preview-title {
+  font-family: var(--font-masthead);
+  font-size: 17px;
+  line-height: 1.25;
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+
+.post-link-preview-excerpt {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.post-link-preview-cta {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 1px solid var(--signal);
+}
+
+.post-link-preview-cta:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.zine-post-body > .post-paragraph:first-of-type::first-letter {
+  font-family: var(--font-masthead);
+  font-size: 64px;
+  font-weight: 900;
+  float: left;
+  line-height: 0.8;
+  padding: 6px 8px 0 0;
+  color: var(--signal);
+}
+
+/* Quick-take template — skips the drop cap to feel lighter/shorter than
+   a standard article. First-pass, not final. */
+.zine-post-body--compact > .post-paragraph:first-of-type::first-letter {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  float: none;
+  line-height: inherit;
+  padding: 0;
+  color: inherit;
+}
+
+.pullquote {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 24px 0;
+  margin: 32px 0;
+  text-align: center;
+}
+
+.pullquote p {
+  font-family: var(--font-masthead);
+  font-size: 26px;
+  font-style: italic;
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+
+.pullquote cite {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--steel);
+  font-style: normal;
+}
+
+.post-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 24px 0;
+}
+
+.post-image {
+  margin: 32px 0;
+}
+
+.post-image img {
+  width: 100%;
+}
+
+/* Shared caption style for every image/code/spreadsheet block — keeps the
+   subtext under all of them the same size, color, and font regardless of
+   what it sits below. Context-specific rules below only add alignment. */
+.block-caption {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--steel);
+  margin-top: 8px;
+}
+
+.post-image .block-caption {
+  text-align: center;
+}
+
+.image-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.image-group figure {
+  margin: 0;
+}
+
+.image-group img {
+  width: 100%;
+}
+
+.image-group .block-caption {
+  text-align: center;
+}
+
+/* "divider": true on an imageGroup block — a thin rule between every
+   image (and between rows, for 3+ images) instead of a plain gap. The
+   figure's own background painted over the container's fills the gap
+   with a hairline everywhere two cells meet. */
+.image-group--divided {
+  background: var(--ink);
+  gap: 1px;
+}
+
+.image-group--divided figure {
+  background: var(--paper);
+  padding: 20px;
+}
+
+/* Text/image split block — text one side, one image the other
+   (build.js's "textImage" block type; DOM order handles left/right). */
+.text-image-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  margin: 32px 0;
+}
+
+.text-image-text {
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.text-image-figure {
+  margin: 0;
+}
+
+.text-image-figure img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  display: block;
+  background: var(--tag-bg);
+}
+
+.text-image-figure .block-caption {
+  text-align: center;
+}
+
+/* Meal photo with clickable recipe hotspots (build.js's "recipeImage"
+   block type; interaction driven by recipe-hotspots.js). x/y positioning
+   comes from each hotspot's own inline style (percentages from the
+   post JSON), not from CSS. */
+.recipe-image-block {
+  margin: 32px 0;
+}
+
+.recipe-image-frame {
+  position: relative;
+  width: 100%;
+}
+
+.recipe-image-frame img {
+  width: 100%;
+  display: block;
+}
+
+.recipe-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.recipe-hotspot-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--signal);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: background 0.15s ease;
+}
+
+.recipe-hotspot-dot::after {
+  content: "+";
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--signal);
+  transition: color 0.15s ease;
+}
+
+.recipe-hotspot:hover .recipe-hotspot-dot,
+.recipe-hotspot:focus-visible .recipe-hotspot-dot {
+  background: var(--signal);
+}
+
+.recipe-hotspot:hover .recipe-hotspot-dot::after,
+.recipe-hotspot:focus-visible .recipe-hotspot-dot::after {
+  color: var(--paper);
+}
+
+.recipe-popover {
+  position: absolute;
+  z-index: 50;
+  width: min(260px, calc(100vw - 32px));
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 16px 18px;
+}
+
+.recipe-popover[hidden] {
+  display: none;
+}
+
+.recipe-popover-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--steel);
+}
+
+.recipe-popover-title {
+  font-family: var(--font-masthead);
+  font-size: 17px;
+  line-height: 1.25;
+  margin: 0 20px 8px 0;
+  color: var(--ink);
+}
+
+.recipe-popover h4 {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 10px 0 4px;
+}
+
+.recipe-popover ul,
+.recipe-popover ol {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* Monospace schema/code snippet block (build.js's "code" block type),
+   with a prose caption underneath explaining what it shows. */
+.post-code {
+  margin: 32px 0;
+}
+
+.post-code-block {
+  margin: 0;
+  padding: 20px 24px;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.post-code-block code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink);
+  white-space: pre;
+}
+
+/* Mocked-up spreadsheet snippet (build.js's "spreadsheet" block type) — a
+   hand-authored table of example rows/columns styled to read as a sheet,
+   not an embed of a real one. Column-letters row + row-number rail are
+   purely decorative, generated at build time from the data's shape. */
+.post-spreadsheet {
+  margin: 32px 0;
+  padding: 0 50px;
+}
+
+.post-spreadsheet-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.post-spreadsheet-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+}
+
+.post-spreadsheet-table th,
+.post-spreadsheet-table td {
+  border: 1px solid var(--rule);
+  padding: 8px 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.post-spreadsheet-letters th {
+  background: var(--tag-bg);
+  color: var(--steel);
+  font-size: 11px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.post-spreadsheet-headers th {
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.post-spreadsheet-rownum {
+  background: var(--tag-bg);
+  color: var(--steel);
+  font-weight: 400;
+  text-align: center;
+}
+
+.post-list {
+  font-size: 18px;
+  line-height: 1.75;
+  padding-left: 24px;
+  margin: 0 0 20px;
+}
+
+.post-divider {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 40px 0;
+}
+
+.post-back-link {
+  display: block;
+  max-width: 640px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.post-tags-footer {
+  max-width: 640px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  text-align: center;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 900px) {
+  .zine-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .zine-card:nth-child(3n) {
+    border-right: 1px solid var(--rule);
+  }
+  .zine-card:nth-child(2n) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .zine-grid {
+    grid-template-columns: 1fr;
+  }
+  .zine-card {
+    border-right: none;
+  }
+  .zine-feature {
+    grid-template-columns: 1fr;
+  }
+  .post-columns,
+  .image-group,
+  .text-image-block {
+    grid-template-columns: 1fr;
+  }
+  .zine-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Filter chips read left-to-right in a scrollable row on narrow
+     screens instead of the desktop's stacked icon-over-label wrap,
+     which was forcing every tag onto its own line. */
+  .zine-tags {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 12px;
+    padding: 0 24px 20px;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .zine-tag-btn {
+    flex: 0 0 auto;
+    flex-direction: row;
+    width: auto;
+    gap: 6px;
+  }
+
+  .zine-tag-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .zine-tag-label {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .post-spreadsheet {
+    padding: 0;
+  }
+}

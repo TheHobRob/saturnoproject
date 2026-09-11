@@ -1,0 +1,75 @@
+[
+  {
+    "slug": "drag-race-the-simulation",
+    "title": "Drag Race: The Simulator",
+    "date": "2026-09-04",
+    "tags": [
+      "Entertainment",
+      "Web Dev"
+    ],
+    "excerpt": "Charisma. Uniqueness. Talent. Nerve. Long ago in the year 2013, I had none of these qualities. I came across a Q&A video on the web. The question asked: “Are you watching the current season of Drag Race? If so, who are you rooting for to snatch the crown?” A crown? For drag racing? No, this was something much much gayer. ",
+    "heroImage": {
+      "src": "",
+      "alt": "Placeholder photo of a quiet evening at home"
+    },
+    "series": {
+      "id": "DragRaceSimulator",
+      "title": "Drag Race: The Simulator",
+      "part": 1
+    }
+  },
+  {
+    "slug": "my-second-post",
+    "title": "My Second Post",
+    "date": "2026-09-04",
+    "tags": [
+      "Lifestyle",
+      "Spirituality",
+      "Web Dev"
+    ],
+    "excerpt": "Hello World! This is my SECOND official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond.",
+    "heroImage": {
+      "src": "",
+      "alt": "Placeholder photo of a quiet evening at home"
+    },
+    "series": {
+      "id": "DITL",
+      "title": "Day In the Life",
+      "part": 2
+    }
+  },
+  {
+    "slug": "my-first-post",
+    "title": "My First Post",
+    "date": "2026-09-03",
+    "tags": [
+      "Lifestyle",
+      "Spirituality",
+      "Web Dev"
+    ],
+    "excerpt": "Hello World! This is my first official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond.",
+    "heroImage": {
+      "src": "",
+      "alt": "Placeholder photo of a quiet evening at home"
+    },
+    "series": {
+      "id": "DITL",
+      "title": "Day In the Life",
+      "part": 1
+    }
+  },
+  {
+    "slug": "block-type-showcase",
+    "title": "Block Type Showcase",
+    "date": "1999-01-19",
+    "tags": [
+      "Web Dev"
+    ],
+    "excerpt": "A reference post demonstrating every content block type supported by the blog build system, with placeholder content for each.",
+    "heroImage": {
+      "src": "",
+      "alt": "Placeholder hero image for the block type showcase"
+    },
+    "series": null
+  }
+]

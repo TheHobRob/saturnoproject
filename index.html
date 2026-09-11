@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roberto Jimenez-Martinez</title>
+<script>
+  // Arriving with a URL hash (e.g. a blog post's "Back to all posts" or nav
+  // link): hide the page until blog.js has fetched its content and jumped
+  // straight to that section, so the reader never sees the hero flash by
+  // first. The timeout is a safety net in case that script fails to load.
+  if (location.hash) {
+    document.documentElement.classList.add("hash-loading");
+    setTimeout(function () {
+      document.documentElement.classList.remove("hash-loading");
+    }, 1200);
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="blog-zine.css">
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="#" class="wordmark"><img src="images/logo.svg" alt="" class="wordmark-logo">THE SATURNO PROJECT</a>
+    <nav aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#blog">Blog</a>
+      <a href="#creator">Creator</a>
+      <a href="#contact">Contact</a>
+      <a href="#legal" class="legal-link">Legal</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="masthead">
+    <div class="masthead-row">
+      <span>Grand Rapids, MI, USA</span>
+      <span>Est. 2026</span>
+    </div>
+    <hr class="masthead-rule">
+    <div class="masthead-body">
+      <h1 class="masthead-title">The Saturno Project</h1>
+      <p class="masthead-tagline">Welcome to The Saturno Project</p>
+    </div>
+    <hr class="masthead-rule">
+    <p class="masthead-meta" id="masthead-meta"></p>
+    <hr class="masthead-rule">
+  </div>
+
+  <section id="about" class="company-about">
+    <div class="wrap company-about-inner">
+      <div class="company-logo-placeholder">
+        <img src="images/logo.svg" alt="The Saturno Project logo">
+      </div>
+      <div class="company-about-text">
+        <h2 class="section-title">Logical brain. Creative itch.</h2>
+        <p class="intro-lead">The Saturno Project is where structure meets imagination.</p>
+        <p class="company-about-description">We blend technical precision with creative vision to deliver exceptional digital experiences.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" aria-label="Blog">
+    <div class="wrap">
+      <h2 class="section-title">Blog</h2>
+
+      <div id="featured-post"></div>
+
+      <div class="zine-controls">
+        <input type="search" id="search-input" class="zine-search" placeholder="Search posts&hellip;" aria-label="Search posts">
+        <p class="explore-heading">explore</p>
+        <div class="zine-tags" id="tag-filter" role="group" aria-label="Filter by tag">
+          <button class="zine-tag-btn is-active" data-tag="all">
+            <span class="zine-tag-circle">&#9733;</span>
+            <span class="zine-tag-label">all</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="post-grid" class="zine-grid-scroll" aria-live="polite">
+        <!-- Populated by blog.js from posts-index.json -->
+      </div>
+
+      <p class="zine-empty-state" id="empty-state" hidden>No posts match your search or filter.</p>
+    </div>
+  </section>
+
+  <section id="creator" class="about-preview">
+    <div class="wrap about-preview-inner">
+      <div class="about-preview-photo">
+        <div class="img-placeholder" role="img" aria-label="Photo placeholder">*Here goes a Photo*</div>
+      </div>
+      <div class="about-preview-text">
+        <h2 class="about-intro-heading">Meet the Creator</h2>
+        <p class="intro-lead">I'm Roberto! Born and raised in West Michigan, I am a bilingual web developer with a passion for creating an immersive
+        digital experience. Here is where I am able to display my whimsical nonsense in the most structured and professional
+        way.</p>
+        <h2 class="about-intro-heading">Why Saturno?</h2>
+        <p class="intro-lead">This project was inspired by: Saturn. The classical ruling planet of the signs Capricorn and Aquarius. I quite literally
+        looked to the stars to find a name. My birth chart features a Capricorn Sun and an Aquarius Stellium.</p>
+        <p class="intro-lead">I felt that Capricorn represents the part that wants things built properly and patiently, much like this website.
+        Aquarius represents the part of me that is more unconventional and contrarian leading me to develop many projects that
+        no one has asked for.</p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <h2 class="section-title">Side projects</h2>
+      <div class="skills-grid">
+        <div class="skills-group">
+          <h3>Zodiac RPG</h3>
+          <p>An astrology-inspired creature-collecting game. Early UI design phase.</p>
+        </div>
+        <div class="skills-group">
+          <h3>Reality Show Simulator</h3>
+          <p>A data-driven simulation modeling contestant scoring and elimination logic. In development.</p>
+        </div>
+        <div class="skills-group">
+          <h3>This site</h3>
+          <p>Hand-built with HTML, CSS, and vanilla JavaScript &mdash; an ongoing project in itself.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2 class="section-title">Contact</h2>
+      <p>Reach out about roles, collaborations, or the blog.</p>
+      <div class="contact-buttons">
+        <a href="mailto:robant.jimmartin@gmail.com" class="contact-btn contact-btn-primary">Email Me &rarr;</a>
+      </div>
+
+      <div class="mail-sheets">
+        <form class="mail-sheet" id="contact-form" novalidate>
+          <div class="mail-sheet-stamp" aria-hidden="true">
+            <span class="stamp-mark">&#10022;</span>
+            <span class="postmark">Grand Rapids, MI</span>
+          </div>
+          <p class="mail-sheet-label">Send us a Letter</p>
+          <label class="mail-sheet-field">
+            <span>Name</span>
+            <input type="text" name="name" required>
+          </label>
+          <label class="mail-sheet-field">
+            <span>Email</span>
+            <input type="email" name="email" required>
+          </label>
+          <label class="mail-sheet-field">
+            <span>Message</span>
+            <textarea name="message" rows="4" required></textarea>
+          </label>
+          <hr class="mail-sheet-perforation">
+          <button type="submit" class="mail-sheet-submit">Mail It &rarr;</button>
+          <p class="mail-sheet-note" hidden>Thanks — this form isn't wired up to send anywhere yet. Use the Email Me button above for now.</p>
+        </form>
+
+        <form class="mail-sheet mail-sheet--compact" id="newsletter-form" novalidate>
+          <div class="mail-sheet-stamp" aria-hidden="true">
+            <span class="stamp-mark">&#10022;</span>
+            <span class="postmark">Est. 2026</span>
+          </div>
+          <p class="mail-sheet-label">Join the Mailing List!</p>
+          <label class="mail-sheet-field">
+            <span>Email</span>
+            <input type="email" name="email" required>
+          </label>
+          <hr class="mail-sheet-perforation">
+          <button type="submit" class="mail-sheet-submit">Subscribe &rarr;</button>
+          <p class="mail-sheet-note" hidden>Thanks — sign-ups aren't wired up to a mailing list yet, but the form's ready for one.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="legal">
+    <div class="wrap">
+      <h2 class="section-title">Legal &amp; Disclosures</h2>
+      <p>This page exists to be clear, not to bury anything. If something here is unclear, <a href="#contact">reach out directly</a>.</p>
+
+      <nav class="legal-toc" aria-label="On this page">
+        <h3>On this page</h3>
+        <ul>
+          <li><a href="#affiliate-disclosure">Affiliate disclosure</a></li>
+          <li><a href="#privacy-policy">Privacy policy</a></li>
+          <li><a href="#terms">Terms of use</a></li>
+        </ul>
+      </nav>
+
+      <div class="legal-section" id="affiliate-disclosure">
+        <h3>Affiliate disclosure</h3>
+        <p>This site does not currently use affiliate links. If that changes, this section will be updated to state plainly which posts contain them, that clicking and purchasing through them may earn a commission at no extra cost to the reader, and that products are only ever recommended based on genuine research or use &mdash; not because they pay a commission.</p>
+      </div>
+
+      <div class="legal-section" id="privacy-policy">
+        <h3>Privacy policy</h3>
+        <p>This site is fully static: it doesn't use analytics, tracking cookies, or any third-party trackers. The contact and mailing-list forms above are front-end only for now &mdash; nothing typed into them is transmitted, stored, or seen by anyone; submitting just shows a note that the form isn't connected yet. If either form is wired up to actually send data in the future, this policy will be updated first to explain exactly what's collected, how it's used, and how to request it be deleted.</p>
+      </div>
+
+      <div class="legal-section" id="terms">
+        <h3>Terms of use</h3>
+        <p>Content on this site is provided for informational and entertainment purposes only and isn't professional financial, legal, or career advice &mdash; do your own research or consult a qualified professional before acting on anything you read here. Unless otherwise noted, the site's content, design, and code belong to Roberto Jimenez-Martinez; please don't reproduce or redistribute without permission.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer wrap">
+  <p>&copy; 2026 Roberto Jimenez-Martinez</p>
+  <nav aria-label="Footer">
+    <a href="#contact">Contact</a>
+    <a href="#legal">Legal &amp; Disclosures</a>
+  </nav>
+</footer>
+
+<script src="blog.js"></script>
+<script>
+  // Both mail-sheet forms are visual only for now (see the mobile brainstorm
+  // notes: "style only, wire up later") — no backend to submit to yet, so
+  // just stop the page navigating away and surface the placeholder note.
+  document.querySelectorAll(".mail-sheet").forEach(function (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var note = form.querySelector(".mail-sheet-note");
+      if (note) note.hidden = false;
+    });
+  });
+</script>
+</body>
+</html>
