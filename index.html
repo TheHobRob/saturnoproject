@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roberto Jimenez-Martinez</title>
+<title>The Saturno Project</title>
+<meta name="description" content="The Saturno Project — Roberto Jimenez-Martinez&#39;s blog and dev portfolio, where structured web development meets astrology-inspired creative projects.">
+<link rel="canonical" href="https://saturnoproject.com/">
+<link rel="icon" type="image/svg+xml" href="images/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Saturno Project">
+<meta property="og:title" content="The Saturno Project">
+<meta property="og:description" content="A blog and dev portfolio where structured web development meets astrology-inspired creative projects — coding devlogs, art, fashion, and spirituality.">
+<meta property="og:url" content="https://saturnoproject.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Saturno Project">
+<meta name="twitter:description" content="A blog and dev portfolio where structured web development meets astrology-inspired creative projects — coding devlogs, art, fashion, and spirituality.">
 <script>
   // Arriving with a URL hash (e.g. a blog post's "Back to all posts" or nav
   // link): hide the page until blog.js has fetched its content and jumped
@@ -43,13 +56,13 @@
 
   <div class="masthead">
     <div class="masthead-row">
-      <span>Grand Rapids, MI, USA</span>
+      <span>Grand Rapids, MI</span>
       <span>Est. 2026</span>
     </div>
     <hr class="masthead-rule">
     <div class="masthead-body">
       <h1 class="masthead-title">The Saturno Project</h1>
-      <p class="masthead-tagline">Welcome to The Saturno Project</p>
+      <p class="masthead-tagline">Logical brain. Creative itch.</p>
     </div>
     <hr class="masthead-rule">
     <p class="masthead-meta" id="masthead-meta"></p>
@@ -62,22 +75,21 @@
         <img src="images/logo.svg" alt="The Saturno Project logo">
       </div>
       <div class="company-about-text">
-        <h2 class="section-title">Logical brain. Creative itch.</h2>
-        <p class="intro-lead">The Saturno Project is where structure meets imagination.</p>
-        <p class="company-about-description">We blend technical precision with creative vision to deliver exceptional digital experiences.</p>
+        <h2 class="section-title"><i>Explore</i> a distant world</h2>
+        <p class="intro-lead">...where structure meets imagination.</p>
       </div>
     </div>
   </section>
 
   <section id="blog" aria-label="Blog">
     <div class="wrap">
-      <h2 class="section-title">Blog</h2>
+      <h2 class="section-title">The Saturno Blog</h2>
 
       <div id="featured-post"></div>
 
       <div class="zine-controls">
         <input type="search" id="search-input" class="zine-search" placeholder="Search posts&hellip;" aria-label="Search posts">
-        <p class="explore-heading">explore</p>
+        <p class="explore-heading">explore some tags...</p>
         <div class="zine-tags" id="tag-filter" role="group" aria-label="Filter by tag">
           <button class="zine-tag-btn is-active" data-tag="all">
             <span class="zine-tag-circle">&#9733;</span>
@@ -97,7 +109,7 @@
   <section id="creator" class="about-preview">
     <div class="wrap about-preview-inner">
       <div class="about-preview-photo">
-        <div class="img-placeholder" role="img" aria-label="Photo placeholder">*Here goes a Photo*</div>
+        <div class="img-placeholder" role="img" aria-label="Photo placeholder">Photo</div>
       </div>
       <div class="about-preview-text">
         <h2 class="about-intro-heading">Meet the Creator</h2>
@@ -137,11 +149,11 @@
       <h2 class="section-title">Contact</h2>
       <p>Reach out about roles, collaborations, or the blog.</p>
       <div class="contact-buttons">
-        <a href="mailto:robant.jimmartin@gmail.com" class="contact-btn contact-btn-primary">Email Me &rarr;</a>
+        <a href="mailto:roberto@saturnoproject.com" class="contact-btn contact-btn-primary">Email Me &rarr;</a>
       </div>
 
       <div class="mail-sheets">
-        <form class="mail-sheet" id="contact-form" novalidate>
+        <form class="mail-sheet" id="contact-form" action="https://formspree.io/f/myeyvqej" method="POST" data-success-message="Thanks — your letter is on its way. I'll get back to you soon!" novalidate>
           <div class="mail-sheet-stamp" aria-hidden="true">
             <span class="stamp-mark">&#10022;</span>
             <span class="postmark">Grand Rapids, MI</span>
@@ -149,22 +161,22 @@
           <p class="mail-sheet-label">Send us a Letter</p>
           <label class="mail-sheet-field">
             <span>Name</span>
-            <input type="text" name="name" required>
+            <input type="text" name="name" autocomplete="name" required>
           </label>
           <label class="mail-sheet-field">
             <span>Email</span>
-            <input type="email" name="email" required>
+            <input type="email" name="email" autocomplete="email" required>
           </label>
           <label class="mail-sheet-field">
             <span>Message</span>
-            <textarea name="message" rows="4" required></textarea>
+            <textarea name="message" rows="4" autocomplete="off" required></textarea>
           </label>
           <hr class="mail-sheet-perforation">
           <button type="submit" class="mail-sheet-submit">Mail It &rarr;</button>
-          <p class="mail-sheet-note" hidden>Thanks — this form isn't wired up to send anywhere yet. Use the Email Me button above for now.</p>
+          <p class="mail-sheet-note" role="status" hidden></p>
         </form>
 
-        <form class="mail-sheet mail-sheet--compact" id="newsletter-form" novalidate>
+        <form class="mail-sheet mail-sheet--compact" id="newsletter-form" action="https://formspree.io/f/meaqdbal" method="POST" data-success-message="Thanks — you're on the list!" novalidate>
           <div class="mail-sheet-stamp" aria-hidden="true">
             <span class="stamp-mark">&#10022;</span>
             <span class="postmark">Est. 2026</span>
@@ -172,11 +184,11 @@
           <p class="mail-sheet-label">Join the Mailing List!</p>
           <label class="mail-sheet-field">
             <span>Email</span>
-            <input type="email" name="email" required>
+            <input type="email" name="email" autocomplete="email" required>
           </label>
           <hr class="mail-sheet-perforation">
           <button type="submit" class="mail-sheet-submit">Subscribe &rarr;</button>
-          <p class="mail-sheet-note" hidden>Thanks — sign-ups aren't wired up to a mailing list yet, but the form's ready for one.</p>
+          <p class="mail-sheet-note" role="status" hidden></p>
         </form>
       </div>
     </div>
@@ -203,7 +215,7 @@
 
       <div class="legal-section" id="privacy-policy">
         <h3>Privacy policy</h3>
-        <p>This site is fully static: it doesn't use analytics, tracking cookies, or any third-party trackers. The contact and mailing-list forms above are front-end only for now &mdash; nothing typed into them is transmitted, stored, or seen by anyone; submitting just shows a note that the form isn't connected yet. If either form is wired up to actually send data in the future, this policy will be updated first to explain exactly what's collected, how it's used, and how to request it be deleted.</p>
+        <p>This site doesn't use analytics or tracking cookies, and nothing about your visit is logged unless you submit one of the forms above. Whatever you type into the "Send us a Letter" or "Join the Mailing List" forms &mdash; name, email, and message &mdash; is sent to <a href="https://formspree.io/legal/privacy-policy/">Formspree</a>, a third-party form-processing service, which forwards it to Roberto's inbox. Formspree does not receive any other data from this site. To have a submission deleted, email <a href="mailto:roberto@saturnoproject.com">roberto@saturnoproject.com</a>.</p>
       </div>
 
       <div class="legal-section" id="terms">
@@ -225,14 +237,40 @@
 
 <script src="blog.js"></script>
 <script>
-  // Both mail-sheet forms are visual only for now (see the mobile brainstorm
-  // notes: "style only, wire up later") — no backend to submit to yet, so
-  // just stop the page navigating away and surface the placeholder note.
+  // Both mail-sheet forms submit to Formspree via fetch (rather than a plain
+  // HTML POST) so a submission can show its result inline as a mail-sheet-note
+  // instead of navigating away to formspree.io.
   document.querySelectorAll(".mail-sheet").forEach(function (form) {
+    var note = form.querySelector(".mail-sheet-note");
+    var submitBtn = form.querySelector(".mail-sheet-submit");
+    var successMessage = form.dataset.successMessage || "Thanks — your submission is on its way!";
+    var errorMessage = "Something went wrong sending that — please try the Email Me button above instead.";
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var note = form.querySelector(".mail-sheet-note");
-      if (note) note.hidden = false;
+      if (submitBtn) submitBtn.disabled = true;
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      })
+        .then(function (response) {
+          if (note) {
+            note.textContent = response.ok ? successMessage : errorMessage;
+            note.hidden = false;
+          }
+          if (response.ok) form.reset();
+        })
+        .catch(function () {
+          if (note) {
+            note.textContent = errorMessage;
+            note.hidden = false;
+          }
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   });
 </script>

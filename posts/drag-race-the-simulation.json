@@ -12,9 +12,10 @@
     "part": 1
   },
   "excerpt": "Charisma. Uniqueness. Talent. Nerve. Long ago in the year 2013, I had none of these qualities. I came across a Q&A video on the web. The question asked: “Are you watching the current season of Drag Race? If so, who are you rooting for to snatch the crown?” A crown? For drag racing? No, this was something much much gayer. ",
+  "metaDescription": "How a decade of Drag Race fandom turned into a real database of queens, seasons, and track records — and then into a full simulator.",
   "heroImage": {
     "src": "",
-    "alt": "Placeholder photo of a quiet evening at home"
+    "alt": "Hero photo for Drag Race: The Simulator — pending"
   },
   "body": [
     { "type": "paragraph", "runs": [
@@ -72,7 +73,7 @@
         ["050104904", "0501", "4", "0049: [Detox]", "SAFE", "..."],
         ["050104805", "0501", "5", "0048: [Coco Montrese]", "SAFE", "..."],
         ["050104706", "0501", "6", "0047: [Alyssa Edwards]", "SAFE", "..."],
-        ["050105107", "0501", "7", "0051: [Ivy Winter]", "TOP", "..."],
+        ["050105107", "0501", "7", "0051: [Ivy Winters]", "TOP", "..."],
         ["050105208", "0501", "8", "0052: [Jade Jolie]", "LOW", "..."],
         ["050105409", "0501", "9", "0054: [Lineysha Sparx]", "TOP", "..."],
         ["050105011", "0501", "11", "0050: [Honey Mahogany]", "SAFE", "..."],

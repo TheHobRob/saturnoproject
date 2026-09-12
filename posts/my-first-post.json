@@ -11,33 +11,33 @@
     "title": "Day In the Life",
     "part": 1
   },
-  "excerpt": "Hello World! This is my first official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond.",
+  "excerpt": "Hello World! This is my first official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development, and beyond.",
+  "metaDescription": "A personal journey of self-discovery, coding, and web development. Join me as I share my experiences and insights in this first post.",
   "heroImage": {
     "src": "",
-    "alt": "Placeholder photo of a quiet evening at home"
+    "alt": "Hero photo for My First Post — pending"
   },
   "body": [
     { "type": "paragraph", "runs": [
-      { "text": "Hello World! This is my first official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond." }
-]},
+      { "text": "Hello World! This is my first official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development, and beyond." }
+    ]},
     { "type": "heading", "text": "My Journey" },
     { "type": "paragraph", "runs": [
-      { "text": "I started my coding journey back in 2015 in high school during an Introduction to Computer Science course 💻. Developing little flash games in the beautifully designed programming language: Scratch 🐱. I was hooked instantly. My logical brain was tickled and finally, I thought, I understood what a Computer is capable of. " },
-      { "text": "Then came 2017, I graduated high school and pursued a Bachelor’s Degree in Computer Science at the College of Engineering in the University of Michigan 🟨🟦. This was great! Until it wasn’t. Life started to become very real, very quickly. Then all of the sudden: 💥boom💥! It’s 2020. " }
-    ]},
-    { "type": "imageGroup", "images": [
-      { "src": "", "alt": "Placeholder photo one", "caption": "Placeholder caption one" },
-      { "src": "", "alt": "Placeholder photo two", "caption": "Placeholder caption two" }
+      { "text": "I started my coding journey back in 2015 in high school during an Introduction to Computer Science course, developing little flash games in the beautifully designed programming language: Scratch 🐱. I was hooked instantly. My logical brain was tickled and finally, I thought, I understood what a Computer is capable of. Then came 2017. I graduated high school and pursued a Bachelor's Degree in Computer Science at the College of Engineering at the University of Michigan. This was great! Until it wasn't. Life started to become very real, very quickly. Then all of a sudden: boom💥! It's 2020." }
     ]},
     { "type": "paragraph", "runs": [
-      { "text": "I was contemplating my decision of having pursued a Bachelor’s Degree in Computer Science. Many questions came to my mind: Do I still love this?❣️ Am I capable of staying up to date with technology?💻 Is my career flashing before my eyes?👁️ Why am I so far from home?🏠 Who am I?🧍 The world outside was crumbling and so was mine. I gave it my best effort given the circumstances and ultimately withdrew from university in 2022. "},
-      { "text": "I have since moved back home to West Michigan, working jobs to pay the bills. 🧾 You know how it is. Then came 2026. And after having worked in the real world for 4 years, all the roads I took lead me back to coding. 💻 I started working with my computer, I designed a program, and then I organized some data in beautiful layouts. "},
-      { "text": "I began to do it for fun again, as a hobby. I came back to the feeling that coding gave me 11 years ago in my introduction class in high school. Now here we are, with all my experience on hand. 🫰 I began to code and I asked myself:"}
+      { "text": "I was contemplating my decision to pursue a Bachelor's Degree in Computer Science. Many questions came to my mind: Do I still love this? Am I capable of staying up to date with technology? Is my career flashing before my eyes? Why am I so far from home? Who am I?🧍 The world outside was crumbling and so was mine. I gave it my best effort given the circumstances and ultimately withdrew from university in 2022. I have since moved back home to West Michigan, working to pay the bills and spend more time finding myself." }
+    ]},
+    { "type": "paragraph", "runs": [
+      { "text": "I explored and experimented. Deep dives into spirituality led me to astrology — it's the entire inspiration for the blog's name 🪐. I started picking up my hobbies again: my love for video games, fashion, art, music, cooking, and taking care of my health. I love a little bit of everything when it comes to hobbies. Oh also, I'm gay. Growing up queer is hard, man. Anyways." }
+    ]},
+    { "type": "pullquote", "text": "\"Oh also I'm gay.\"", "attribution": "a queer" },
+    { "type": "paragraph", "runs": [
+      { "text": "Then came 2026. And after having worked in the real world for 4 years, all the roads I took led me back to coding. I started working with my computer. I designed a program. Then I organized some data in beautiful layouts. I began to do it for fun again, as a hobby. I came back to the feeling that coding gave me 11 years ago in my introduction class in high school. Now here we are, with all my experience on hand. 🫰 I sat down to code and asked myself:" }
     ]},
     { "type": "heading", "text": "Why Not Make a Website?"},
     { "type": "paragraph", "runs": [
-      { "text": "Making a website about myself requires so many skills beyond those I was developing at University.🤓 I knew what my spirit wanted and it was not figuring out the science of computation. I want to use computation to show its integration into everyday life.🔢 Many days I spend thinking, logically. Mathematically as Finn would say. "},
-      { "text": "So I ended up here, creating my portfolio on a website. This is great for a now drop-out computer scientist.🙂 Coding websites doesn’t have to make sense to a computer, it has to make sense to me, a human.🧍 A website has to act like a little window into the world of a brand 🌎, a company 🏢, a business 🌐, a product, etcetera. It’s a piece on the internet that is entirely my own.🌌"}
+      { "text": "Making a website about myself requires so many skills beyond those I was developing at University. I knew what my spirit wanted and it was not figuring out the science of computation. I want to use computation to show its integration into everyday life. Many days I spend thinking. Logically. Mathematically as Finn would say. So I ended up here, creating my portfolio on a website. This is great for a now-dropout computer scientist. Coding websites doesn't have to make sense to a computer — it has to make sense to me: a human. A website has to act like a little window into the world of a brand, a company, a business, a product, etcetera. It's a piece on the internet that is entirely my own.🌌" }
     ]}
   ]
 }
