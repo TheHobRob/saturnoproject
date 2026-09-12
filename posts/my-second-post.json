@@ -14,11 +14,11 @@
   "excerpt": "Hello World! This is my SECOND official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond.",
   "heroImage": {
     "src": "",
-    "alt": "Placeholder photo of a quiet evening at home"
+    "alt": "Hero photo for My Second Post — pending"
   },
   "body": [
     { "type": "paragraph", "runs": [
-      { "text": "Hello World! This is my Second hi official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond. " },
+      { "text": "Hello World! This is my second official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development and beyond. " },
       {
         "text": "Here's a teleporting script for ya.",
         "postLink": "my-first-post"

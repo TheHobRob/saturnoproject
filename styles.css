@@ -4,7 +4,10 @@
 :root {
   --ink: #2E2517;
   --paper: #F2ECDD;
-  --steel: #B08F52;
+  /* Darkened from the original #B08F52 (~2.6:1 against --paper, fails WCAG
+     AA) to ~5.8:1 — same warm gold hue/saturation, just less light, so nav
+     links, tag pills, byline/meta text, and footer nav all pass AA. */
+  --steel: #705729;
   --signal: #5D6A39;
   --rule: #E0D5B8;
   --paper-raised: #F8F3E6;

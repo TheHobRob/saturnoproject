@@ -18,7 +18,9 @@ const OUTPUT_DIR = path.join(__dirname, "blog");
 const TEMPLATES_DIR = path.join(__dirname, "templates");
 const PARTIALS_DIR = path.join(TEMPLATES_DIR, "partials");
 const INDEX_OUTPUT_PATH = path.join(__dirname, "posts-index.json");
+const SITEMAP_OUTPUT_PATH = path.join(__dirname, "sitemap.xml");
 const DEFAULT_TEMPLATE = "standard-article";
+const SITE_URL = "https://saturnoproject.com";
 
 // Set once per build (see build()) so renderRuns can resolve postLink slugs
 // without threading allPosts through every block renderer's signature —
@@ -61,12 +63,15 @@ function renderRuns(runs) {
     .join("");
 }
 
-// Basic HTML escaping so post text can't accidentally break markup
+// Basic HTML escaping so post text can't accidentally break markup — safe
+// for both element text content and double-quoted attribute values (alt=""
+// aria-label="" meta content="" etc.) since it covers the quote character too.
 function escapeHtml(str) {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 // For content embedded inside a single-quoted HTML attribute (the
@@ -392,7 +397,7 @@ function loadTemplate(name, partials) {
 // STEP 5: Inject rendered content + metadata into the stitched template.
 // Template should contain placeholders like {{TITLE}}, {{BODY}}, etc.
 // -------------------------------------------------
-const DEFAULT_LOCATION = "Grand Rapids, MI, USA";
+const DEFAULT_LOCATION = "Grand Rapids, MI";
 
 function renderPost(post, template, allPosts, issueNumbers) {
   const bodyHtml = renderBody(post.body);
@@ -408,13 +413,29 @@ function renderPost(post, template, allPosts, issueNumbers) {
   // Issue No. is the same computed number shown everywhere else on the
   // site (homepage grid, Related Reading) — not the post JSON's own
   // "issue" field, so a post never shows two different numbers for itself.
-  const issueNumber = String(issueNumbers.get(post.slug)).padStart(2, "0");
+  // Draft posts (see build()) aren't in issueNumbers at all since they're
+  // outside the real numbering sequence entirely.
+  const issueNumber = issueNumbers.has(post.slug)
+    ? String(issueNumbers.get(post.slug)).padStart(2, "0")
+    : "DRAFT";
+  // Canonical/OG url — draft posts still get one (they're still built and
+  // reachable directly), it just never appears in the sitemap or index.
+  const postUrl = `${SITE_URL}/blog/${post.slug}.html`;
+  // Meta/OG/Twitter description only — an optional shorter, SEO-friendly
+  // summary so a long on-page excerpt (like drag-race-the-simulation's)
+  // doesn't get cut off mid-sentence in Google/social previews. The
+  // on-page excerpt (teaser cards, related reading, posts-index.json)
+  // always uses post.excerpt untouched; this only swaps what goes into
+  // {{EXCERPT}} in the <head> tags below.
+  const metaDescription = post.metaDescription || post.excerpt;
 
   return template
     .replace(/{{TITLE}}/g, escapeHtml(post.title))
     .replace(/{{AUTHOR}}/g, escapeHtml(post.author))
     .replace(/{{DATE}}/g, post.date)
     .replace(/{{TAGS}}/g, tagsHtml)
+    .replace(/{{EXCERPT}}/g, escapeHtml(metaDescription))
+    .replace(/{{URL}}/g, postUrl)
     .replace(/{{LOCATION}}/g, locationText)
     .replace(/{{ISSUE}}/g, issueNumber)
     .replace(/{{HERO_IMAGE_SRC}}/g, post.heroImage?.src || "")
@@ -422,6 +443,26 @@ function renderPost(post, template, allPosts, issueNumbers) {
     .replace(/{{BODY}}/g, bodyHtml)
     .replace(/{{SERIES_POSTS}}/g, seriesPostsHtml)
     .replace(/{{RELATED_POSTS}}/g, relatedPostsHtml);
+}
+
+// -------------------------------------------------
+// Sitemap — one <url> per public (non-draft) post plus the homepage, so it
+// stays in sync with posts-index.json automatically as posts are added.
+// -------------------------------------------------
+function buildSitemap(publicPosts) {
+  const urls = [
+    { loc: `${SITE_URL}/`, lastmod: new Date().toISOString().slice(0, 10) },
+    ...publicPosts.map((post) => ({ loc: `${SITE_URL}/blog/${post.slug}.html`, lastmod: post.date })),
+  ];
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n  </url>`).join("\n")}
+</urlset>
+`;
+
+  fs.writeFileSync(SITEMAP_OUTPUT_PATH, xml, "utf-8");
+  console.log(`Built sitemap.xml with ${urls.length} URLs`);
 }
 
 // -------------------------------------------------
@@ -447,23 +488,31 @@ function build() {
   allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
   postsForLinkResolution = allPosts;
 
-  // Issue No. — oldest post is Issue No. 01 — computed once here so
-  // related-post cards and each post's own title section match the
-  // homepage's client-side numbering (blog.js), same date order.
+  // Draft posts (post.draft === true — dev/demo/reference content, e.g.
+  // block-type-showcase.json) still get their own HTML file built below so
+  // they're viewable by direct URL, but never appear in posts-index.json,
+  // never get a real Issue No., and are never suggested as related/series
+  // reading — "public" here means "part of the real, indexable feed."
+  const publicPosts = allPosts.filter((p) => !p.draft);
+
+  // Issue No. — oldest PUBLIC post is Issue No. 01 — computed only from
+  // publicPosts so a draft's placeholder date can't shift every real post's
+  // number, and matches the homepage's client-side numbering (blog.js),
+  // which reads posts-index.json (also public-only, see below).
   const issueNumbers = new Map(
-    allPosts.map((p, i) => [p.slug, allPosts.length - i])
+    publicPosts.map((p, i) => [p.slug, publicPosts.length - i])
   );
 
   allPosts.forEach((post) => {
     const templateName = post.template || DEFAULT_TEMPLATE;
     const template = loadTemplate(templateName, partials);
-    const html = renderPost(post, template, allPosts, issueNumbers);
+    const html = renderPost(post, template, publicPosts, issueNumbers);
     const outputPath = path.join(OUTPUT_DIR, `${post.slug}.html`);
     fs.writeFileSync(outputPath, html, "utf-8");
-    console.log(`Built: ${outputPath} (template: ${templateName})`);
+    console.log(`Built: ${outputPath} (template: ${templateName}${post.draft ? ", draft — excluded from index" : ""})`);
   });
 
-  const indexEntries = allPosts.map((post) => ({
+  const indexEntries = publicPosts.map((post) => ({
     slug: post.slug,
     title: post.title,
     date: post.date,
@@ -474,6 +523,8 @@ function build() {
   }));
   fs.writeFileSync(INDEX_OUTPUT_PATH, JSON.stringify(indexEntries, null, 2), "utf-8");
   console.log(`Built posts-index.json with ${indexEntries.length} posts`);
+
+  buildSitemap(publicPosts);
 }
 
 build();
