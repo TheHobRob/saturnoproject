@@ -196,6 +196,16 @@
   color: var(--paper);
 }
 
+.zine-tag-btn--soon:hover .zine-tag-circle {
+  background: none;
+  color: var(--ink);
+}
+
+.zine-tag-btn--soon .zine-tag-label::after {
+  content: " · coming soon";
+  opacity: 0.8;
+}
+
 .zine-tag-label {
   font-size: 11px;
   letter-spacing: 0.03em;
@@ -203,6 +213,25 @@
   color: var(--ink);
   text-align: center;
   line-height: 1.3;
+}
+
+.zine-tag-btn--soon .zine-tag-circle {
+  border-style: dashed;
+  border-color: var(--steel);
+  color: var(--steel);
+  background: transparent;
+  opacity: 0.75;
+}
+
+.zine-tag-btn--soon .zine-tag-label {
+  color: var(--steel);
+  font-style: italic;
+}
+
+.zine-tag-btn--soon.is-active .zine-tag-circle {
+  background: var(--paper-raised);
+  border-color: var(--signal);
+  color: var(--signal);
 }
 
 .zine-empty-state {

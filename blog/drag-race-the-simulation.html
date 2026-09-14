@@ -62,26 +62,26 @@
   </div>
 
 
-  <div class="zine-hero-image" style="background-image:url(''); background-size:cover; background-position:center;" role="img" aria-label="Hero photo for Drag Race: The Simulator — pending"></div>
+  <div class="zine-hero-image" style="background-image:url('../images/Drag-Race-Track-Record-Snippet.png'); background-size:auto 100%; background-repeat:no-repeat; background-position:center;" role="img" aria-label="Hero photo for Drag Race: The Simulator — pending"></div>
 
   <div class="wrap" style="max-width:640px;">
     <p class="disclosure-banner">This post may contain affiliate links. If you make a purchase through one, I may earn a commission at no extra cost to you. See the <a href="../index.html#affiliate-disclosure">full affiliate disclosure</a>.</p>
   </div>
 
   <div class="zine-post-body">
-<p class="post-paragraph">Charisma. Uniqueness. Talent. Nerve. Long ago in the year 2013, I had none of these qualities. I came across a Q&amp;A video on the web. The question asked: “Are you watching the current season of Drag Race? If so, who are you rooting for to snatch the crown?” A crown? For drag racing? No, this was something much much gayer. </p>
+<p class="post-paragraph">Charisma. Uniqueness. Nerve. Talent. Long ago in the year 2013, I had none of these qualities. I came across a Q&amp;A video on the web. The question asked: “Are you watching the current season of Drag Race? If so, who are you rooting for to snatch the crown?” A crown? For drag racing? No, this was something much much gayer.</p>
 <h2 class="post-heading">Let's Get Sickening</h2>
-<p class="post-paragraph">As you know, my first time experiencing the show was in 2013. I was on a journey of self discovering my sexuality and I coped by watching videos online of people like me living their gayest lives online. I discovered many things about what other gay people liked like what they watched on television. I found a competition show about people just like me. The personalities were infectious, the art was extravagant, the outfits radiating eleganza. The challenges? A challenge for sure. I was hooked immediately. Season 5 was wrapping up and the big question was are you #TeamJinkx? Or are you wrong? But as I was watching the show, the topic of “Track Records” would come up amongst the competitors during their run in the competition and the gears began to turn in my head. Racers start your engines for one of the most sickening sexy spreads of data of all time. And it all started with one file:</p>
+<p class="post-paragraph">As you know, my first time experiencing the show was in 2013. I was on a journey of discovering my sexuality and I coped by watching videos online of people like me living their gayest lives. I discovered a lot about what other gay people liked, including what they watched on television. I found a competition show about people just like me. The personalities were infectious, the art was extravagant, the outfits radiated eleganza. The challenges? A challenge for sure. I was hooked immediately. Season 5 was wrapping up and the big question was: are you #TeamJinkx? Or are you wrong? But as I was watching the show, the topic of “Track Records” would come up amongst the competitors as the season went on, and the gears began to turn in my head. Racers start your engines for one of the most sickening sexy spreads of data of all time. And it all started with one file:</p>
 <h2 class="post-heading">The Spreadsheet</h2>
-<p class="post-paragraph">I started documenting every track record, for each queen, for every season, for every version of Drag Race. As the show began branching into different countries, the database began to grow exponentially. All Stars started releasing a season annually, then Drag Race branched to Thailand and the UK. After that the name went global. Today, we see seasons from several countries around the world. All stars for each country, royale style seasons that feature contestants from all franchises. And I kept documenting those track records. Let's take a looksy at our first schemas, shall we?:</p>
+<p class="post-paragraph">I started documenting every track record, for each queen, for every season, for every version of Drag Race. As the show began branching into different countries, the database began to grow exponentially. All Stars started releasing a season annually, then Drag Race branched to Thailand and the UK. After that the name went global. Today, we see seasons from several countries around the world, All Stars seasons for each country, and royale-style seasons that feature contestants from all franchises. And I kept documenting those track records. Let's take a looksy at our first schemas, shall we?</p>
 
     <figure class="post-code">
       <pre class="post-code-block"><code>Queens: [QID, QUEEN_NAME]
 Seasons: [SID, SEASON, VERSION]
 Track_Records: [TID, SID, POSITION, QID, EP_01, EP_02…]</code></pre>
-      <figcaption class="block-caption">A database schema is the blueprint of the structure of how data is organized and stored. For my spreadsheet I started with this as my core elements for the track records.</figcaption>
+      <figcaption class="block-caption">A database schema is the blueprint for how data is organized and stored. For my spreadsheet, these were the core elements I started with for the track records.</figcaption>
     </figure>
-<p class="post-paragraph">Let's take a look into the data of Season 5 for the United States Version of Drag Race:</p>
+<p class="post-paragraph">Let's take a look into the data of Season 5 for the United States version of Drag Race:</p>
 
     <figure class="post-spreadsheet">
       <div class="post-spreadsheet-scroll">
@@ -228,7 +228,7 @@ Track_Records: [TID, SID, POSITION, QID, EP_01, EP_02…]</code></pre>
       </div>
       <figcaption class="block-caption">Track Records for Season 5, Regular Version. Each row represents a queen's placement in a season for every episode. The 'POS' column indicates their final position in the competition. Spoiler Alert: Alaska and Roxxxy tied for Top 3.</figcaption>
     </figure>
-<p class="post-paragraph">Of the many things I forgot about my time as a computer scientist, database management systems was definitely not one of them. This was one of the few classes I was fully engaged in when I took it over Zoom University during the Winter of 2021. The principles of keeping a good database tickled my brains. Another thing I was fully engaged in was Drag Race. 2021 saw a total of 8 seasons released that year. Naturally, a major overhaul to my spreadsheet came after this resulting in the design today. I began applying the principles I learned in database management to plan my database even further. With the track records set up now, I then started adding data on episodes, challenges, the lip syncs, all leading to the creation of a simulator for a show I loved watching since I was a teenager.</p>
+<p class="post-paragraph">Of the many things I forgot about my time as a computer scientist, database management systems was definitely not one of them. This was one of the few classes I was fully engaged in when I took it at Zoom University during the Winter of 2021. The principles of keeping a good database tickled my brain. Another thing I was fully engaged in was Drag Race. 2021 saw a total of 8 seasons released that year. Naturally, a major overhaul to my spreadsheet followed, resulting in the design you see today. I began applying the principles I learned in database management to plan my database even further. With the track records set up now, I then started adding data on episodes, challenges, the lip syncs, all leading to the creation of a simulator for a show I loved watching since I was a teenager.</p>
   </div>
 
   <div class="wrap post-tags-footer">

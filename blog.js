@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const emptyState = document.getElementById("empty-state");
   const searchInput = document.getElementById("search-input");
   const tagFilter = document.getElementById("tag-filter");
+  // Update this when introducting new categories in ALPHABETICAL order
+  const ALL_CATEGORIES = [
+    "Entertainment", "Fashion", "Finance", "Food", "Health", "Lifestyle", "Spirituality", "Web Dev"
+  ]
 
   // Legacy masthead fields used only by the standalone blog/index.html page
   const issueCount = document.getElementById("issue-count");
@@ -93,11 +97,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Build circular tag filter buttons from every post's tags
   if (tagFilter) {
-    const allTags = Array.from(new Set(posts.flatMap((p) => p.tags || []))).sort();
-    allTags.forEach((tag) => {
+    const usedTags = new Set(posts.flatMap((p) => p.tags || []));
+    const displayTags = ALL_CATEGORIES.filter((t) => usedTags.has(t) || true)
+    .sort((a, b) => Number(usedTags.has(b)) - Number(usedTags.has(a)));
+
+    displayTags.forEach((tag) => {
+      const isEmpty = !usedTags.has(tag);
       const btn = document.createElement("button");
-      btn.className = "zine-tag-btn";
+      btn.className = "zine-tag-btn" + (isEmpty ? " zine-tag-btn--soon" : "");
       btn.dataset.tag = tag;
+      if (isEmpty) btn.title = `${tag} - coming soon`;
       btn.innerHTML = `<span class="zine-tag-circle">${tag.charAt(0).toUpperCase()}</span><span class="zine-tag-label">${tag.toLowerCase()}</span>`;
       tagFilter.appendChild(btn);
     });
@@ -107,8 +116,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!btn) return;
       activeTag = btn.dataset.tag;
       tagFilter
-        .querySelectorAll(".zine-tag-btn")
-        .forEach((b) => b.classList.toggle("is-active", b === btn));
+      .querySelectorAll(".zine-tag-btn")
+      .forEach((b) => b.classList.toggle("is-active", b === btn));
       render();
     });
   }

@@ -1,5 +1,6 @@
 # Claude Code local tooling (settings, worktrees, launch config) — dev-only, never deploy
 .claude/
+Claude outputs/
 
 # Stray generated/output artifacts that ended up inside the repo — not site content
 mnt/
@@ -11,3 +12,6 @@ BRANDING.md
 # OS junk
 .DS_Store
 Thumbs.db
+
+# Photo Editor
+duotone.py
