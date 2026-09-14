@@ -56,6 +56,19 @@ html.hash-loading body {
   visibility: hidden;
 }
 
+@keyframes saturn-drift {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+.brand-kicker {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0 0 10px;
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -265,7 +278,7 @@ section {
    ============================================ */
 .company-about-inner {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 380px 1fr;
   gap: 40px;
   align-items: center;
 }
@@ -273,15 +286,15 @@ section {
 .company-logo-placeholder {
   width: 100%;
   aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
 }
 
 .company-logo-placeholder img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  animation: saturn-drift 10s ease-in-out infinite;
+  transform-origin: 50% 50%;
 }
 
 @media (max-width: 640px) {
@@ -293,6 +306,14 @@ section {
     width: 160px;
     margin: 0 auto;
   }
+}
+
+.company-logo-caption {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--steel);
+  margin-top: 8px;
+  text-align: center;
 }
 
 /* ============================================
@@ -587,5 +608,8 @@ section {
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto !important;
+  }
+  .company-logo-placeholder img {
+    animation: none;
   }
 }
