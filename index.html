@@ -34,6 +34,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="blog-zine.css">
+<!-- .fade-section starts at opacity:0 until scroll-fade.js reveals it —
+     without JS that reveal never happens, so show everything plainly instead. -->
+<noscript><style>.fade-section { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
 
@@ -71,20 +74,20 @@
 
   <section id="about" class="company-about">
     <div class="wrap company-about-inner">
-      <div class="company-logo-placeholder">
+      <figure class="company-logo-placeholder fade-section">
         <img src="images/logo.svg" alt="The Saturno Project logo">
         <figcaption class="company-logo-caption">Saturn — Traditional ruler of Capricorns and Aquarians</figcaption>
-      </div>
+      </figure>
       <div class="company-about-text">
-        <h2 class="section-title"><i>Explore</i> a distant world</h2>
-        <p class="intro-lead">...where structure meets imagination.</p>
+        <h2 class="section-title fade-section"><i>Explore</i> a distant world</h2>
+        <p class="intro-lead fade-section">...where structure meets imagination.</p>
       </div>
     </div>
   </section>
     
   <section id="blog" aria-label="Blog">
     <div class="wrap">
-      <h2 class="section-title">The Saturno Blog</h2>
+      <h2 class="section-title fade-section">The Saturno Blog</h2>
 
       <div id="featured-post"></div>
 
@@ -110,34 +113,34 @@
   <section id="creator" class="about-preview">
     <div class="wrap about-preview-inner">
       <div class="about-preview-photo">
-        <div class="img-placeholder" role="img" aria-label="Photo placeholder">Photo</div>
+        <div class="img-placeholder fade-section" role="img" aria-label="Photo placeholder">Photo</div>
       </div>
       <div class="about-preview-text">
-        <h2 class="about-intro-heading">Meet the Creator</h2>
-        <p class="intro-lead">I'm Roberto! Born and raised in West Michigan, I am a bilingual web developer with a passion for creating an immersive
+        <h2 class="about-intro-heading fade-section">Meet the Creator</h2>
+        <p class="intro-lead fade-section">I'm Roberto! Born and raised in West Michigan, I am a bilingual web developer with a passion for creating an immersive
         digital experience. Here is where I am able to display my whimsical nonsense in the most structured and professional
         way.</p>
-        <h2 class="about-intro-heading">Why Saturno?</h2>
-        <p class="intro-lead">This project was inspired by: Saturn. The classical ruling planet of the signs Capricorn and Aquarius. I quite literally
+        <h2 class="about-intro-heading fade-section">Why Saturno?</h2>
+        <p class="intro-lead fade-section">This project was inspired by: Saturn. The classical ruling planet of the signs Capricorn and Aquarius. I quite literally
         looked to the stars to find a name. My birth chart features a Capricorn Sun and an Aquarius Stellium.</p>
-        <p class="intro-lead">I felt that Capricorn represents the part that wants things built properly and patiently, much like this website.
+        <p class="intro-lead fade-section">I felt that Capricorn represents the part that wants things built properly and patiently, much like this website.
         Aquarius represents the part of me that is more unconventional and contrarian leading me to develop many projects that
         no one has asked for.</p>
       </div>
     </div>
 
     <div class="wrap">
-      <h2 class="section-title">Side projects</h2>
+      <h2 class="section-title fade-section">Side projects</h2>
       <div class="skills-grid">
-        <div class="skills-group">
+        <div class="skills-group fade-section">
           <h3>Zodiac RPG</h3>
           <p>An astrology-inspired creature-collecting game. Early UI design phase.</p>
         </div>
-        <div class="skills-group">
+        <div class="skills-group fade-section">
           <h3>Reality Show Simulator</h3>
           <p>A data-driven simulation modeling contestant scoring and elimination logic. In development.</p>
         </div>
-        <div class="skills-group">
+        <div class="skills-group fade-section">
           <h3>This site</h3>
           <p>Hand-built with HTML, CSS, and vanilla JavaScript &mdash; an ongoing project in itself.</p>
         </div>
@@ -147,14 +150,14 @@
 
   <section id="contact">
     <div class="wrap">
-      <h2 class="section-title">Contact</h2>
-      <p>Reach out about roles, collaborations, or the blog.</p>
+      <h2 class="section-title fade-section">Contact</h2>
+      <p class="fade-section">Reach out about roles, collaborations, or the blog.</p>
       <div class="contact-buttons">
         <a href="mailto:roberto@saturnoproject.com" class="contact-btn contact-btn-primary">Email Me &rarr;</a>
       </div>
 
       <div class="mail-sheets">
-        <form class="mail-sheet" id="contact-form" action="https://formspree.io/f/myeyvqej" method="POST" data-success-message="Thanks — your letter is on its way. I'll get back to you soon!" novalidate>
+        <form class="mail-sheet fade-section" id="contact-form" action="https://formspree.io/f/myeyvqej" method="POST" data-success-message="Thanks — your letter is on its way. I'll get back to you soon!" novalidate>
           <div class="mail-sheet-stamp" aria-hidden="true">
             <span class="stamp-mark">&#10022;</span>
             <span class="postmark">Grand Rapids, MI</span>
@@ -177,7 +180,7 @@
           <p class="mail-sheet-note" role="status" hidden></p>
         </form>
 
-        <form class="mail-sheet mail-sheet--compact" id="newsletter-form" action="https://formspree.io/f/meaqdbal" method="POST" data-success-message="Thanks — you're on the list!" novalidate>
+        <form class="mail-sheet mail-sheet--compact fade-section" id="newsletter-form" action="https://formspree.io/f/meaqdbal" method="POST" data-success-message="Thanks — you're on the list!" novalidate>
           <div class="mail-sheet-stamp" aria-hidden="true">
             <span class="stamp-mark">&#10022;</span>
             <span class="postmark">Est. 2026</span>
@@ -197,8 +200,8 @@
 
   <section id="legal">
     <div class="wrap">
-      <h2 class="section-title">Legal &amp; Disclosures</h2>
-      <p>This page exists to be clear, not to bury anything. If something here is unclear, <a href="#contact">reach out directly</a>.</p>
+      <h2 class="section-title fade-section">Legal &amp; Disclosures</h2>
+      <p class="fade-section">This page exists to be clear, not to bury anything. If something here is unclear, <a href="#contact">reach out directly</a>.</p>
 
       <nav class="legal-toc" aria-label="On this page">
         <h3>On this page</h3>
@@ -209,17 +212,17 @@
         </ul>
       </nav>
 
-      <div class="legal-section" id="affiliate-disclosure">
+      <div class="legal-section fade-section" id="affiliate-disclosure">
         <h3>Affiliate disclosure</h3>
         <p>This site does not currently use affiliate links. If that changes, this section will be updated to state plainly which posts contain them, that clicking and purchasing through them may earn a commission at no extra cost to the reader, and that products are only ever recommended based on genuine research or use &mdash; not because they pay a commission.</p>
       </div>
 
-      <div class="legal-section" id="privacy-policy">
+      <div class="legal-section fade-section" id="privacy-policy">
         <h3>Privacy policy</h3>
         <p>This site doesn't use analytics or tracking cookies, and nothing about your visit is logged unless you submit one of the forms above. Whatever you type into the "Send us a Letter" or "Join the Mailing List" forms &mdash; name, email, and message &mdash; is sent to <a href="https://formspree.io/legal/privacy-policy/">Formspree</a>, a third-party form-processing service, which forwards it to Roberto's inbox. Formspree does not receive any other data from this site. To have a submission deleted, email <a href="mailto:roberto@saturnoproject.com">roberto@saturnoproject.com</a>.</p>
       </div>
 
-      <div class="legal-section" id="terms">
+      <div class="legal-section fade-section" id="terms">
         <h3>Terms of use</h3>
         <p>Content on this site is provided for informational and entertainment purposes only and isn't professional financial, legal, or career advice &mdash; do your own research or consult a qualified professional before acting on anything you read here. Unless otherwise noted, the site's content, design, and code belong to Roberto Jimenez-Martinez; please don't reproduce or redistribute without permission.</p>
       </div>
@@ -236,6 +239,7 @@
   </nav>
 </footer>
 
+<script src="scroll-fade.js"></script>
 <script src="blog.js"></script>
 <script>
   // Both mail-sheet forms submit to Formspree via fetch (rather than a plain

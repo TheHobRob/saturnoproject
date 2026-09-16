@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let posts = [];
   let activeTag = "all";
   let searchTerm = "";
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   try {
     const res = await fetch(postsIndexPath);
@@ -58,21 +59,68 @@ document.addEventListener("DOMContentLoaded", async () => {
   const featured = posts[0];
   const rest = posts.slice(1);
 
-  // Hero masthead meta line — today's date, post count, section count, price joke
+  // Hero masthead meta line — the whole row (today's date through "Price:
+  // (1) Coffee") types in as one line, then the separators get their
+  // subtle .meta-sep color swapped in as a final polish pass (typing has
+  // to happen as plain text — there's no clean way to type character-by-
+  // character into markup with inline spans). Waiting for posts data
+  // before building any of this (rather than starting immediately on page
+  // load) means the FULL final text is known up front, which matters for
+  // .meta-ghost below: an invisible copy of that full text that reserves
+  // the line's width from frame one, so centering it (.masthead-meta's
+  // flex justify-content) never has to recalculate as it types in — the
+  // animated text (.meta-live) is absolutely positioned on top of the
+  // ghost rather than sized by its own (changing) content, so its start
+  // position never shifts either.
   if (mastheadMeta) {
-    const today = new Date().toLocaleDateString("en-US", {
+    const todayStr = new Date().toLocaleDateString("en-US", {
       weekday: "long",
       day: "numeric",
       month: "long",
       year: "numeric",
     });
     const sectionCount = new Set(posts.flatMap((p) => p.tags || [])).size;
-    mastheadMeta.innerHTML = [
-      today,
-      `Vol. ${posts.length}`,
-      `${sectionCount} Sections`,
-      "Price: (1) Coffee",
-    ].join(' <span class="meta-sep">&middot;</span> ');
+    const restParts = [`Vol. ${posts.length}`, `${sectionCount} Sections`, "Price: (1) Coffee"];
+    const fullText = [todayStr, ...restParts].join(" · ");
+    const fullHtml = [todayStr, ...restParts].join(' <span class="meta-sep">&middot;</span> ');
+
+    // The typewriter needs .meta-stack's white-space:nowrap to type in
+    // place — there's no room for that on a phone screen, so below 640px
+    // (matching .masthead-meta's mobile breakpoint in blog-zine.css) skip
+    // the animation and just show the finished line, wrapped and centered
+    // like it rendered before the typewriter existed.
+    const isNarrowViewport = window.matchMedia("(max-width: 640px)").matches;
+
+    if (prefersReducedMotion || isNarrowViewport) {
+      mastheadMeta.innerHTML = fullHtml;
+    } else {
+      mastheadMeta.innerHTML = `
+        <span class="meta-stack">
+          <span class="meta-ghost" aria-hidden="true">${fullText}</span>
+          <span class="meta-live"><span id="type-line"></span><span class="cursor">|</span></span>
+        </span>`;
+
+      const typeEl = document.getElementById("type-line");
+      const cursorEl = mastheadMeta.querySelector(".cursor");
+      let i = 0;
+      (function typeChar() {
+        if (i < fullText.length) {
+          typeEl.textContent += fullText.charAt(i);
+          i++;
+          setTimeout(typeChar, 25); // adjust typing speed here
+        } else {
+          // swap in the styled separators now that typing (plain text,
+          // so it could go character-by-character) has finished
+          typeEl.innerHTML = fullHtml;
+          // pause on the completed line, then fade cursor out
+          setTimeout(() => {
+            cursorEl.style.transition = "opacity 0.4s ease";
+            cursorEl.style.animation = "none";
+            cursorEl.style.opacity = "0";
+          }, 600);
+        }
+      })();
+    }
   }
 
   // Legacy blog/index.html masthead — issue number, date, featured band, category line
@@ -166,7 +214,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       .join("");
 
     return `
-      <article class="zine-feature">
+      <article class="zine-feature fade-section">
         <div class="zine-feature-media">${imgTag}</div>
         <div class="zine-feature-body">
           <p class="zine-byline">${issueLabel(post)}</p>
@@ -192,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       .join("");
 
     return `
-      <article class="zine-card">
+      <article class="zine-card fade-section">
         ${imgTag}
         <p class="zine-byline">${issueLabel(post)}</p>
         <h3><a href="${postLinkPrefix}${post.slug}.html">${post.title}</a></h3>
@@ -216,6 +264,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // The homepage grid is its own scrollable panel (see .zine-grid-scroll) —
     // switching tags/search shouldn't leave it mid-scroll from the last filter.
     grid.scrollTop = 0;
+    // Cards are freshly inserted markup — scroll-fade.js's own DOMContentLoaded
+    // scan ran before any of this existed, so it needs a nudge to notice them.
+    if (window.observeFadeIns) window.observeFadeIns(grid);
   }
 
   // Landing here with a URL hash (e.g. a post page's "../index.html#contact"
@@ -246,6 +297,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (featured && featuredContainer) {
     featuredContainer.innerHTML = featureHtml(featured);
+    if (window.observeFadeIns) window.observeFadeIns(featuredContainer);
   }
 
   if (!featured) {
