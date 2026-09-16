@@ -96,27 +96,31 @@ function imageSizeStyle(width) {
 }
 
 const blockRenderers = {
-  heading: (block) => `<h2 class="post-heading">${escapeHtml(block.text)}</h2>`,
+  // "fade-section" (see scroll-fade.js / styles.css) applies the sitewide
+  // scroll-in animation to every block below, one unit per block — never
+  // per-line/word, which looks choppy at finer granularity.
+  heading: (block) => `<h2 class="post-heading fade-section">${escapeHtml(block.text)}</h2>`,
 
-  paragraph: (block) => `<p class="post-paragraph">${renderRuns(block.runs)}</p>`,
+  paragraph: (block) => `<p class="post-paragraph fade-section">${renderRuns(block.runs)}</p>`,
 
   pullquote: (block) => `
-    <blockquote class="pullquote">
+    <blockquote class="pullquote fade-section">
       <p>${escapeHtml(block.text)}</p>
       ${block.attribution ? `<cite>${escapeHtml(block.attribution)}</cite>` : ""}
     </blockquote>`,
 
   image: (block) => `
-    <figure class="post-image"${imageSizeStyle(block.width)}>
+    <figure class="post-image fade-section"${imageSizeStyle(block.width)}>
       <img src="${block.src}" alt="${escapeHtml(block.alt)}" />
       ${block.caption ? `<figcaption class="block-caption">${escapeHtml(block.caption)}</figcaption>` : ""}
     </figure>`,
 
   // "divider": true draws a thin rule between every image in the group
   // (any number of images — the grid just wraps additional ones onto new
-  // rows) instead of the default plain gap.
+  // rows) instead of the default plain gap. Fades in as one unit rather
+  // than each image separately.
   imageGroup: (block) => `
-    <div class="image-group${block.divider ? " image-group--divided" : ""}">
+    <div class="image-group fade-section${block.divider ? " image-group--divided" : ""}">
       ${block.images
         .map(
           (img) => `
@@ -133,11 +137,11 @@ const blockRenderers = {
     const items = block.items
       .map((item) => `<li>${renderRuns(item.runs)}</li>`)
       .join("");
-    return `<${tag} class="post-list">${items}</${tag}>`;
+    return `<${tag} class="post-list fade-section">${items}</${tag}>`;
   },
 
   columns: (block) => `
-    <div class="post-columns">
+    <div class="post-columns fade-section">
       ${block.columns
         .map((col) => `<div class="column">${renderRuns(col.runs)}</div>`)
         .join("")}
@@ -156,7 +160,7 @@ const blockRenderers = {
         ${block.image.caption ? `<figcaption class="block-caption">${escapeHtml(block.image.caption)}</figcaption>` : ""}
       </figure>`;
     return `
-    <div class="text-image-block">
+    <div class="text-image-block fade-section">
       ${position === "left" ? imageHtml + textHtml : textHtml + imageHtml}
     </div>`;
   },
@@ -185,7 +189,7 @@ const blockRenderers = {
       .join("");
 
     return `
-    <figure class="recipe-image-block">
+    <figure class="recipe-image-block fade-section">
       <div class="recipe-image-frame">
         <img src="${block.image.src}" alt="${escapeHtml(block.image.alt)}" />
         ${hotspotsHtml}
@@ -198,7 +202,7 @@ const blockRenderers = {
   // explaining what it shows — for the schema/data-structure asides in
   // posts like drag-race-the-simulation, not for runnable code samples.
   code: (block) => `
-    <figure class="post-code">
+    <figure class="post-code fade-section">
       <pre class="post-code-block"><code>${escapeHtml(block.code)}</code></pre>
       ${block.caption ? `<figcaption class="block-caption">${escapeHtml(block.caption)}</figcaption>` : ""}
     </figure>`,
@@ -229,7 +233,7 @@ const blockRenderers = {
       .join("");
 
     return `
-    <figure class="post-spreadsheet">
+    <figure class="post-spreadsheet fade-section">
       <div class="post-spreadsheet-scroll">
         <table class="post-spreadsheet-table">
           <thead>${lettersRow}${headersRow}</thead>
@@ -240,7 +244,7 @@ const blockRenderers = {
     </figure>`;
   },
 
-  divider: () => `<hr class="post-divider" />`,
+  divider: () => `<hr class="post-divider fade-section" />`,
 
   embed: (block) => `<!-- embed placeholder: ${block.provider} -->`,
 };
@@ -307,7 +311,7 @@ function renderRelatedCard(relatedPost, issueNumbers) {
 function renderRelatedPosts(relatedPosts, issueNumbers) {
   if (relatedPosts.length === 0) return "";
   return `
-  <section class="related-posts">
+  <section class="related-posts fade-section">
     <div class="wrap" style="max-width:900px;">
       <h2 class="section-title">Related Reading</h2>
       <div class="related-posts-scroll">
@@ -357,7 +361,7 @@ function renderSeriesPosts(post, allPosts) {
   const seriesPosts = getSeriesPosts(post, allPosts);
   if (seriesPosts.length === 0) return "";
   return `
-  <section class="series-posts">
+  <section class="series-posts fade-section">
     <div class="wrap" style="max-width:900px;">
       <h2 class="section-title">More from ${escapeHtml(post.series.title)}</h2>
       <div class="related-posts-scroll">
