@@ -16,6 +16,21 @@
 // -------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // "Back to all posts" defaults to the homepage's blog section, but if the
+  // reader actually came from the Blog hub (/blog/index.html), send them
+  // back there instead so they land where they were browsing from.
+  const backLink = document.querySelector(".post-back-link");
+  if (backLink && document.referrer) {
+    try {
+      const referrerPath = new URL(document.referrer).pathname;
+      if (/\/blog\/(index\.html)?$/.test(referrerPath)) {
+        backLink.href = "index.html";
+      }
+    } catch (err) {
+      // malformed/opaque referrer — keep the default homepage link
+    }
+  }
+
   const links = document.querySelectorAll(".post-link");
   if (links.length === 0) return;
 

@@ -1,0 +1,17 @@
+[
+  {
+    "slug": "drag-race-simulator",
+    "title": "Drag Race Simulator",
+    "status": "In development",
+    "tagline": "A data-driven simulation modeling contestant scoring and elimination logic.",
+    "tags": [
+      "Web Dev",
+      "Entertainment"
+    ],
+    "heroImage": {
+      "src": "../images/Drag-Race-Track-Record-Snippet.png",
+      "alt": "A track record table from the Drag Race Simulator, showing contestant scores by episode"
+    },
+    "seriesId": "DragRaceSimulator"
+  }
+]

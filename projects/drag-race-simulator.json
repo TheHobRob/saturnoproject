@@ -1,0 +1,20 @@
+{
+  "slug": "drag-race-simulator",
+  "title": "Drag Race Simulator",
+  "status": "In development",
+  "tagline": "A data-driven simulation modeling contestant scoring and elimination logic.",
+  "tags": ["Web Dev", "Entertainment"],
+  "heroImage": {
+    "src": "../images/Drag-Race-Track-Record-Snippet.png",
+    "alt": "A track record table from the Drag Race Simulator, showing contestant scores by episode"
+  },
+  "links": {
+    "demo": null,
+    "repo": null
+  },
+  "seriesId": "DragRaceSimulator",
+  "description": [
+    "Built to explore how structured data and a handful of scoring rules can recreate the drama of an elimination-based reality competition — episode-by-episode placements, running point totals, and a bottom-of-the-pack cutoff that decides who's safe.",
+    "The devlog series covers the build itself: how the scoring schema came together, what the track-record data looks like under the hood, and the decisions behind turning a season's worth of placements into something simulatable."
+  ]
+}
