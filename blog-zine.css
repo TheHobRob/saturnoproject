@@ -369,9 +369,26 @@
 }
 
 .zine-card {
+  position: relative;
   padding: 28px 24px;
   border-right: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+}
+
+/* Stretched-link pattern: the title link's ::after covers the whole card,
+   so the entire card is clickable, not just the title text/image. The
+   "Read the post" link stays independently clickable on top of it since it
+   comes later in the DOM and gets its own stacking position. */
+.zine-card h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.zine-card .zine-feature-link {
+  position: relative;
+  z-index: 1;
 }
 
 .zine-card:nth-child(3n) {
@@ -1087,6 +1104,12 @@
     padding: 0 24px 20px;
     scrollbar-gutter: stable;
     -webkit-overflow-scrolling: touch;
+    /* Flex items default to min-width:auto, which refuses to shrink below
+       the row's unwrapped content width — that pushed this scrollable strip
+       (and its flex siblings/ancestors) past the viewport instead of
+       scrolling internally. min-width:0 lets it shrink to fit and actually
+       scroll. */
+    min-width: 0;
   }
 
   .zine-tag-btn {

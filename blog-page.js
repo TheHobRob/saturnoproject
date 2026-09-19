@@ -63,13 +63,13 @@ document.addEventListener("DOMContentLoaded", async () => {
               <p class="book-card-eyebrow">${eyebrowText(post)}</p>
               <h3 class="book-card-title">${post.title}</h3>
             </div>
-            <a class="book-card-cta" href="${href}">Read &rarr;</a>
+            <a class="book-card-cta" href="${href}">Read it &rarr;</a>
           </div>
           <div class="book-card-face book-card-back">
             <p class="book-card-eyebrow">${eyebrowText(post)}</p>
             <h3 class="book-card-title">${post.title}</h3>
             <p class="book-card-excerpt">${post.excerpt}</p>
-            <a class="book-card-cta" href="${href}">Read &rarr;</a>
+            <a class="book-card-cta" href="${href}">Read it &rarr;</a>
           </div>
         </div>
       </article>`;

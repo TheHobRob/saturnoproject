@@ -151,14 +151,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       ? `<img src="${post.heroImage.src}" alt="${post.heroImage.alt || ""}">`
       : `<div class="img-placeholder" role="img" aria-label="Post image placeholder">Image</div>`;
 
+    const tags = (post.tags || [])
+      .map((t) => `<li class="tag">${t}</li>`)
+      .join("");
+
     return `
       <article class="zine-card fade-section">
         ${imgTag}
         <p class="zine-byline">${tag}</p>
         <h3><a href="blog/${post.slug}.html">${post.title}</a></h3>
         <p>${post.excerpt}</p>
-        <p class="slide-meta" style="margin-top:10px;">${formatDate(post.date)}</p>
-        <a class="zine-feature-link" href="blog/${post.slug}.html">Read the post &rarr;</a>
+        <ul class="tag-list">${tags}</ul>
+        <div class="zine-feature-meta">
+          <span>${formatDate(post.date)}</span>
+          <a class="zine-feature-link" href="blog/${post.slug}.html">Read the post &rarr;</a>
+        </div>
       </article>`;
   }
 
