@@ -411,13 +411,14 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 30px;
+  padding: 10px 22px;
   border: 1.5px solid var(--ink);
-  border-radius: 6px;
+  border-radius: 3px;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   text-decoration: none;
   text-decoration-color: transparent;
   color: var(--ink);

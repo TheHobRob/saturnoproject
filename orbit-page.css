@@ -63,6 +63,21 @@
   color: var(--paper);
 }
 
+/* --ink/--paper swap meaning in dark mode (so normal text/backgrounds
+   adapt), which flips this hero from a dark inversion into a bright block
+   sitting in an otherwise dark page. Swapping which token backs which
+   property here keeps it dark regardless of site theme. */
+@media (prefers-color-scheme: dark) {
+  .orbit-hero {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .orbit-hero-title {
+    color: var(--ink);
+  }
+}
+
 .orbit-hero-scroll-cue {
   position: absolute;
   left: 50%;

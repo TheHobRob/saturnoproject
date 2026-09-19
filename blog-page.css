@@ -66,6 +66,21 @@
   color: var(--paper);
 }
 
+/* --ink/--paper swap meaning in dark mode (so normal text/backgrounds
+   adapt), which flips this hero from a dark inversion into a bright block
+   sitting in an otherwise dark page. Swapping which token backs which
+   property here keeps it dark regardless of site theme. */
+@media (prefers-color-scheme: dark) {
+  .blog-hero {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .blog-hero-title {
+    color: var(--ink);
+  }
+}
+
 .blog-hero-scroll-cue {
   position: absolute;
   left: 50%;
@@ -213,6 +228,11 @@
   padding: 0;
   justify-content: flex-start;
   flex: 1 1 100%;
+  /* flex-basis:100% alone doesn't reliably cap this item to the wrapped
+     line's width once its (horizontally-scrollable) content is wider than
+     that — max-width pins it to the container so it scrolls internally
+     instead of pushing the page into horizontal overflow. */
+  max-width: 100%;
 }
 
 .book-grid {
