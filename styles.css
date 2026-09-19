@@ -75,8 +75,8 @@ html.hash-loading body {
 }
 
 @keyframes saturn-drift {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
 }
 .brand-kicker {
   font-family: var(--font-display);
@@ -262,6 +262,13 @@ section {
   font-size: 16px;
 }
 
+.side-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
 /* ============================================
    Post meta chips (shared: homepage grid card date line,
    tag pills on the featured post / grid cards)
@@ -433,6 +440,21 @@ section {
 .contact-btn-primary:hover {
   background: var(--ink);
   border-color: var(--ink);
+}
+
+.contact-btn-sm {
+  padding: 8px 16px;
+  font-size: 12px;
+  gap: 6px;
+}
+
+/* Fallback links for a devlog/project page that doesn't exist yet (see
+   templates/orbit-project.html's demo-link fallback, and the homepage's
+   side-project cards) — dimmed and inert rather than a dead link. */
+.contact-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 /* ============================================
@@ -623,6 +645,13 @@ section {
 @media (max-width: 640px) {
   nav {
     gap: 14px;
+  }
+  /* Two columns leaves each side-project card too narrow for its two
+     action buttons (text wraps to one word per line) — stack to one
+     column so "Go to the Blog Series"/"Go to the Project Page" stay
+     readable and tappable. */
+  .skills-grid {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -1,0 +1,423 @@
+/* ============================================
+   /blog — dedicated library page
+   Loaded only by blog/index.html, alongside styles.css/blog-zine.css
+   (shared tokens, header/footer, .zine-tag-btn, .tag-list/.tag). Everything
+   in this file is specific to this page: the full-height watermark hero,
+   the series showcase, and the flip "book card" component.
+   ============================================ */
+
+/* ============================================
+   Hero — full viewport height, dark inversion of the site's normal paper/
+   ink so a visitor immediately knows they've left the homepage, with a
+   large low-opacity Saturn watermark drifting behind the title (reuses
+   styles.css's existing "saturn-drift" rotation keyframes).
+   ============================================ */
+.blog-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+}
+
+.blog-hero-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(1100px, 140vw);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.blog-hero-watermark img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0.14;
+  animation: saturn-drift 16s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+.blog-hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 24px;
+}
+
+.blog-hero-kicker {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0 0 12px;
+}
+
+.blog-hero-title {
+  font-family: var(--font-masthead);
+  font-weight: 900;
+  font-size: clamp(64px, 14vw, 160px);
+  line-height: 1;
+  margin: 0;
+  color: var(--paper);
+}
+
+.blog-hero-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border-right: 2px solid var(--steel);
+  border-bottom: 2px solid var(--steel);
+  transform: translateX(-50%) rotate(45deg);
+  animation: blog-hero-cue-bob 2s ease-in-out infinite;
+}
+
+@keyframes blog-hero-cue-bob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: 10px; }
+}
+
+/* ============================================
+   Series showcase — one row per series with 2+ posts, most-recently-
+   updated series first (see blog-page.js). Title card fixed on the left,
+   its own posts scroll horizontally on the right.
+   ============================================ */
+.series-showcase {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.series-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  align-items: stretch;
+  margin-top: 32px;
+}
+
+.series-row + .series-row {
+  margin-top: 48px;
+}
+
+.series-title-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  text-align: left;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 24px 20px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.series-title-card:hover,
+.series-title-card:focus-visible {
+  border-color: var(--signal);
+  background: var(--tag-bg);
+}
+
+.series-title-card h3 {
+  font-family: var(--font-masthead);
+  font-size: 22px;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--ink);
+}
+
+.series-title-card p {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0;
+}
+
+.series-title-card .series-jump-hint {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--signal);
+  margin: 4px 0 0;
+}
+
+.series-cards-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x proximity;
+  scrollbar-gutter: stable;
+}
+
+.series-cards-scroll .book-card {
+  flex: 0 0 240px;
+  scroll-snap-align: start;
+}
+
+/* ============================================
+   Library — search/sort/filter over every post.
+   ============================================ */
+.blog-library {
+  padding: 64px 0 80px;
+}
+
+.library-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin: 28px 0 36px;
+}
+
+.library-controls .zine-search {
+  text-align: left;
+  flex: 1 1 240px;
+}
+
+.library-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.library-sort select {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.library-controls .zine-tags {
+  padding: 0;
+  justify-content: flex-start;
+  flex: 1 1 100%;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+/* ============================================
+   Book card — faded-at-rest hero image, enlarges + reveals its CTA on
+   hover (desktop), click-to-flip reveals a preview on the back face. The
+   "Go to post" button sits in the same lower-right spot on both faces so
+   it never has to be relocated when the card flips.
+   ============================================ */
+.book-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  perspective: 1400px;
+  transition: transform 0.25s ease;
+}
+
+.book-card:hover,
+.book-card:focus-within {
+  transform: scale(1.04);
+  z-index: 2;
+}
+
+.book-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0.1, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.book-card.is-flipped .book-card-inner {
+  transform: rotateY(180deg);
+}
+
+.book-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.book-card-front {
+  background-color: var(--tag-bg);
+  background-size: cover;
+  background-position: center;
+}
+
+.book-card-front .book-card-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.55;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.book-card:hover .book-card-front .book-card-image,
+.book-card:focus-within .book-card-front .book-card-image {
+  opacity: 0.9;
+  transform: scale(1.04);
+}
+
+.book-card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0) 65%);
+}
+
+.book-card-front-content {
+  position: relative;
+  padding: 18px 18px 56px;
+  color: #fff;
+}
+
+.book-card-eyebrow {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin: 0 0 6px;
+}
+
+.book-card-title {
+  font-family: var(--font-masthead);
+  font-size: 19px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.book-card-back {
+  background: var(--paper-raised);
+  transform: rotateY(180deg);
+  padding: 18px 18px 56px;
+  justify-content: flex-start;
+}
+
+.book-card-back .book-card-eyebrow {
+  color: var(--steel);
+  opacity: 1;
+}
+
+.book-card-back .book-card-title {
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.book-card-excerpt {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+
+.book-card-cta {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--paper);
+  background: var(--signal);
+  padding: 8px 12px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+  pointer-events: none;
+}
+
+.book-card:hover .book-card-cta,
+.book-card:focus-within .book-card-cta,
+.book-card.is-flipped .book-card-cta {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.book-card-cta:hover {
+  background: var(--ink);
+}
+
+/* The back face's CTA needs to stay legible/clickable even before the
+   card is hovered (touch devices flip via tap, with no hover state at
+   all) — always show it there regardless of hover/flip state above. */
+.book-card-back .book-card-cta {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-card-inner {
+    transition: none;
+  }
+  .blog-hero-watermark img {
+    animation: none;
+  }
+  .blog-hero-scroll-cue {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .series-row {
+    grid-template-columns: 1fr;
+  }
+  .series-title-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 640px) {
+  .book-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 18px;
+  }
+  .series-cards-scroll .book-card {
+    flex-basis: 180px;
+  }
+  .library-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

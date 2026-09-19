@@ -8,6 +8,7 @@ mnt/
 # Internal content-strategy doc (name-pun bank, voice notes, Easter-egg planning) —
 # keep it locally for your own reference, never commit/deploy it
 BRANDING.md
+CLAUDE.md
 
 # OS junk
 .DS_Store

@@ -1,0 +1,192 @@
+/* ============================================
+   /orbit — project showcase
+   Loaded by orbit/index.html AND every individual orbit/<slug>.html project
+   page (via the orbit-header partial), alongside styles.css/blog-zine.css.
+   ============================================ */
+
+/* ============================================
+   Hero — same full-height watermark pattern as /blog's, kept as its own
+   copy (orbit- prefixed) rather than shared classes, since there are only
+   two consumers and each page's CSS stays self-contained.
+   ============================================ */
+.orbit-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+}
+
+.orbit-hero-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(1100px, 140vw);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.orbit-hero-watermark img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0.14;
+  animation: saturn-drift 16s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+.orbit-hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 24px;
+}
+
+.orbit-hero-kicker {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin: 0 0 12px;
+}
+
+.orbit-hero-title {
+  font-family: var(--font-masthead);
+  font-weight: 900;
+  font-size: clamp(64px, 14vw, 160px);
+  line-height: 1;
+  margin: 0;
+  color: var(--paper);
+}
+
+.orbit-hero-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border-right: 2px solid var(--steel);
+  border-bottom: 2px solid var(--steel);
+  transform: translateX(-50%) rotate(45deg);
+  animation: orbit-hero-cue-bob 2s ease-in-out infinite;
+}
+
+@keyframes orbit-hero-cue-bob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-hero-watermark img,
+  .orbit-hero-scroll-cue {
+    animation: none;
+  }
+}
+
+/* ============================================
+   Project grid
+   ============================================ */
+.orbit-grid-section {
+  padding: 64px 0 80px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+  margin-top: 32px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--paper-raised);
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.project-card:hover {
+  border-color: var(--signal);
+}
+
+.project-card-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--tag-bg);
+  background-size: cover;
+  background-position: center;
+}
+
+.project-card-body {
+  padding: 20px;
+}
+
+.project-card-status {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin: 0 0 8px;
+}
+
+.project-card-title {
+  font-family: var(--font-masthead);
+  font-size: 22px;
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.project-card-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.project-card-title a:hover {
+  color: var(--signal);
+}
+
+.project-card-tagline {
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 14px;
+}
+
+.project-card-link {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 1px solid var(--signal);
+}
+
+.project-card-link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* .project-tags also appears on individual project pages (see
+   templates/orbit-project.html), outside of any .project-card — the flex
+   layout above already covers both, just without a bottom margin there. */
+.zine-post-title + .project-tags,
+.intro-lead + .project-tags {
+  margin-top: -6px;
+}

@@ -89,24 +89,17 @@
     <div class="wrap">
       <h2 class="section-title fade-section">The Saturno Blog</h2>
 
+      <div class="blog-teaser-cta fade-section">
+        <a href="blog/index.html" class="contact-btn contact-btn-primary">Browse the Blog &rarr;</a>
+      </div>
+
+      <p class="explore-heading fade-section">Most Recently Published Issue</p>
       <div id="featured-post"></div>
 
-      <div class="zine-controls">
-        <input type="search" id="search-input" class="zine-search" placeholder="Search posts&hellip;" aria-label="Search posts">
-        <p class="explore-heading">explore some tags...</p>
-        <div class="zine-tags" id="tag-filter" role="group" aria-label="Filter by tag">
-          <button class="zine-tag-btn is-active" data-tag="all">
-            <span class="zine-tag-circle">&#9733;</span>
-            <span class="zine-tag-label">all</span>
-          </button>
-        </div>
+      <p class="explore-heading fade-section">more from the blog...</p>
+      <div id="blog-sections-preview" class="blog-sections-preview" aria-live="polite">
+        <!-- Populated by blog.js: one representative post per other section -->
       </div>
-
-      <div id="post-grid" class="zine-grid-scroll" aria-live="polite">
-        <!-- Populated by blog.js from posts-index.json -->
-      </div>
-
-      <p class="zine-empty-state" id="empty-state" hidden>No posts match your search or filter.</p>
     </div>
   </section>
 
@@ -130,19 +123,34 @@
     </div>
 
     <div class="wrap">
+      <div class="blog-teaser-cta fade-section">
+        <a href="orbit/index.html" class="contact-btn contact-btn-primary">Browse what's in Orbit &rarr;</a>
+      </div>
       <h2 class="section-title fade-section">Side projects</h2>
       <div class="skills-grid">
         <div class="skills-group fade-section">
           <h3>Zodiac RPG</h3>
           <p>An astrology-inspired creature-collecting game. Early UI design phase.</p>
+          <div class="side-project-actions">
+            <span class="contact-btn contact-btn-sm" aria-disabled="true">Go to the Blog Series &mdash; coming soon</span>
+            <span class="contact-btn contact-btn-sm" aria-disabled="true">Go to the Project Page &mdash; coming soon</span>
+          </div>
         </div>
         <div class="skills-group fade-section">
           <h3>Reality Show Simulator</h3>
           <p>A data-driven simulation modeling contestant scoring and elimination logic. In development.</p>
+          <div class="side-project-actions">
+            <a class="contact-btn contact-btn-sm" href="blog/index.html?series=DragRaceSimulator">Go to the Blog Series &rarr;</a>
+            <a class="contact-btn contact-btn-sm" href="orbit/drag-race-simulator.html">Go to the Project Page &rarr;</a>
+          </div>
         </div>
         <div class="skills-group fade-section">
           <h3>This site</h3>
           <p>Hand-built with HTML, CSS, and vanilla JavaScript &mdash; an ongoing project in itself.</p>
+          <div class="side-project-actions">
+            <span class="contact-btn contact-btn-sm" aria-disabled="true">Go to the Blog Series &mdash; coming soon</span>
+            <span class="contact-btn contact-btn-sm" aria-disabled="true">Project Page? &mdash; You're in it!</span>
+          </div>
         </div>
       </div>
     </div>

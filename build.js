@@ -22,6 +22,14 @@ const SITEMAP_OUTPUT_PATH = path.join(__dirname, "sitemap.xml");
 const DEFAULT_TEMPLATE = "standard-article";
 const SITE_URL = "https://saturnoproject.com";
 
+// Orbit (project showcase) — same shape as the blog pipeline above: one
+// JSON file per project in /projects, rendered to /orbit/<slug>.html, plus
+// a projects-index.json the Orbit grid page reads client-side.
+const PROJECTS_DIR = path.join(__dirname, "projects");
+const PROJECTS_OUTPUT_DIR = path.join(__dirname, "orbit");
+const PROJECTS_INDEX_OUTPUT_PATH = path.join(__dirname, "projects-index.json");
+const PROJECT_TEMPLATE = "orbit-project";
+
 // Set once per build (see build()) so renderRuns can resolve postLink slugs
 // without threading allPosts through every block renderer's signature —
 // same "shared state for one build run" pattern as templateCache below.
@@ -432,6 +440,7 @@ function renderPost(post, template, allPosts, issueNumbers) {
   // always uses post.excerpt untouched; this only swaps what goes into
   // {{EXCERPT}} in the <head> tags below.
   const metaDescription = post.metaDescription || post.excerpt;
+  const seriesText = post.series ? escapeHtml(post.series.title) : "";
 
   return template
     .replace(/{{TITLE}}/g, escapeHtml(post.title))
@@ -442,6 +451,7 @@ function renderPost(post, template, allPosts, issueNumbers) {
     .replace(/{{URL}}/g, postUrl)
     .replace(/{{LOCATION}}/g, locationText)
     .replace(/{{ISSUE}}/g, issueNumber)
+    .replace(/{{SERIES}}/g, seriesText)
     .replace(/{{HERO_IMAGE_SRC}}/g, post.heroImage?.src || "")
     .replace(/{{HERO_IMAGE_ALT}}/g, post.heroImage?.alt || "")
     .replace(/{{BODY}}/g, bodyHtml)
@@ -454,9 +464,20 @@ function renderPost(post, template, allPosts, issueNumbers) {
 // stays in sync with posts-index.json automatically as posts are added.
 // -------------------------------------------------
 function buildSitemap(publicPosts) {
+  const today = new Date().toISOString().slice(0, 10);
+  const projectFiles = fs.existsSync(PROJECTS_DIR)
+    ? fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith(".json"))
+    : [];
+  const projectSlugs = projectFiles.map(
+    (filename) => JSON.parse(fs.readFileSync(path.join(PROJECTS_DIR, filename), "utf-8")).slug
+  );
+
   const urls = [
-    { loc: `${SITE_URL}/`, lastmod: new Date().toISOString().slice(0, 10) },
+    { loc: `${SITE_URL}/`, lastmod: today },
+    ...(publicPosts.length ? [{ loc: `${SITE_URL}/blog/`, lastmod: today }] : []),
     ...publicPosts.map((post) => ({ loc: `${SITE_URL}/blog/${post.slug}.html`, lastmod: post.date })),
+    ...(projectSlugs.length ? [{ loc: `${SITE_URL}/orbit/`, lastmod: today }] : []),
+    ...projectSlugs.map((slug) => ({ loc: `${SITE_URL}/orbit/${slug}.html`, lastmod: today })),
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -467,6 +488,84 @@ ${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</
 
   fs.writeFileSync(SITEMAP_OUTPUT_PATH, xml, "utf-8");
   console.log(`Built sitemap.xml with ${urls.length} URLs`);
+}
+
+// -------------------------------------------------
+// Orbit (project showcase) — mirrors the blog pipeline: parse every
+// /projects/*.json, render each to /orbit/<slug>.html via the
+// "orbit-project" template (stitched with its own header partial, whose
+// wordmark exits back to the Orbit index rather than the homepage), and
+// write projects-index.json for orbit/index.html's grid.
+// -------------------------------------------------
+function renderProject(project, template) {
+  const tagsHtml = (project.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+  const descriptionHtml = (project.description || [])
+    .map((p) => `<p class="post-paragraph fade-section">${escapeHtml(p)}</p>`)
+    .join("\n");
+
+  const demoLinkHtml = project.links && project.links.demo
+    ? `<a class="contact-btn contact-btn-primary" href="${escapeHtml(project.links.demo)}" target="_blank" rel="noopener">Live Demo &rarr;</a>`
+    : `<span class="contact-btn" aria-disabled="true">Live Demo &mdash; coming soon</span>`;
+  const repoLinkHtml = project.links && project.links.repo
+    ? `<a class="contact-btn" href="${escapeHtml(project.links.repo)}" target="_blank" rel="noopener">View Repo &rarr;</a>`
+    : "";
+  const seriesLinkHtml = project.seriesId
+    ? `<a class="contact-btn" href="../blog/index.html?series=${encodeURIComponent(project.seriesId)}">Read the Devlog &rarr;</a>`
+    : "";
+
+  const projectUrl = `${SITE_URL}/orbit/${project.slug}.html`;
+
+  return template
+    .replace(/{{TITLE}}/g, escapeHtml(project.title))
+    .replace(/{{STATUS}}/g, escapeHtml(project.status || ""))
+    .replace(/{{TAGLINE}}/g, escapeHtml(project.tagline))
+    .replace(/{{TAGS}}/g, tagsHtml)
+    .replace(/{{DESCRIPTION}}/g, descriptionHtml)
+    .replace(/{{DEMO_LINK}}/g, demoLinkHtml)
+    .replace(/{{REPO_LINK}}/g, repoLinkHtml)
+    .replace(/{{SERIES_LINK}}/g, seriesLinkHtml)
+    .replace(/{{HERO_IMAGE_SRC}}/g, project.heroImage?.src || "")
+    .replace(/{{HERO_IMAGE_ALT}}/g, project.heroImage?.alt || "")
+    .replace(/{{URL}}/g, projectUrl);
+}
+
+function buildProjects() {
+  if (!fs.existsSync(PROJECTS_DIR)) return;
+
+  const orbitPartials = {
+    header: fs.readFileSync(path.join(PARTIALS_DIR, "orbit-header.html"), "utf-8"),
+    footer: fs.readFileSync(path.join(PARTIALS_DIR, "footer.html"), "utf-8"),
+    // orbit-project.html has no {{TITLE_SECTION}} placeholder — loadTemplate's
+    // blanket replace is a harmless no-op without it, so this can stay empty.
+    titleSection: "",
+  };
+
+  if (!fs.existsSync(PROJECTS_OUTPUT_DIR)) fs.mkdirSync(PROJECTS_OUTPUT_DIR, { recursive: true });
+
+  const projectFiles = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith(".json"));
+  const projects = projectFiles.map((filename) =>
+    JSON.parse(fs.readFileSync(path.join(PROJECTS_DIR, filename), "utf-8"))
+  );
+
+  const template = loadTemplate(PROJECT_TEMPLATE, orbitPartials);
+  projects.forEach((project) => {
+    const html = renderProject(project, template);
+    const outputPath = path.join(PROJECTS_OUTPUT_DIR, `${project.slug}.html`);
+    fs.writeFileSync(outputPath, html, "utf-8");
+    console.log(`Built: ${outputPath}`);
+  });
+
+  const indexEntries = projects.map((project) => ({
+    slug: project.slug,
+    title: project.title,
+    status: project.status || "",
+    tagline: project.tagline,
+    tags: project.tags || [],
+    heroImage: project.heroImage,
+    seriesId: project.seriesId || null,
+  }));
+  fs.writeFileSync(PROJECTS_INDEX_OUTPUT_PATH, JSON.stringify(indexEntries, null, 2), "utf-8");
+  console.log(`Built projects-index.json with ${indexEntries.length} projects`);
 }
 
 // -------------------------------------------------
@@ -529,6 +628,7 @@ function build() {
   console.log(`Built posts-index.json with ${indexEntries.length} posts`);
 
   buildSitemap(publicPosts);
+  buildProjects();
 }
 
 build();

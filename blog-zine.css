@@ -67,8 +67,8 @@
 }
 
 /* Typewriter date effect (see blog.js). .meta-ghost is an invisible copy of
-   the FULL final text (today's date + "Vol. X · N Sections · Price: (1)
-   Coffee") — its only job is to give .meta-stack a fixed width/position
+   the FULL final text (today's date + "Vol. X · N Sections") — its only
+   job is to give .meta-stack a fixed width/position
    from the very first frame, so centering this line never has to
    recalculate as the date types in. .meta-live (the actually-visible
    text) is absolutely positioned on top of it instead of sized by its own
@@ -376,6 +376,29 @@
 
 .zine-card:nth-child(3n) {
   border-right: none;
+}
+
+/* ============================================
+   Homepage blog teaser — "sneak peek of other sections" strip that
+   replaces the old in-page search/filter/grid (now lives on /blog). Reuses
+   .zine-card's look but as standalone rounded cards (no shared grid rule
+   lines) since this is a short, non-exhaustive preview, not the full list.
+   ============================================ */
+.blog-sections-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.blog-sections-preview .zine-card {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.blog-teaser-cta {
+  text-align: center;
+  padding: 32px 0 8px;
 }
 
 /* Related Reading (bottom of every post) — a horizontally scrollable

@@ -2,7 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://saturnoproject.com/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-19</lastmod>
+  </url>
+  <url>
+    <loc>https://saturnoproject.com/blog/</loc>
+    <lastmod>2026-09-19</lastmod>
   </url>
   <url>
     <loc>https://saturnoproject.com/blog/drag-race-the-simulation.html</loc>
@@ -15,5 +19,13 @@
   <url>
     <loc>https://saturnoproject.com/blog/my-first-post.html</loc>
     <lastmod>2026-09-03</lastmod>
+  </url>
+  <url>
+    <loc>https://saturnoproject.com/orbit/</loc>
+    <lastmod>2026-09-19</lastmod>
+  </url>
+  <url>
+    <loc>https://saturnoproject.com/orbit/drag-race-simulator.html</loc>
+    <lastmod>2026-09-19</lastmod>
   </url>
 </urlset>
