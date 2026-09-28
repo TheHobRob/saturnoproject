@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!libraryGrid) return;
 
   let posts = [];
-  let activeTag = "all";
+  // Multi-select: empty set means "all" — a post must carry every tag
+  // currently in the set (AND, not OR) to match.
+  let activeTags = new Set();
   let activeSeries = null; // series id, or null for "all"
   let searchTerm = "";
   let sortMode = "newest";
@@ -130,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     seriesListEl.querySelectorAll(".series-title-card").forEach((btn) => {
       btn.addEventListener("click", () => {
         activeSeries = btn.dataset.seriesId;
-        activeTag = "all";
+        activeTags.clear();
         searchTerm = "";
         if (searchInput) searchInput.value = "";
         syncTagButtons();
@@ -151,7 +153,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   function syncTagButtons() {
     if (!tagFilter) return;
     tagFilter.querySelectorAll(".zine-tag-btn").forEach((b) => {
-      b.classList.toggle("is-active", !activeSeries && b.dataset.tag === activeTag);
+      const isAllBtn = b.dataset.tag === "all";
+      const isActive = isAllBtn ? activeTags.size === 0 : activeTags.has(b.dataset.tag);
+      b.classList.toggle("is-active", !activeSeries && isActive);
     });
   }
 
@@ -168,7 +172,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     tagFilter.addEventListener("click", (e) => {
       const btn = e.target.closest(".zine-tag-btn");
       if (!btn) return;
-      activeTag = btn.dataset.tag;
+      const tag = btn.dataset.tag;
+      if (tag === "all") {
+        activeTags.clear();
+      } else if (activeTags.has(tag)) {
+        activeTags.delete(tag);
+      } else {
+        activeTags.add(tag);
+      }
       activeSeries = null;
       updateUrlSeries(null);
       syncTagButtons();
@@ -202,8 +213,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function matchesTag(post) {
-    if (activeTag === "all") return true;
-    return (post.tags || []).includes(activeTag);
+    if (activeTags.size === 0) return true;
+    const postTags = post.tags || [];
+    return Array.from(activeTags).every((tag) => postTags.includes(tag));
   }
 
   function matchesSeries(post) {

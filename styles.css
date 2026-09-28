@@ -370,6 +370,14 @@ section {
   border-radius: 4px;
 }
 
+.about-preview-photo img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
 .about-preview-text p {
   max-width: 52ch;
   margin: 0 0 20px;
@@ -441,6 +449,15 @@ section {
 .contact-btn-primary:hover {
   background: var(--ink);
   border-color: var(--ink);
+}
+
+/* Small logo mark inline with a button's own text — sized off font-size (not
+   a fixed px) so it stays proportional if the button's text size ever
+   changes; .contact-btn's flex gap already spaces it from the label. */
+.contact-btn-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 .contact-btn-sm {

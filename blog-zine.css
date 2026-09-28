@@ -415,7 +415,12 @@
 
 .blog-teaser-cta {
   text-align: center;
-  padding: 32px 0 8px;
+  padding: 32px 0 0;
+  /* margin (not padding) so it collapses with whatever follows — the
+     Blog section's .explore-heading already carries a 28px top margin, and
+     the Creator section's h2 carries none, which left that second instance
+     flush against the button with no breathing room. */
+  margin-bottom: 28px;
 }
 
 /* Related Reading (bottom of every post) — a horizontally scrollable

@@ -172,6 +172,11 @@
   display: flex;
   gap: 20px;
   overflow-x: auto;
+  /* Setting only overflow-x leaves overflow-y at its initial "visible",
+     which the spec then computes to "auto" anyway once the other axis is
+     scrollable — that produced a real (if small) vertical scrollbar here.
+     Pin it to hidden so this row is horizontal-scroll only. */
+  overflow-y: hidden;
   padding-bottom: 8px;
   scroll-snap-type: x proximity;
   scrollbar-gutter: stable;
@@ -429,15 +434,40 @@
 }
 
 @media (max-width: 640px) {
+  /* The 900px row layout (title beside post count/hint) is too cramped at
+     true phone widths — stack back to the title-first column layout so the
+     series title stays the visual focus. */
+  .series-title-card {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* Sized so two cards fit the ~327px content width (2 * 150px + 18px gap
+     = 318px) in both the series-scroll strip and the library grid, so the
+     two sections' cards read as the same size instead of the grid's cards
+     (which previously fell just short of fitting two per row and collapsed
+     to one huge column) dwarfing the series ones. */
   .book-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 18px;
   }
   .series-cards-scroll .book-card {
-    flex-basis: 180px;
+    flex-basis: 150px;
   }
+
   .library-controls {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* .zine-search's flex-basis:240px (set for the desktop row layout, see
+     .library-controls .zine-search above) applies to the main axis — once
+     .library-controls switches to flex-direction:column above, that same
+     240px becomes a HEIGHT instead of a width, rendering the field as a
+     near-square box instead of a normal single-line input. */
+  .library-controls .zine-search {
+    flex: 0 0 auto;
+    width: 100%;
   }
 }
