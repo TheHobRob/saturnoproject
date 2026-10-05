@@ -9,8 +9,8 @@
     ],
     "excerpt": "Charisma. Uniqueness. Nerve. Talent. Long ago in the year 2013, I had none of these qualities. I came across a Q&A video on the web. The question asked: “Are you watching the current season of Drag Race? If so, who are you rooting for to snatch the crown?” A crown? For drag racing? No, this was something much much gayer.",
     "heroImage": {
-      "src": "../images/Drag-Race-Track-Record-Snippet.png",
-      "alt": "Hero photo for Drag Race: The Simulator — pending"
+      "src": "../images/posts/drag-race-the-simulation.png",
+      "alt": "Spreadsheet of Season 5 track records for the US version of Drag Race, one row per queen with her placement each episode (SAFE, TOP, WIN, BTM, ELIM)"
     },
     "series": {
       "id": "DragRaceSimulator",
@@ -39,18 +39,18 @@
     }
   },
   {
-    "slug": "my-first-post",
-    "title": "My First Post",
+    "slug": "from-scratch",
+    "title": "From Scratch",
     "date": "2026-09-03",
     "tags": [
       "Lifestyle",
       "Spirituality",
       "Web Dev"
     ],
-    "excerpt": "Hello World! This is my first official post. Join me as I share my journey, experiences, and insights as I return to the world of coding, web development, and beyond.",
+    "excerpt": "Hello World! Join me as I return to the world of coding and web development after dropping out of a computer science degree.",
     "heroImage": {
-      "src": "",
-      "alt": "Hero photo for My First Post — pending"
+      "src": "../images/posts/from-scratch.jpg",
+      "alt": "Sepia photo of a beach at sunset: tarot cards, glasses, and a journal resting on a blanket in the sand beside a calm lake"
     },
     "series": {
       "id": "DITL",

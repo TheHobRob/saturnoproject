@@ -12,6 +12,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const POSTS_DIR = path.join(__dirname, "posts");
 const OUTPUT_DIR = path.join(__dirname, "blog");
@@ -22,13 +23,14 @@ const SITEMAP_OUTPUT_PATH = path.join(__dirname, "sitemap.xml");
 const DEFAULT_TEMPLATE = "standard-article";
 const SITE_URL = "https://saturnoproject.com";
 
-// Orbit (project showcase) — same shape as the blog pipeline above: one
-// JSON file per project in /projects, rendered to /orbit/<slug>.html, plus
-// a projects-index.json the Orbit grid page reads client-side.
+// Orbit (cartridge console) — one list of projects, from two sources:
+//   • /projects/<slug>.json          projects without their own build yet
+//   • /orbit/<slug>/manifest.json    playable builds (games, web apps)
+// Merged by slug into projects-index.json, which orbit-page.js reads to
+// build the cartridge shelf. Each live project runs at /orbit/<slug>/.
 const PROJECTS_DIR = path.join(__dirname, "projects");
-const PROJECTS_OUTPUT_DIR = path.join(__dirname, "orbit");
+const ORBIT_DIR = path.join(__dirname, "orbit");
 const PROJECTS_INDEX_OUTPUT_PATH = path.join(__dirname, "projects-index.json");
-const PROJECT_TEMPLATE = "orbit-project";
 
 // Set once per build (see build()) so renderRuns can resolve postLink slugs
 // without threading allPosts through every block renderer's signature —
@@ -463,21 +465,16 @@ function renderPost(post, template, allPosts, issueNumbers) {
 // Sitemap — one <url> per public (non-draft) post plus the homepage, so it
 // stays in sync with posts-index.json automatically as posts are added.
 // -------------------------------------------------
-function buildSitemap(publicPosts) {
+function buildSitemap(publicPosts, orbitEntries) {
   const today = new Date().toISOString().slice(0, 10);
-  const projectFiles = fs.existsSync(PROJECTS_DIR)
-    ? fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith(".json"))
-    : [];
-  const projectSlugs = projectFiles.map(
-    (filename) => JSON.parse(fs.readFileSync(path.join(PROJECTS_DIR, filename), "utf-8")).slug
-  );
+  const liveProjects = orbitEntries.filter((p) => p.playable);
 
   const urls = [
     { loc: `${SITE_URL}/`, lastmod: today },
     ...(publicPosts.length ? [{ loc: `${SITE_URL}/blog/`, lastmod: today }] : []),
     ...publicPosts.map((post) => ({ loc: `${SITE_URL}/blog/${post.slug}.html`, lastmod: post.date })),
-    ...(projectSlugs.length ? [{ loc: `${SITE_URL}/orbit/`, lastmod: today }] : []),
-    ...projectSlugs.map((slug) => ({ loc: `${SITE_URL}/orbit/${slug}.html`, lastmod: today })),
+    ...(orbitEntries.length ? [{ loc: `${SITE_URL}/orbit/`, lastmod: today }] : []),
+    ...liveProjects.map((p) => ({ loc: `${SITE_URL}/orbit/${p.slug}/`, lastmod: today })),
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -491,81 +488,84 @@ ${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</
 }
 
 // -------------------------------------------------
-// Orbit (project showcase) — mirrors the blog pipeline: parse every
-// /projects/*.json, render each to /orbit/<slug>.html via the
-// "orbit-project" template (stitched with its own header partial, whose
-// wordmark exits back to the Orbit index rather than the homepage), and
-// write projects-index.json for orbit/index.html's grid.
+// Orbit — collect every cartridge for the console page.
+// A project is playable only when its status isn't "soon" AND
+// /orbit/<slug>/index.html exists; anything else shows as "Coming soon".
+// When both sources exist for one slug, the manifest wins field by field.
 // -------------------------------------------------
-function renderProject(project, template) {
-  const tagsHtml = (project.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("");
-  const descriptionHtml = (project.description || [])
-    .map((p) => `<p class="post-paragraph fade-section">${escapeHtml(p)}</p>`)
-    .join("\n");
-
-  const demoLinkHtml = project.links && project.links.demo
-    ? `<a class="contact-btn contact-btn-primary" href="${escapeHtml(project.links.demo)}" target="_blank" rel="noopener">Live Demo &rarr;</a>`
-    : `<span class="contact-btn" aria-disabled="true">Live Demo &mdash; coming soon</span>`;
-  const repoLinkHtml = project.links && project.links.repo
-    ? `<a class="contact-btn" href="${escapeHtml(project.links.repo)}" target="_blank" rel="noopener">View Repo &rarr;</a>`
-    : "";
-  const seriesLinkHtml = project.seriesId
-    ? `<a class="contact-btn" href="../blog/index.html?series=${encodeURIComponent(project.seriesId)}">Read the Devlog &rarr;</a>`
-    : "";
-
-  const projectUrl = `${SITE_URL}/orbit/${project.slug}.html`;
-
-  return template
-    .replace(/{{TITLE}}/g, escapeHtml(project.title))
-    .replace(/{{STATUS}}/g, escapeHtml(project.status || ""))
-    .replace(/{{TAGLINE}}/g, escapeHtml(project.tagline))
-    .replace(/{{TAGS}}/g, tagsHtml)
-    .replace(/{{DESCRIPTION}}/g, descriptionHtml)
-    .replace(/{{DEMO_LINK}}/g, demoLinkHtml)
-    .replace(/{{REPO_LINK}}/g, repoLinkHtml)
-    .replace(/{{SERIES_LINK}}/g, seriesLinkHtml)
-    .replace(/{{HERO_IMAGE_SRC}}/g, project.heroImage?.src || "")
-    .replace(/{{HERO_IMAGE_ALT}}/g, project.heroImage?.alt || "")
-    .replace(/{{URL}}/g, projectUrl);
+function readJson(filePath) {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  } catch (err) {
+    console.warn(`Orbit: skipped ${path.relative(__dirname, filePath)} (${err.message})`);
+    return null;
+  }
 }
 
-function buildProjects() {
-  if (!fs.existsSync(PROJECTS_DIR)) return;
+function collectOrbitEntries() {
+  const bySlug = new Map();
 
-  const orbitPartials = {
-    header: fs.readFileSync(path.join(PARTIALS_DIR, "orbit-header.html"), "utf-8"),
-    footer: fs.readFileSync(path.join(PARTIALS_DIR, "footer.html"), "utf-8"),
-    // orbit-project.html has no {{TITLE_SECTION}} placeholder — loadTemplate's
-    // blanket replace is a harmless no-op without it, so this can stay empty.
-    titleSection: "",
-  };
+  if (fs.existsSync(PROJECTS_DIR)) {
+    fs.readdirSync(PROJECTS_DIR)
+      .filter((f) => f.endsWith(".json"))
+      .forEach((f) => {
+        const data = readJson(path.join(PROJECTS_DIR, f));
+        if (data && data.slug) bySlug.set(data.slug, data);
+      });
+  }
 
-  if (!fs.existsSync(PROJECTS_OUTPUT_DIR)) fs.mkdirSync(PROJECTS_OUTPUT_DIR, { recursive: true });
+  if (fs.existsSync(ORBIT_DIR)) {
+    fs.readdirSync(ORBIT_DIR, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .forEach((d) => {
+        const manifestPath = path.join(ORBIT_DIR, d.name, "manifest.json");
+        if (!fs.existsSync(manifestPath)) return; // e.g. unreleased wire-game
+        const data = readJson(manifestPath);
+        if (!data) return;
+        const expected = `/orbit/${d.name}/`;
+        if (data.path && data.path !== expected) {
+          console.warn(`Orbit: ${d.name}/manifest.json "path" is "${data.path}", expected "${expected}"`);
+        }
+        bySlug.set(d.name, { ...(bySlug.get(d.name) || {}), ...data, slug: d.name });
+      });
+  }
 
-  const projectFiles = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith(".json"));
-  const projects = projectFiles.map((filename) =>
-    JSON.parse(fs.readFileSync(path.join(PROJECTS_DIR, filename), "utf-8"))
-  );
-
-  const template = loadTemplate(PROJECT_TEMPLATE, orbitPartials);
-  projects.forEach((project) => {
-    const html = renderProject(project, template);
-    const outputPath = path.join(PROJECTS_OUTPUT_DIR, `${project.slug}.html`);
-    fs.writeFileSync(outputPath, html, "utf-8");
-    console.log(`Built: ${outputPath}`);
+  const entries = [...bySlug.values()].map((p) => {
+    const hasBuild = fs.existsSync(path.join(ORBIT_DIR, p.slug, "index.html"));
+    const playable = p.status !== "soon" && hasBuild;
+    if (p.status !== "soon" && !hasBuild) {
+      console.warn(`Orbit: ${p.slug} has no orbit/${p.slug}/index.html yet — listed as "Coming soon"`);
+    }
+    if (fs.existsSync(path.join(ORBIT_DIR, `${p.slug}.html`))) {
+      console.warn(`Orbit: orbit/${p.slug}.html is a leftover description page — delete it`);
+    }
+    const book = p.book || {};
+    const about = Array.isArray(book.about) ? book.about : book.about ? [book.about] : [];
+    return {
+      slug: p.slug,
+      title: p.title || p.slug,
+      genre: p.genre || "",
+      description: p.description || "",
+      color: p.color || null,
+      status: playable ? p.status || "" : "soon",
+      playable,
+      href: playable ? `${p.slug}/` : null,
+      startLabel: p.startLabel || "Start Game",
+      files: Array.isArray(p.files) ? p.files : [],
+      book: { about, controls: Array.isArray(book.controls) ? book.controls : [] },
+      seriesId: p.seriesId || null,
+    };
   });
 
-  const indexEntries = projects.map((project) => ({
-    slug: project.slug,
-    title: project.title,
-    status: project.status || "",
-    tagline: project.tagline,
-    tags: project.tags || [],
-    heroImage: project.heroImage,
-    seriesId: project.seriesId || null,
-  }));
-  fs.writeFileSync(PROJECTS_INDEX_OUTPUT_PATH, JSON.stringify(indexEntries, null, 2), "utf-8");
-  console.log(`Built projects-index.json with ${indexEntries.length} projects`);
+  // Playable first, then alphabetical.
+  entries.sort((a, b) => (b.playable - a.playable) || a.title.localeCompare(b.title));
+  return entries;
+}
+
+function writeProjectsIndex(entries) {
+  fs.writeFileSync(PROJECTS_INDEX_OUTPUT_PATH, JSON.stringify(entries, null, 2), "utf-8");
+  const live = entries.filter((e) => e.playable).length;
+  console.log(`Built projects-index.json with ${entries.length} cartridges (${live} playable)`);
 }
 
 // -------------------------------------------------
@@ -574,7 +574,31 @@ function buildProjects() {
 // (2) each post's related-posts section can be computed with full
 // knowledge of every other post before anything gets written to disk.
 // -------------------------------------------------
+// -------------------------------------------------
+// Images: runs duotone.py --sync (Python + Pillow) so card/hero images are
+// filtered and compressed automatically on every build. Safe to run
+// repeatedly — it only touches images whose original is newer than the
+// processed copy. If Python/Pillow/duotone.py isn't available it warns and
+// the rest of the build carries on.
+// -------------------------------------------------
+function processImages() {
+  const script = path.join(__dirname, "duotone.py");
+  if (!fs.existsSync(script)) {
+    console.warn("Images: duotone.py not found — skipping image processing");
+    return;
+  }
+  for (const cmd of ["py", "python", "python3"]) {
+    const r = spawnSync(cmd, [script, "--sync", path.join(__dirname, "images")], { encoding: "utf-8" });
+    if (!r.error && r.status === 0) {
+      process.stdout.write(r.stdout);
+      return;
+    }
+  }
+  console.warn("Images: skipped — couldn't run Python with Pillow (tried py, python, python3). Fix: python -m pip install pillow");
+}
+
 function build() {
+  processImages();
   const partials = {
     header: fs.readFileSync(path.join(PARTIALS_DIR, "header.html"), "utf-8"),
     footer: fs.readFileSync(path.join(PARTIALS_DIR, "footer.html"), "utf-8"),
@@ -627,8 +651,9 @@ function build() {
   fs.writeFileSync(INDEX_OUTPUT_PATH, JSON.stringify(indexEntries, null, 2), "utf-8");
   console.log(`Built posts-index.json with ${indexEntries.length} posts`);
 
-  buildSitemap(publicPosts);
-  buildProjects();
+  const orbitEntries = collectOrbitEntries();
+  buildSitemap(publicPosts, orbitEntries);
+  writeProjectsIndex(orbitEntries);
 }
 
 build();

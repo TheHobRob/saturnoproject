@@ -1,7 +1,7 @@
 /* ============================================
-   /orbit — project showcase
-   Loaded by orbit/index.html AND every individual orbit/<slug>.html project
-   page (via the orbit-header partial), alongside styles.css/blog-zine.css.
+   /orbit — cartridge console
+   Loaded by orbit/index.html alongside styles.css/blog-zine.css. Projects
+   themselves run full-page at /orbit/<slug>/ and don't load this file.
    ============================================ */
 
 /* ============================================
@@ -50,7 +50,9 @@
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--steel);
+  /* Dark-mode --steel value: the hero stays dark in both themes, and
+     light-mode --steel (#705729) is only ~2.2:1 on it. This is ~7.8:1. */
+  color: #D4B67F;
   margin: 0 0 12px;
 }
 
@@ -67,7 +69,19 @@
    adapt), which flips this hero from a dark inversion into a bright block
    sitting in an otherwise dark page. Swapping which token backs which
    property here keeps it dark regardless of site theme. */
+.orbit-hero-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.2vw, 20px);
+  letter-spacing: 0.02em;
+  color: var(--paper);
+  margin: 20px 0 0;
+}
+
 @media (prefers-color-scheme: dark) {
+  .orbit-hero-tagline {
+    color: var(--ink);
+  }
+
   .orbit-hero {
     background: var(--paper);
     color: var(--ink);
@@ -85,8 +99,8 @@
   z-index: 1;
   width: 26px;
   height: 26px;
-  border-right: 2px solid var(--steel);
-  border-bottom: 2px solid var(--steel);
+  border-right: 2px solid #D4B67F;
+  border-bottom: 2px solid #D4B67F;
   transform: translateX(-50%) rotate(45deg);
   animation: orbit-hero-cue-bob 2s ease-in-out infinite;
 }
@@ -104,104 +118,754 @@
 }
 
 /* ============================================
-   Project grid
+   Console section — tokens
+   Everything is sized off --P (planet diameter) so the whole console scales
+   as one piece. Colors are site tokens only. The screen always stays the
+   darkest surface: it uses --ink in light mode and --paper in dark mode
+   (where the two swap). --screen-lit is the dark-mode --signal value,
+   reused in light mode because regular --signal is too dim on the screen.
    ============================================ */
-.orbit-grid-section {
-  padding: 64px 0 80px;
+.orbit-console-section,
+.orbit-shelf-section {
+  --shadow: var(--ink);
+  --shadow-offset: 6px;
+  --screen-bg: var(--ink);
+  --screen-fg: var(--paper);
+  --screen-lit: #8FA35E;
+  --cart-grip: rgba(46, 37, 23, 0.4);
 }
 
-.project-grid {
+@media (prefers-color-scheme: dark) {
+  .orbit-console-section,
+  .orbit-shelf-section {
+    --shadow: var(--rule);
+    --screen-bg: var(--paper);
+    --screen-fg: var(--ink);
+    --screen-lit: var(--signal);
+  }
+}
+
+.orbit-console-section {
+  /* Mobile: rings may run into the page gutters, never past the viewport. */
+  --P: min(268px, calc((100vw - 8px) / 1.42));
+  --sw: calc(var(--P) * 0.84);
+  --sh: calc(var(--P) * 0.58);
+  --sr: calc(var(--P) * 0.1);
+  padding: 72px 0 40px;
+  overflow-x: clip;
+  /* Clears the sticky site header when arriving via #console-section. */
+  scroll-margin-top: 48px;
+  /* When the game book grows/shrinks on insert/eject, keep whatever the
+     visitor is looking at (usually the shelf) still instead of pushing it. */
+  overflow-anchor: none;
+}
+
+@media (min-width: 700px) {
+  .orbit-console-section {
+    --P: 400px;
+    --sw: calc(var(--P) * 0.78);
+    --sh: calc(var(--P) * 0.435);
+    --sr: 18px;
+  }
+  .orbit-console-section,
+  .orbit-shelf-section {
+    --shadow-offset: 10px;
+  }
+}
+
+@media (min-width: 1180px) {
+  .orbit-console-section {
+    --P: 460px;
+    --sr: 20px;
+  }
+}
+
+.orbit-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================
+   Stage: console + game book
+   Stacked on phones/tablets; side by side from 1180px.
+   ============================================ */
+.orbit-stage {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 28px;
-  margin-top: 32px;
+  gap: 40px;
+  justify-items: center;
 }
 
-.project-card {
+@media (min-width: 1180px) {
+  .orbit-stage {
+    grid-template-columns: 740px 340px;
+    justify-content: center;
+    align-items: start;
+  }
+}
+
+.console-col {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  background: var(--paper-raised);
-  overflow: hidden;
-  transition: border-color 0.15s ease;
+  align-items: center;
 }
 
-.project-card:hover {
-  border-color: var(--signal);
+/* ============================================
+   The console (Saturn logo)
+   ============================================ */
+.console {
+  position: relative;
+  z-index: 2;
+  width: calc(var(--P) * 1.42);
+  height: var(--P);
+  flex-shrink: 0;
+  margin-left: calc(50% - var(--P) * 0.71);
+  margin-right: calc(50% - var(--P) * 0.71);
 }
 
-.project-card-media {
+.console-rings {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background-color: var(--tag-bg);
-  background-size: cover;
-  background-position: center;
+  height: 100%;
+  overflow: visible;
+  transition: filter 0.6s ease;
 }
 
-.project-card-body {
-  padding: 20px;
+.console-rings-back { z-index: 1; }
+.console-rings-front { z-index: 3; }
+
+.ring {
+  fill: none;
+  stroke: var(--ink);
+  stroke-opacity: 0.35;
+  stroke-linecap: round;
+  transition: stroke 0.6s ease, stroke-opacity 0.6s ease;
 }
 
-.project-card-status {
+/* viewBox units: 1 unit = 1% of --P (14px / 6px at a 460px planet) */
+.ring-outer { stroke-width: 3; }
+.ring-inner { stroke-width: 1.3; }
+
+.console-planet {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: calc(var(--P) * 0.21);
+  width: var(--P);
+  height: var(--P);
+  box-sizing: border-box;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow);
+}
+
+.console-power {
+  position: absolute;
+  z-index: 5;
+  top: calc(var(--P) * 0.075);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--signal);
-  margin: 0 0 8px;
-}
-
-.project-card-title {
-  font-family: var(--font-masthead);
-  font-size: 22px;
-  line-height: 1.2;
-  margin: 0 0 10px;
-}
-
-.project-card-title a {
+  white-space: nowrap;
   color: var(--ink);
-  text-decoration: none;
 }
 
-.project-card-title a:hover {
-  color: var(--signal);
+.console-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--rule);
+  transition: background 0.6s ease, box-shadow 0.6s ease;
 }
 
-.project-card-tagline {
-  font-size: 15px;
-  color: var(--ink);
-  margin: 0 0 14px;
-}
-
-.project-tags {
+.console-screen {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: calc(var(--P) * 0.52 - var(--sh) / 2);
+  transform: translateX(-50%);
+  width: var(--sw);
+  height: var(--sh);
+  box-sizing: border-box;
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0 0 14px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px calc(var(--sr) * 0.6);
+  border: 3px solid var(--ink);
+  border-radius: var(--sr);
+  background: var(--screen-bg);
+  box-shadow: inset 0 0 0 3px var(--steel);
+  color: var(--screen-fg);
+  text-align: center;
+  overflow: hidden;
 }
 
-.project-card-link {
-  display: inline-block;
+.console-slot {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+  width: calc(var(--P) * 0.36);
+  height: 16px;
+  box-sizing: border-box;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  background: var(--screen-bg);
+}
+
+/* Powered on */
+.console[data-power="on"] .ring {
+  stroke: var(--signal);
+  stroke-opacity: 1;
+}
+
+.console[data-power="on"] .console-rings {
+  filter: drop-shadow(0 0 6px var(--signal));
+}
+
+.console[data-power="on"] .console-light {
+  background: var(--screen-lit);
+  box-shadow: 0 0 8px 2px var(--screen-lit);
+}
+
+/* ----- Screen content ----- */
+.screen-kicker {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: max(10px, calc(var(--P) * 0.026));
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--screen-fg);
+}
+
+.console[data-power="on"] .screen-kicker {
+  color: var(--screen-lit);
+}
+
+.screen-standby {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: max(13px, calc(var(--P) * 0.036));
+  color: var(--screen-fg);
+}
+
+.screen-cursor {
+  animation: screen-blink 1s steps(1) infinite;
+}
+
+@keyframes screen-blink {
+  50% { opacity: 0; }
+}
+
+.screen-title {
+  margin: 2px 0 6px;
+  font-family: var(--font-masthead);
+  font-size: max(19px, calc(var(--P) * 0.074));
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--screen-fg);
+}
+
+.screen-note {
+  margin: 0 0 6px;
   font-family: var(--font-display);
   font-size: 12px;
-  font-weight: 600;
+  color: var(--screen-fg);
+}
+
+.screen-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.screen-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 2px solid var(--screen-fg);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--screen-fg);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--signal);
   text-decoration: none;
-  border-bottom: 1px solid var(--signal);
+  cursor: pointer;
 }
 
-.project-card-link:hover {
+.screen-btn-start {
+  border-color: var(--screen-lit);
+  background: var(--screen-lit);
+  color: var(--screen-bg);
+}
+
+.screen-btn:hover {
+  background: var(--screen-fg);
+  border-color: var(--screen-fg);
+  color: var(--screen-bg);
+}
+
+.console-screen:focus {
+  outline: none; /* only focused by script, to keep focus in the console */
+}
+
+.console-screen a:focus-visible,
+.console-screen button:focus-visible {
+  outline: 2px solid var(--screen-lit);
+  outline-offset: 2px;
+}
+
+/* Start transition (see launch() in orbit-page.js) */
+.screen-splash {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.screen-splash img {
+  width: calc(var(--P) * 0.28);
+  height: auto;
+  opacity: 0;
+}
+
+.screen-splash span {
+  font-family: var(--font-display);
+  font-size: max(10px, calc(var(--P) * 0.03));
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #D4B67F; /* dark-mode --steel, same as the hero kicker */
+  opacity: 0;
+}
+
+.orbit-launch {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* ============================================
+   Dock — the plugged-in cartridge sits under the slot
+   ============================================ */
+.console-dock {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: -8px;
+  min-height: calc(var(--P) * 0.34);
+}
+
+.dock-empty {
+  width: calc(var(--P) * 0.3);
+  height: calc(var(--P) * 0.32);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 6px 6px;
+  border: 2px dashed var(--ink);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  opacity: 0.55;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
   color: var(--ink);
-  border-color: var(--ink);
 }
 
-/* .project-tags also appears on individual project pages (see
-   templates/orbit-project.html), outside of any .project-card — the flex
-   layout above already covers both, just without a bottom margin there. */
-.zine-post-title + .project-tags,
-.intro-lead + .project-tags {
-  margin-top: -6px;
+.dock-cart {
+  width: calc(var(--P) * 0.3);
+  height: calc(var(--P) * 0.34);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid var(--ink);
+  border-radius: 4px 4px 10px 10px;
+  background: var(--cart, var(--signal));
+  animation: cart-insert 0.55s ease-out both;
+}
+
+@keyframes cart-insert {
+  from { transform: translateY(70%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.dock-cart .cart-pins { height: 12px; margin: 0 10%; }
+.dock-cart .cart-label {
+  margin: 6px 8%;
+  padding: 4px;
+  justify-content: center;
+}
+.dock-cart .cart-title { font-size: max(10px, calc(var(--P) * 0.034)); }
+.dock-cart .cart-grip { height: 14%; margin: 0 8% 6px; }
+
+/* ============================================
+   Game book
+   ============================================ */
+.game-book {
+  display: flex;
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+  border: 3px solid var(--ink);
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow);
+}
+
+.game-book::before {
+  content: "";
+  flex: 0 0 18px;
+  background: var(--screen-bg);
+  border-right: 3px solid var(--ink);
+}
+
+@media (min-width: 1180px) {
+  .game-book {
+    max-width: 340px;
+    margin-top: 24px;
+  }
+}
+
+.game-book-page {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 22px 26px;
+}
+
+.book-kicker {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.book-title {
+  margin: 0 0 14px;
+  font-family: var(--font-masthead);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.book-hint,
+.book-about p {
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.book-subhead {
+  margin: 20px 0 8px;
+  padding-top: 14px;
+  border-top: 2px solid var(--rule);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.book-controls {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.book-controls dt {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.book-controls dd {
+  margin: 2px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.book-devlog {
+  margin-top: 8px;
+}
+
+/* ============================================
+   Shelf
+   ============================================ */
+.orbit-shelf-section {
+  padding: 32px 0 80px;
+}
+
+.shelf-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.shelf-hint {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.hint-coarse { display: none; }
+
+@media (pointer: coarse) {
+  .hint-fine { display: none; }
+  .hint-coarse { display: inline; }
+}
+
+.shelf {
+  list-style: none;
+  margin: 0;
+  padding: 16px 4px 28px;
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 4px;
+  overscroll-behavior-x: contain;
+}
+
+.shelf > li {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.cart {
+  width: 160px;
+  height: 212px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 3px solid var(--ink);
+  border-radius: 4px 4px 14px 14px;
+  background: var(--cart, var(--signal));
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+@media (min-width: 700px) {
+  .cart {
+    width: 180px;
+    height: 232px;
+  }
+}
+
+.cart:hover,
+.cart:focus-visible {
+  transform: translateY(-8px);
+}
+
+.cart:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 4px;
+}
+
+/* Pins go in first, so they sit on the top edge. */
+.cart-pins {
+  height: 20px;
+  margin: 0 18px;
+  background:
+    repeating-linear-gradient(90deg, var(--steel) 0 7px, transparent 7px 12px) center / 100% 70% no-repeat,
+    var(--screen-bg);
+  border: 2px solid var(--ink);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.cart-label {
+  flex: 1;
+  min-height: 0;
+  margin: 12px 12px 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: var(--paper-raised);
+}
+
+.cart-genre,
+.cart-status {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.cart-status {
+  margin-top: auto;
+  color: var(--ink);
+}
+
+.cart-title {
+  flex-shrink: 0;
+  font-family: var(--font-masthead);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.cart-desc {
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--ink);
+  flex-shrink: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cart-grip {
+  height: 26px;
+  margin: 0 14px 10px;
+  background: repeating-linear-gradient(90deg, var(--cart-grip) 0 4px, transparent 4px 9px);
+}
+
+.shelf-placeholder {
+  width: 160px;
+  height: 212px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border: 3px dashed var(--ink);
+  border-radius: 4px 4px 14px 14px;
+  opacity: 0.55;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink);
+}
+
+@media (min-width: 700px) {
+  .shelf-placeholder {
+    width: 180px;
+    height: 232px;
+  }
+}
+
+/* ============================================
+   Floating "Console" button — shows only while the console is off screen
+   ============================================ */
+.orbit-to-console {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 18px 0 12px;
+  box-sizing: border-box;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper-raised);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.orbit-to-console img {
+  width: 28px;
+  height: auto;
+}
+
+.orbit-to-console:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.orbit-to-console[data-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-to-console {
+    transition: none;
+  }
+  .console-rings,
+  .ring,
+  .console-light,
+  .cart {
+    transition: none;
+  }
+  .screen-cursor,
+  .dock-cart {
+    animation: none;
+  }
 }

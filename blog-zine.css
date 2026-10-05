@@ -9,6 +9,10 @@
    ============================================ */
 
 :root {
+  /* One width for every standalone post/mockup card on the site (homepage
+     blog preview, Work With Me strip, Related Reading) so card images — all
+     4:3 via .zine-card img — render at the same size everywhere. */
+  --card-w: 280px;
   --font-masthead: "Playfair Display", serif;
 }
 
@@ -403,12 +407,40 @@
    ============================================ */
 .blog-sections-preview {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-w)), var(--card-w)));
   gap: 24px;
   margin-bottom: 12px;
 }
 
 .blog-sections-preview .zine-card {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+/* ============================================
+   Homepage "Work With Me" examples strip — reuses .zine-card's look (same
+   as the blog preview above) but as a horizontally-scrollable row instead
+   of a wrapping grid, mirroring /blog's Series row, since this list starts
+   at one card and is expected to grow slowly.
+   ============================================ */
+.examples-scroll {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  scroll-snap-type: x proximity;
+  scrollbar-gutter: stable;
+}
+
+.examples-scroll:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.examples-scroll .zine-card {
+  flex: 0 0 var(--card-w);
+  scroll-snap-align: start;
   border: 1px solid var(--rule);
   border-radius: 6px;
 }
@@ -421,6 +453,15 @@
      the Creator section's h2 carries none, which left that second instance
      flush against the button with no breathing room. */
   margin-bottom: 28px;
+}
+
+/* "Let's Talk" under the Work With Me pitch — sits left-aligned right below
+   the paragraph (not centered at the end of the section), with just enough
+   gap before the mockups heading that follows. */
+.blog-teaser-cta--inline {
+  text-align: left;
+  padding: 8px 0 0;
+  margin-bottom: 4px;
 }
 
 /* Related Reading (bottom of every post) — a horizontally scrollable
@@ -438,7 +479,7 @@
 }
 
 .related-posts-scroll .related-card {
-  flex: 0 0 280px;
+  flex: 0 0 var(--card-w);
   border: 1px solid var(--rule);
   border-radius: 4px;
   scroll-snap-align: start;
@@ -447,6 +488,9 @@
 .zine-card .img-placeholder,
 .zine-card img {
   width: 100%;
+  /* height:auto lets aspect-ratio win over any height="" attribute on the
+     <img> (those attributes are presentational height hints otherwise). */
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   background: var(--tag-bg);

@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El Jalapeño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chango&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<!-- Shared icons -->
+<svg class="icon-sprite" aria-hidden="true">
+  <symbol id="i-pepper" viewBox="0 0 200 400">
+    <path d="M100 66 C 100 36, 112 18, 138 10" class="pep-stem"/>
+    <path d="M66 74 C 56 150, 66 250, 108 330 C 124 362, 140 386, 152 392 C 158 370, 152 336, 148 300 C 142 220, 142 140, 134 74 Z" class="pep-body"/>
+    <ellipse cx="100" cy="74" rx="40" ry="17" class="pep-cap"/>
+    <path d="M84 104 C 82 170, 90 238, 114 298" class="pep-shine"/>
+  </symbol>
+  <symbol id="i-chili" viewBox="0 0 24 24">
+    <path d="M8.5 6c-1.2 5 .2 11 6.3 15.6.9.7 2 .3 1.7-.8C15 15 14.8 9.5 13.5 6z" fill="currentColor"/>
+    <path d="M11 6c0-1.7.9-3 2.6-3.6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" fill="currentColor"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap nav-row">
+    <a class="logo" href="#welcome" aria-label="El Jalapeño home"><svg aria-hidden="true"><use href="#i-pepper"/></svg>El Jalapeño</a>
+    <ul class="nav-links" id="navLinks">
+      <li data-nav="events"><a href="#events">Events</a></li>
+      <li data-nav="menu"><a href="#menu">Menu</a></li>
+      <li data-nav="team"><a href="#team">Team</a></li>
+      <li data-nav="photos"><a href="#photos">Photos</a></li>
+      <li data-nav="reviews"><a href="#reviews">Reviews</a></li>
+      <li data-nav="faq"><a href="#faq">FAQ</a></li>
+      <li data-nav="shop"><a href="#shop">Shop</a></li>
+      <li data-nav="visit"><a href="#visit">Visit Us</a></li>
+    </ul>
+    <button class="btn btn--naranja btn--sm nav-cta" type="button" data-action="reserve">Reserve</button>
+    <button class="icon-btn nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<!-- ============ WELCOME ============ -->
+<section class="hero" id="welcome" aria-label="Welcome">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <p class="kicker"><span>Cocina</span><span>·</span><span>Cantina</span><span>·</span><span>Est. 2014</span></p>
+      <h1>El Jalapeño</h1>
+      <p class="hero-tag">Tacos off the trompo, margaritas with a kick, and a patio that stays loud until close.</p>
+      <div class="open-pill"><span class="dot" aria-hidden="true"></span><span id="heroHours">Open today</span></div>
+      <div class="quick">
+        <a class="btn btn--mantequilla" href="#menu" data-needs="menu">Explore the Menu</a>
+        <a class="btn btn--salsa" href="#order" data-needs="menu">Order Now</a>
+        <a class="btn btn--ghost" href="#events" data-needs="events">View Events</a>
+        <button class="btn btn--ghost" type="button" data-action="reserve">Reserve a Time</button>
+      </div>
+    </div>
+    <svg class="pepper-big" viewBox="0 0 200 400" aria-hidden="true"><use href="#i-pepper"/></svg>
+  </div>
+  <p class="video-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z" fill="currentColor"/></svg>Background video placeholder</p>
+</section>
+
+<!-- ============ EVENTS ============ -->
+<section class="band band--hoja" id="events">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Qué hay de nuevo</p>
+        <h2 class="title">What's On</h2>
+        <p class="lede">Live music, taco nights, and tastings. Flip to the calendar to plan your week.</p>
+      </div>
+      <div class="view-toggle" role="group" aria-label="Events view">
+        <button type="button" data-view="posters" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5" fill="currentColor"/><rect x="14" y="4" width="7" height="16" rx="1.5" fill="currentColor"/></svg>Posters</button>
+        <button type="button" data-view="calendar" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2"/></svg>Calendar</button>
+      </div>
+    </div>
+
+    <div class="event-filters" id="eventFilters" role="group" aria-label="Filter events by category" hidden></div>
+
+    <div id="postersView" class="rail-wrap">
+      <div class="rail" id="rail" tabindex="0" aria-label="Upcoming event flyers"></div>
+      <div class="rail-ctrl">
+        <button class="icon-btn" type="button" id="railPrev" aria-label="Scroll flyers left"><svg aria-hidden="true"><use href="#i-left"/></svg></button>
+        <button class="icon-btn" type="button" id="railNext" aria-label="Scroll flyers right"><svg aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
+    </div>
+
+    <div id="calendarView" hidden>
+      <div class="cal-bar">
+        <p class="cal-range" id="calRange" aria-live="polite"></p>
+        <div class="cal-nav">
+          <button class="btn btn--ghost btn--sm" type="button" id="calPrev"><svg aria-hidden="true"><use href="#i-left"/></svg>Earlier</button>
+          <button class="btn btn--naranja btn--sm" type="button" id="calToday">This week</button>
+          <button class="btn btn--ghost btn--sm" type="button" id="calNext">Later<svg aria-hidden="true"><use href="#i-right"/></svg></button>
+        </div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section class="band band--masa" id="menu">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">La carta</p>
+        <h2 class="title">The Menu</h2>
+        <p class="lede">Corn tortillas pressed in-house every morning. Salsas made from scratch, from mild verde to the habanero we warn you about.</p>
+      </div>
+    </div>
+    <div class="menu-layout">
+      <div>
+        <div class="tabs" role="tablist" aria-label="Menu">
+          <button class="tab" role="tab" id="tab-food" aria-selected="true" aria-controls="menuCats" data-tab="food">Food</button>
+          <button class="tab" role="tab" id="tab-drinks" aria-selected="false" aria-controls="menuCats" data-tab="drinks" tabindex="-1">Drinks</button>
+        </div>
+        <div class="menu-cats" id="menuCats" role="tabpanel" aria-labelledby="tab-food"></div>
+      </div>
+      <aside class="order-card" id="order" aria-label="Order">
+        <h3>Order Now</h3>
+        <p>Call in for pickup, or get delivery through our partners.</p>
+        <div class="phone-row"><span class="num" data-bind="phone"></span><button class="copy-btn" type="button" data-copy="phone">Copy</button></div>
+        <a class="btn btn--naranja" data-bind-href="tel">Call to order</a>
+        <a class="btn btn--salsa" data-bind-href="doordash" target="_blank" rel="noopener">Order on DoorDash</a>
+        <a class="btn btn--chile" data-bind-href="ubereats" target="_blank" rel="noopener">Order on Uber Eats</a>
+        <button class="btn btn--ghost" type="button" id="openFullMenu">View full menu</button>
+        <div class="legend">
+          <span><span class="tag">V</span>Vegetarian</span>
+          <span><span class="tag">GF</span>Gluten-free</span>
+          <span><svg class="chili" aria-hidden="true"><use href="#i-chili"/></svg>Spicy</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section class="band band--mantequilla" id="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">La familia</p>
+        <h2 class="title">Meet the Team</h2>
+        <p class="lede">The cooks, bartenders, and musicians who make a night here what it is.</p>
+      </div>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
+  </div>
+</section>
+
+<!-- ============ PHOTOS ============ -->
+<section class="band band--hoja" id="photos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Fotos</p>
+        <h2 class="title">Photos</h2>
+        <p class="lede">Plates, pours, and patio nights. Click any photo to see it larger.</p>
+      </div>
+    </div>
+    <div class="gallery" id="gallery"></div>
+    <div class="social">
+      <div><strong>@eljalapenocantina</strong><br><span class="social-note">Tag us to get your photo featured here.</span></div>
+      <div class="social-links">
+        <a class="btn btn--ghost btn--sm" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn btn--ghost btn--sm" href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+        <a class="btn btn--ghost btn--sm" href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="band band--masa" id="reviews">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Lo que dicen</p>
+        <h2 class="title">Reviews</h2>
+      </div>
+      <div class="rev-summary">
+        <span class="score">4.8</span>
+        <div>
+          <span class="stars" aria-label="4.8 out of 5 stars" id="summaryStars"></span>
+          <p class="rev-count">Average of 1,284 Google reviews</p>
+          <span class="sample-chip">Sample reviews for this mockup</span>
+        </div>
+      </div>
+    </div>
+    <div class="rev-grid" id="revGrid"></div>
+    <div class="rev-foot"><a class="btn btn--ghost" href="https://www.google.com/maps" target="_blank" rel="noopener">Read all reviews on Google</a></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="band band--mantequilla" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Preguntas</p>
+        <h2 class="title">FAQ</h2>
+      </div>
+    </div>
+    <div class="faq-layout">
+      <aside class="faq-aside">
+        <h3>Planning a big night?</h3>
+        <p>For parties of 9 or more, or to book the patio for a private event, give us a call and we'll set it up.</p>
+        <button class="btn btn--naranja" type="button" data-action="reserve">Reserve a Time</button>
+      </aside>
+      <div>
+        <div class="faq-group">
+          <h3>Reservations &amp; large parties</h3>
+          <details><summary>Do you take reservations?</summary><p>Yes. Book online for parties of up to 8. Walk-ins are always welcome, and we hold about half the dining room and all of the bar for them.</p></details>
+          <details><summary>How do I book for a large group?</summary><p>For 9 to 25 guests, call us at least three days ahead. We'll hold a section and can set up a family-style taco spread.</p></details>
+          <details><summary>Can I rent the patio for a private event?</summary><p>The patio holds up to 60 guests standing or 40 seated. Birthdays, rehearsal dinners, and work parties are all fair game. Call or email for packages.</p></details>
+        </div>
+        <div class="faq-group">
+          <h3>Dietary options</h3>
+          <details><summary>Do you have vegetarian or vegan dishes?</summary><p>Plenty. Look for the V on the menu. Our coliflor al carbón tacos and enchiladas verdes can be made vegan on request.</p></details>
+          <details><summary>Is the menu gluten-free friendly?</summary><p>Our corn tortillas are made in-house and are gluten-free. The fryer is shared, so chips and churros are not safe for celiac guests.</p></details>
+          <details><summary>What about food allergies?</summary><p>Tell your server and the kitchen will walk you through it. Our mole poblano contains peanuts, almonds, and sesame.</p></details>
+        </div>
+        <div class="faq-group">
+          <h3>Policies</h3>
+          <details><summary>Do I need an ID?</summary><p>Yes, to order alcohol. After 10pm on Fridays and Saturdays the whole place is 21 and up.</p></details>
+          <details><summary>Is there a dress code?</summary><p>No. Come as you are. Flip-flops on the patio are standard.</p></details>
+          <details><summary>Can I bring my dog?</summary><p>Leashed, friendly dogs are welcome on the patio. We'll bring out a water bowl.</p></details>
+          <details><summary>Is there a cover charge?</summary><p>Never on regular nights. A few special events, like the mezcal tasting, are ticketed and marked on the events calendar.</p></details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOP ============ -->
+<section class="band band--masa" id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">La tienda</p>
+        <h2 class="title">Shop</h2>
+        <p class="lede">Take a little El Jalapeño home. Merch ships in 3 to 5 days, or pick it up at the bar.</p>
+      </div>
+      <span class="cart-pill" id="cartPill" aria-live="polite"><svg aria-hidden="true"><use href="#i-bag"/></svg><span id="cartText">Cart is empty</span></span>
+    </div>
+    <div id="shopStore"><div class="shop-grid" id="shopGrid"></div></div>
+    <div id="shopLink" hidden>
+      <div class="shop-link">
+        <div>
+          <h3>Merch, salsa &amp; gift cards</h3>
+          <p>Our online store has shirts, hats, jars of our salsa macha, and gift cards in any amount.</p>
+        </div>
+        <a class="btn btn--mantequilla" data-bind-href="store" target="_blank" rel="noopener">Visit our store</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISIT US ============ -->
+<section class="band band--hoja" id="visit">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Ven a vernos</p>
+        <h2 class="title">Visit Us</h2>
+        <p class="lede" data-bind="address"></p>
+      </div>
+    </div>
+    <div class="visit-grid">
+      <div>
+        <div class="map">
+          <svg viewBox="0 0 600 400" role="img" aria-label="Map of El Jalapeño on Calle Verde between 6th and 7th Street, with the Calle Verde closure and detour marked">
+            <rect class="map-bg" width="600" height="400"/>
+            <rect class="map-park" x="480" y="250" width="110" height="130" rx="10"/>
+            <text class="map-label" x="494" y="322">PLAZA VERDE</text>
+            <!-- roads -->
+            <path class="map-road" d="M0 70H600" stroke-width="16"/>
+            <path class="map-road" d="M0 200H600" stroke-width="26"/>
+            <path class="map-road" d="M0 330H470" stroke-width="16"/>
+            <path class="map-road" d="M100 0V400" stroke-width="16"/>
+            <path class="map-road" d="M290 0V400" stroke-width="16"/>
+            <path class="map-road" d="M470 0V400" stroke-width="16"/>
+            <path class="map-road" d="M395 70V120" stroke-width="10"/>
+            <!-- construction -->
+            <rect x="120" y="186" width="152" height="28" rx="4" class="map-closure"/>
+            <path d="M130 186l-10 28M150 186l-10 28M170 186l-10 28M190 186l-10 28M210 186l-10 28M230 186l-10 28M250 186l-10 28M270 186l-10 28" class="map-stripes"/>
+            <text class="map-label" x="136" y="236">CLOSED FOR CONSTRUCTION</text>
+            <!-- detour -->
+            <path class="map-detour" d="M18 200H100V70H290V200H372"/>
+            <text class="map-label map-label--detour" x="150" y="58">DETOUR</text>
+            <!-- parking lot -->
+            <rect class="map-lot" x="350" y="118" width="92" height="56" rx="6"/>
+            <text x="396" y="154" text-anchor="middle" class="map-lot-label">P</text>
+            <!-- street names -->
+            <text class="map-label" x="310" y="62">MAIN AVE</text>
+            <text class="map-label" x="486" y="192">CALLE VERDE</text>
+            <text class="map-label" x="310" y="322">PECAN ST</text>
+            <text class="map-label" x="106" y="392">5TH ST</text>
+            <text class="map-label" x="296" y="392">6TH ST</text>
+            <text class="map-label" x="476" y="392">7TH ST</text>
+            <!-- pin -->
+            <circle class="map-pulse" cx="390" cy="200" r="16"/>
+            <path class="map-pin" d="M390 206c-12-14-18-23-18-31a18 18 0 0136 0c0 8-6 17-18 31z"/>
+            <circle cx="390" cy="175" r="7" class="map-pin-dot"/>
+            <rect x="330" y="214" width="120" height="26" rx="13" class="map-tag"/>
+            <text x="390" y="232" text-anchor="middle" class="map-tag-text">El Jalapeño</text>
+          </svg>
+          <a class="btn btn--salsa btn--sm" data-bind-href="maps" target="_blank" rel="noopener">Open in Google Maps</a>
+        </div>
+        <div class="notice" id="constructionNotice">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 17H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5M12 17v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          <div>
+            <h3>Road work on Calle Verde</h3>
+            <p>Calle Verde is closed between 5th and 6th St for utility work through mid-November. Coming from the west, take Main Ave to 6th St, then turn left onto Calle Verde. The lot entrance on Main Ave stays open.</p>
+          </div>
+        </div>
+        <div class="info-cards">
+          <div class="info-card">
+            <h3>Parking</h3>
+            <ul>
+              <li>Free lot behind the building, 32 spaces. Enter from Main Ave.</li>
+              <li>Street parking on Calle Verde is free after 6pm.</li>
+              <li>Bike racks next to the patio gate.</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3>Getting here</h3>
+            <ul>
+              <li>Bus 22 stops at Calle Verde &amp; 7th St, a one-minute walk.</li>
+              <li>Rideshare drop-off is at the front door.</li>
+              <li>Two blocks from Plaza Verde.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="visit-h">Hours</h3>
+        <table class="hours" id="hoursTable"><tbody></tbody></table>
+        <ul class="contact-list">
+          <li><div><small>Phone</small><span class="val" data-bind="phone"></span></div><button class="copy-btn" type="button" data-copy="phone">Copy</button></li>
+          <li><div><small>Email</small><span class="val" data-bind="email"></span></div><button class="copy-btn" type="button" data-copy="email">Copy</button></li>
+          <li><div><small>Address</small><span class="val" data-bind="address"></span></div><button class="copy-btn" type="button" data-copy="address">Copy</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <form class="form-card" id="contactForm" novalidate>
+      <h3>Send us an email</h3>
+      <p>Questions, catering, private events, or a shout-out for your server. We reply within a day.</p>
+      <div class="form-grid">
+        <div class="field"><label for="cf-name">Name</label><input id="cf-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field full"><label for="cf-topic">Topic</label>
+          <select id="cf-topic" name="topic"><option>General question</option><option>Private event or patio rental</option><option>Catering</option><option>Feedback</option><option>Jobs</option></select></div>
+        <div class="field full"><label for="cf-msg">Message</label><textarea id="cf-msg" name="message" rows="5" required></textarea></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn--salsa" type="submit">Send message</button>
+        <p class="form-status" id="formStatus" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#welcome"><svg aria-hidden="true"><use href="#i-pepper"/></svg>El Jalapeño</a>
+        <p class="foot-tag">Cocina y cantina on Calle Verde.</p>
+      </div>
+      <div><h4>Hours</h4><p id="footHours"></p></div>
+      <div><h4>Find us</h4><p data-bind="address"></p><p data-bind="phone"></p></div>
+      <div><h4>Follow</h4>
+        <div class="foot-links"><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></div>
+      </div>
+    </div>
+    <div class="foot-note"><span>© <span id="year"></span> El Jalapeño</span><span>Concept mockup. El Jalapeño is a fictional restaurant.</span></div>
+  </div>
+</footer>
+
+<!-- Customize panel -->
+<button class="cust-btn" type="button" id="custBtn" aria-expanded="false" aria-controls="custPanel">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  Customize
+</button>
+<div class="cust-panel" id="custPanel" hidden>
+  <h2>Customize this site</h2>
+  <p>Turn sections on or off to fit the business. The header links update to match.</p>
+  <h3>Sections</h3>
+  <div id="swList"></div>
+  <h3>Shop style</h3>
+  <div class="seg">
+    <label><input type="radio" name="shopMode" id="shopModeStore" value="store"><span>Storefront</span></label>
+    <label><input type="radio" name="shopMode" id="shopModeLink" value="link"><span>Link to store</span></label>
+  </div>
+  <h3>Notices</h3>
+  <label class="sw-row" for="sw-notice">Construction notice<input class="sw" type="checkbox" role="switch" id="sw-notice"></label>
+  <div class="cust-foot">
+    <button class="link-btn" type="button" id="custReset">Reset all</button>
+    <button class="btn btn--salsa btn--sm" type="button" id="custClose">Done</button>
+  </div>
+</div>
+
+<!-- Full menu dialog -->
+<dialog id="fullMenu" aria-labelledby="fmTitle">
+  <div class="dlg-bar"><h2 id="fmTitle">Full menu</h2><button class="icon-btn" type="button" data-close aria-label="Close menu"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="dlg-body">
+    <div class="print-menu">
+      <header><div class="pm-name">El Jalapeño</div><p>Cocina · Cantina · Calle Verde</p></header>
+      <div class="pm-cols" id="printMenu"></div>
+    </div>
+    <p class="pm-note">Swap this panel for the restaurant's own PDF menu.</p>
+  </div>
+</dialog>
+
+<!-- Lightbox -->
+<dialog id="lightbox" aria-labelledby="lbCap">
+  <div class="dlg-bar"><h2>Photos</h2><button class="icon-btn" type="button" data-close aria-label="Close photo"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="dlg-body">
+    <div class="lightbox-art" id="lbArt" role="img"></div>
+    <div class="lb-foot">
+      <p id="lbCap"></p>
+      <div class="lb-nav">
+        <button class="icon-btn" type="button" id="lbPrev" aria-label="Previous photo"><svg aria-hidden="true"><use href="#i-left"/></svg></button>
+        <button class="icon-btn" type="button" id="lbNext" aria-label="Next photo"><svg aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Reserve dialog -->
+<dialog id="reserve" aria-labelledby="resTitle">
+  <div class="dlg-bar"><h2 id="resTitle">Reserve a table</h2><button class="icon-btn" type="button" data-close aria-label="Close reservation form"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="dlg-body">
+    <form id="resForm">
+      <div class="form-grid">
+        <div class="field"><label for="rs-date">Date</label><input type="date" id="rs-date" required></div>
+        <div class="field"><label for="rs-time">Time</label><select id="rs-time"></select></div>
+        <div class="field"><label for="rs-size">Party size</label>
+          <select id="rs-size"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+        <div class="field"><label for="rs-seat">Seating</label>
+          <select id="rs-seat"><option>No preference</option><option>Dining room</option><option>Patio</option><option>Bar</option></select></div>
+        <div class="field full"><label for="rs-name">Name</label><input id="rs-name" autocomplete="name" required></div>
+      </div>
+      <div class="form-actions"><button class="btn btn--salsa" type="submit">Request table</button><span class="form-hint">9 or more? Call us.</span></div>
+    </form>
+    <div class="res-done" id="resDone" hidden></div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+</body>
+</html>

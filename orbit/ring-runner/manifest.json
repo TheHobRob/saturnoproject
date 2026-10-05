@@ -1,0 +1,32 @@
+{
+  "id": "ring-runner",
+  "title": "Ring Runner",
+  "genre": "Action",
+  "description": "Side-scrolling action along Saturn's rings.",
+  "color": "#5D6A39",
+  "status": "prototype",
+  "path": "/orbit/ring-runner/",
+  "files": [
+    "manifest.json",
+    "../engine.js",
+    "game.js",
+    "palette.js"
+  ],
+  "book": {
+    "about": "Race along Saturn's rings, dodging debris and firing back. Survive each wave, chase a high score, and face the boss at the end of the belt.",
+    "controls": [
+      {
+        "input": "Move",
+        "how": "Left-thumb joystick on touch screens, or arrow keys / WASD"
+      },
+      {
+        "input": "A: Fire",
+        "how": "The A button, or Z"
+      },
+      {
+        "input": "B: Dash",
+        "how": "The B button, or Space"
+      }
+    ]
+  }
+}

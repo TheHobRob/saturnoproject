@@ -34,7 +34,7 @@
       { "text": ", an " },
       { "text": "affiliate link", "link": "https://example.com/product", "affiliate": true },
       { "text": ", and an " },
-      { "text": "internal post link", "postLink": "my-first-post" },
+      { "text": "internal post link", "postLink": "from-scratch" },
       { "text": "." }
     ]},
 

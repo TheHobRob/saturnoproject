@@ -14,8 +14,8 @@
   "excerpt": "Charisma. Uniqueness. Nerve. Talent. Long ago in the year 2013, I had none of these qualities. I came across a Q&A video on the web. The question asked: “Are you watching the current season of Drag Race? If so, who are you rooting for to snatch the crown?” A crown? For drag racing? No, this was something much much gayer.",
   "metaDescription": "How a decade of Drag Race fandom turned into a real database of queens, seasons, and track records — and then into a full simulator.",
   "heroImage": {
-    "src": "../images/Drag-Race-Track-Record-Snippet.png",
-    "alt": "Hero photo for Drag Race: The Simulator — pending"
+    "src": "../images/posts/drag-race-the-simulation.png",
+    "alt": "Spreadsheet of Season 5 track records for the US version of Drag Race, one row per queen with her placement each episode (SAFE, TOP, WIN, BTM, ELIM)"
   },
   "body": [
     { "type": "paragraph", "runs": [

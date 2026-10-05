@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DRAGG Simulator — The Saturno Project</title>
+<meta name="description" content="DRAGG Simulator: build a cast, pick your season twists, and simulate an elimination-style reality competition episode by episode. A project from The Saturno Project's Orbit console.">
+<link rel="canonical" href="https://saturnoproject.com/orbit/drag-race-simulator/">
+<link rel="icon" type="image/svg+xml" href="../../images/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32.png">
+<link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Saturno Project">
+<meta property="og:title" content="DRAGG Simulator — The Saturno Project">
+<meta property="og:description" content="Build a cast and simulate an elimination-style reality competition, episode by episode.">
+<meta property="og:url" content="https://saturnoproject.com/orbit/drag-race-simulator/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Orbit power button — the site logo, fixed bottom-left on every Orbit
+   project page. Returns to the Orbit console with this cartridge loaded. */
+.orbit-power {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 600;
+  width: 52px;
+  height: 52px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #F2ECDD;
+  border-radius: 50%;
+  background: #2E2517;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+.orbit-power img { display: block; width: 36px; height: auto; filter: drop-shadow(0 0 4px #8FA35E); }
+.orbit-power:focus-visible { outline: 3px solid #8FA35E; outline-offset: 3px; }
+/* Orbit handoff: fade in from the console's ink after Start Game. */
+@keyframes orbit-enter { from { opacity: 0; } }
+#root, .orbit-power { animation: orbit-enter 0.18s ease-out both; }
+@media (prefers-reduced-motion: reduce) { #root, .orbit-power { animation: none; } }
+
+</style>
+</head>
+<body>
+<a class="orbit-power" href="../index.html?cart=drag-race-simulator#console-section" aria-label="Power off and return to the Orbit console" title="Back to Orbit">
+  <img src="../../images/logo.svg" alt="" width="36" height="36">
+</a>
+<div id="root">
+
+  <section id="page-setup" class="page">
+    <div class="setup-topbar" id="setup-topbar">
+      <nav class="topnav" aria-label="Setup sections">
+        <a class="topnav-link" href="#sec-twists" data-target="sec-twists">Twists</a>
+        <a class="topnav-link" href="#sec-cast" data-target="sec-cast">Current Cast</a>
+        <a class="topnav-link" href="#sec-roster" data-target="sec-roster">Full Roster</a>
+      </nav>
+      <div class="continue-group continue-group-top">
+        <div class="mismatch-msg hidden" id="mismatch-msg"></div>
+        <button class="btn-continue btn-continue-bar" id="continue-btn" data-action="runSimulation">Start Race &rarr;</button>
+      </div>
+    </div>
+
+    <div class="setup-header">
+      <div class="header-row">
+        <div>
+          <div class="display page-title">CASTING CALL</div>
+          <div class="subtitle">Set your season, then build your cast from the roster below.</div>
+        </div>
+        <div class="header-actions">
+          <div class="mode-toggle" id="mode-toggle">
+            <button class="mode-btn" data-action="setMode" data-mode="custom">Custom</button>
+            <button class="mode-btn" data-action="setMode" data-mode="replica5">Replica S5</button>
+            <button class="mode-btn" data-action="setMode" data-mode="replica6">Replica S6</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="sec-twists">
+        <div class="panel-label">Season Twists</div>
+        <div class="replica-hint hidden" id="replica-hint">Auto-filled from <span id="replica-hint-label"></span> &mdash; edit anything to switch to Custom.</div>
+
+        <div id="twist-list">
+          <div class="twist-subgroup" data-subgroup="premiere">
+            <div class="twist-subgroup-label">Premiere Twists</div>
+
+            <div class="twist-row" data-twist="split">
+              <button class="twist-toggle" data-action="toggleTwist" data-key="split">
+                <span class="checkbox"><svg class="check-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#150310" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span>
+                  <div class="twist-title">Split Premiere</div>
+                  <div class="twist-desc">The cast starts divided into premiere groups. Each group competes in its own episode before everyone merges into one cast.</div>
+                </span>
+              </button>
+              <div class="twist-extra">
+                <div class="field">
+                  <label>Groups</label>
+                  <input type="number" min="2" max="4" data-action="twistField" data-key="split" data-field="groups">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="twist-subgroup" data-subgroup="midseason">
+            <div class="twist-subgroup-label">Mid-Season Twists</div>
+
+            <div class="twist-row" data-twist="immunity">
+              <button class="twist-toggle" data-action="toggleTwist" data-key="immunity">
+                <span class="checkbox"><svg class="check-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#150310" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span>
+                  <div class="twist-title">Immunity</div>
+                  <div class="twist-desc">The challenge winner cannot land in the bottom two on the next episode.</div>
+                </span>
+              </button>
+              <div class="twist-extra">
+                <div class="field">
+                  <label>Twist active through episode</label>
+                  <input type="number" min="1" max="20" data-action="twistField" data-key="immunity" data-field="endsAfterEpisode">
+                </div>
+              </div>
+            </div>
+
+            <div class="twist-row" data-twist="doubleElimination">
+              <button class="twist-toggle" data-action="toggleTwist" data-key="doubleElimination">
+                <span class="checkbox"><svg class="check-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#150310" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span>
+                  <div class="twist-title">Double Elimination</div>
+                  <div class="twist-desc">Both queens in the bottom two are eliminated instead of lip syncing.</div>
+                </span>
+              </button>
+              <div class="twist-extra">
+                <div class="field field-occurrences">
+                  <label>Occurrences</label>
+                  <input type="number" min="1" max="5" data-action="twistField" data-key="doubleElimination" data-field="occurrences">
+                </div>
+                <div class="field field-episode">
+                  <label>Fires at episode</label>
+                  <input type="number" min="1" max="20" data-action="twistField" data-key="doubleElimination" data-field="episode">
+                </div>
+                <div class="field">
+                  <label>Trigger</label>
+                  <select data-action="twistField" data-key="doubleElimination" data-field="fireMode">
+                    <option value="guaranteed">Random eligible episode</option>
+                    <option value="custom">Chance each eligible episode</option>
+                    <option value="forced">Fixed episode</option>
+                  </select>
+                </div>
+                <div class="field field-probability">
+                  <label>Chance / eligible episode</label>
+                  <input type="number" min="1" max="100" data-action="twistField" data-key="doubleElimination" data-field="probability">
+                  <span class="unit">%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="twist-row" data-twist="doubleSave">
+              <button class="twist-toggle" data-action="toggleTwist" data-key="doubleSave">
+                <span class="checkbox"><svg class="check-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#150310" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span>
+                  <div class="twist-title">Double Save</div>
+                  <div class="twist-desc">Both queens in the bottom two are safe instead of lip syncing.</div>
+                </span>
+              </button>
+              <div class="twist-extra">
+                <div class="field field-occurrences">
+                  <label>Occurrences</label>
+                  <input type="number" min="1" max="5" data-action="twistField" data-key="doubleSave" data-field="occurrences">
+                </div>
+                <div class="field field-episode">
+                  <label>Fires at episode</label>
+                  <input type="number" min="1" max="20" data-action="twistField" data-key="doubleSave" data-field="episode">
+                </div>
+                <div class="field">
+                  <label>Trigger</label>
+                  <select data-action="twistField" data-key="doubleSave" data-field="fireMode">
+                    <option value="guaranteed">Random eligible episode</option>
+                    <option value="custom">Chance each eligible episode</option>
+                    <option value="forced">Fixed episode</option>
+                  </select>
+                </div>
+                <div class="field field-probability">
+                  <label>Chance / eligible episode</label>
+                  <input type="number" min="1" max="100" data-action="twistField" data-key="doubleSave" data-field="probability">
+                  <span class="unit">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="twist-subgroup" data-subgroup="finale">
+            <div class="twist-subgroup-label">Finale Twists</div>
+
+            <div class="twist-row" data-twist="semifinal">
+              <button class="twist-toggle" data-action="toggleTwist" data-key="semifinal">
+                <span class="checkbox"><svg class="check-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#150310" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span>
+                  <div class="twist-title">Semi-Final Four-Way</div>
+                  <div class="twist-desc">When four queens remain, all four lip sync and one goes home.</div>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-row" id="sec-cast">
+        <div class="field">
+          <label>Cast size</label>
+          <input type="number" min="8" max="24" id="cast-size-input" data-action="setCastSize">
+        </div>
+        <div class="progress-field">
+          <div class="progress-labels"><span>Cast selected</span><span id="progress-count"></span></div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="cast-section">
+        <div class="panel-label">Current Cast</div>
+        <div id="cast-cards" class="cast-cards hidden" data-scroll-id="cast-cards"></div>
+        <div id="no-cast-msg" class="empty-msg">No queens selected yet &mdash; pick from the roster below.</div>
+      </div>
+
+      <div class="split-groups-section hidden" id="split-groups-section">
+        <div class="split-groups-header">
+          <div class="panel-label">Split Premiere Groups</div>
+          <button class="btn-random-groups" data-action="randomizeSplitGroups" type="button">Randomly Select</button>
+        </div>
+        <div class="split-groups-hint">Select one or more queens, then assign them to a premiere group.</div>
+        <div id="split-groups-toolbar"></div>
+        <div id="split-groups-columns" class="split-groups-columns"></div>
+      </div>
+    </div>
+
+    <div class="roster-section" id="sec-roster">
+      <div class="roster-toolbar">
+        <div class="display roster-title">FULL ROSTER</div>
+        <div class="search-box">
+          <input type="text" id="search-input" placeholder="Search name or hometown&hellip;" data-action="setQuery">
+        </div>
+        <div class="field-inline">
+          <label>Sort</label>
+          <select id="sort-select" data-action="setSortBy">
+            <option value="alpha">Alphabetical</option>
+            <option value="season">By Season</option>
+          </select>
+        </div>
+        <div class="field-inline">
+          <label>Season</label>
+          <select id="season-select" data-action="setFilterSeason">
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="field-inline">
+          <label>Country</label>
+          <select id="country-select" data-action="setFilterCountry">
+            <option value="all">All</option>
+          </select>
+        </div>
+        <button class="btn-add-filtered" data-action="addAllFiltered">Add All Shown</button>
+        <button class="btn-clear-cast" data-action="clearCast">Clear Cast</button>
+        <button class="btn-random-cast" data-action="randomCast" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+          Random Cast
+        </button>
+        <div class="queen-count" id="queen-count"></div>
+      </div>
+      <div id="roster-grid" class="roster-grid" data-scroll-id="roster"></div>
+    </div>
+  </section>
+
+  <section id="page-results" class="page hidden">
+    <div class="results-header">
+      <div>
+        <div class="display results-title">THE SEASON</div>
+        <div class="subtitle" id="results-subtitle"></div>
+      </div>
+      <button class="btn-back" data-action="backToSetup">&larr; Back to Setup</button>
+    </div>
+    <div id="episodes-list" class="episodes-list"></div>
+
+    <div id="winner-banner" class="winner-banner hidden">
+      <div class="winner-avatar avatar" id="winner-avatar"></div>
+      <div>
+        <div class="winner-label">Winner</div>
+        <div class="display winner-name" id="winner-name"></div>
+      </div>
+      <div class="spacer"></div>
+      <div class="runner-ups-block">
+        <div class="runner-ups-label" id="runner-ups-label">Runner-Up</div>
+        <div class="runner-ups" id="runner-ups"></div>
+      </div>
+    </div>
+
+    <div class="track-record" id="track-record">
+      <div class="display track-record-title">Season Track Record</div>
+      <div class="track-record-scroll">
+        <table class="track-table">
+          <thead id="track-table-head"></thead>
+          <tbody id="track-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <button type="button" id="scroll-top-btn" class="btn-scroll-top" data-action="scrollToTop" aria-label="Back to top" title="Back to top">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+  </button>
+
+</div>
+
+<script src="dragg_data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

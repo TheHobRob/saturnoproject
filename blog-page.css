@@ -53,7 +53,9 @@
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--steel);
+  /* Dark-mode --steel value: the hero stays dark in both themes, and
+     light-mode --steel (#705729) is only ~2.2:1 on it. This is ~7.8:1. */
+  color: #D4B67F;
   margin: 0 0 12px;
 }
 
@@ -89,8 +91,8 @@
   z-index: 1;
   width: 26px;
   height: 26px;
-  border-right: 2px solid var(--steel);
-  border-bottom: 2px solid var(--steel);
+  border-right: 2px solid #D4B67F;
+  border-bottom: 2px solid #D4B67F;
   transform: translateX(-50%) rotate(45deg);
   animation: blog-hero-cue-bob 2s ease-in-out infinite;
 }

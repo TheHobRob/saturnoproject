@@ -14,5 +14,12 @@ CLAUDE.md
 .DS_Store
 Thumbs.db
 
-# Photo Editor
+# Photo Editor & OG Photos
 duotone.py
+images/posts/*-color-original.*
+images/websites/*.png
+
+# Unreleased content
+orbit/wire-game/
+orbit/drag-race-simulator/build.js
+orbit/drag-race-simulator/sheet-data

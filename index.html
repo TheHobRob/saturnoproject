@@ -49,6 +49,7 @@
       <a href="#about">About</a>
       <a href="#blog">Blog</a>
       <a href="#creator">Creator</a>
+      <a href="#work-with-me">Work With Me</a>
       <a href="#contact">Contact</a>
       <a href="#legal" class="legal-link">Legal</a>
     </nav>
@@ -90,7 +91,7 @@
       <h2 class="section-title fade-section">The Saturno Blog</h2>
 
       <div class="blog-teaser-cta fade-section">
-        <a href="blog/index.html" class="contact-btn contact-btn-primary" alt="" class="contact-btn-icon">Browse the Blog &rarr;</a>
+        <a href="blog/index.html" class="contact-btn contact-btn-primary"><img src="images/logo.svg" alt="" class="contact-btn-icon">Browse the Blog &rarr;</a>
       </div>
 
       <p class="explore-heading fade-section">Recently Published...</p>
@@ -138,7 +139,7 @@
           <p>A data-driven simulation modeling contestant scoring and elimination logic. In development.</p>
           <div class="side-project-actions">
             <a class="contact-btn contact-btn-sm" href="blog/index.html?series=DragRaceSimulator">Go to the Blog Series &rarr;</a>
-            <a class="contact-btn contact-btn-sm" href="orbit/drag-race-simulator.html">Go to the Project Page &rarr;</a>
+            <a class="contact-btn contact-btn-sm" href="orbit/index.html?cart=drag-race-simulator#console-section">Go to the Project Page &rarr;</a>
           </div>
         </div>
         <div class="skills-group fade-section">
@@ -151,7 +152,32 @@
         </div>
       </div>
       <div class="blog-teaser-cta fade-section">
-        <a href="orbit/index.html" class="contact-btn contact-btn-primary" alt="" class="contact-btn-icon">Browse Projects in Orbit &rarr;</a>
+        <a href="orbit/index.html" class="contact-btn contact-btn-primary"><img src="images/logo.svg" alt="" class="contact-btn-icon">Browse Projects in Orbit &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="work-with-me">
+    <div class="wrap">
+      <h2 class="section-title fade-section">Work With Me</h2>
+      <p class="intro-lead fade-section">I build fast, static websites with an optional database including: portfolios, blogs, and small businesses. Everything is deployed on GitHub Pages with a custom domain.</p>
+
+      <div class="blog-teaser-cta blog-teaser-cta--inline fade-section">
+        <a href="#contact" class="contact-btn contact-btn-primary" data-contact-reason="Website Inquiry">Let's Talk &rarr;</a>
+      </div>
+
+      <p class="explore-heading fade-section">Concept mockups &mdash; not live client work</p>
+      <div class="examples-scroll" role="region" tabindex="0" aria-label="Example mockup sites">
+        <article class="zine-card fade-section">
+          <img src="images/websites/el-jalapeno-card.jpg" alt="El Jalape&ntilde;o concept site homepage: cocina and cantina hero with Explore the Menu, Order Now, and Reserve a Time buttons" width="800" height="600" loading="lazy">
+          <p class="zine-byline">Restaurant</p>
+          <h3><a href="examples/el-jalapeno/index.html" target="_blank" rel="noopener">El Jalape&ntilde;o</a></h3>
+          <p>A concept restaurant site &mdash; menu, events, reservations, and a full ordering flow.</p>
+          <div class="zine-feature-meta">
+            <span>Concept</span>
+            <a class="zine-feature-link" href="examples/el-jalapeno/index.html" target="_blank" rel="noopener">View live &rarr;</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -173,6 +199,7 @@
             <span class="postmark">Grand Rapids, MI</span>
           </div>
           <p class="mail-sheet-label">Send us a Letter</p>
+          <input type="hidden" name="_subject" value="Saturno Project — General message">
           <label class="mail-sheet-field">
             <span>Name</span>
             <input type="text" name="name" autocomplete="name" required>
@@ -180,6 +207,15 @@
           <label class="mail-sheet-field">
             <span>Email</span>
             <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label class="mail-sheet-field">
+            <span>Reason</span>
+            <select name="reason" id="contact-reason">
+              <option value="General" selected>General</option>
+              <option value="Website inquiry">Website Inquiry</option>
+              <option value="Collaboration">Collaboration</option>
+              <option value="Blog">The Blog</option>
+            </select>
           </label>
           <label class="mail-sheet-field">
             <span>Message</span>
@@ -255,6 +291,29 @@
   // Both mail-sheet forms submit to Formspree via fetch (rather than a plain
   // HTML POST) so a submission can show its result inline as a mail-sheet-note
   // instead of navigating away to formspree.io.
+  // Contact "Reason" dropdown: the email subject line follows the selection
+  // (Formspree reads the _subject field), and any link carrying
+  // data-contact-reason (e.g. Work With Me's "Let's Talk") pre-selects its
+  // reason before jumping to the form.
+  var reasonSelect = document.getElementById("contact-reason");
+  if (reasonSelect) {
+    var subjectInput = reasonSelect.form.querySelector('input[name="_subject"]');
+    var syncSubject = function () {
+      if (subjectInput) {
+        subjectInput.value = "Saturno Project \u2014 " + reasonSelect.value +
+          (reasonSelect.value === "General" ? " message" : "");
+      }
+    };
+    reasonSelect.addEventListener("change", syncSubject);
+    reasonSelect.form.addEventListener("reset", function () { setTimeout(syncSubject, 0); });
+    document.querySelectorAll("[data-contact-reason]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        reasonSelect.value = link.dataset.contactReason;
+        syncSubject();
+      });
+    });
+  }
+
   document.querySelectorAll(".mail-sheet").forEach(function (form) {
     var note = form.querySelector(".mail-sheet-note");
     var submitBtn = form.querySelector(".mail-sheet-submit");
