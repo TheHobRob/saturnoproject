@@ -41,6 +41,19 @@
 @keyframes orbit-enter { from { opacity: 0; } }
 #root, .orbit-power { animation: orbit-enter 0.18s ease-out both; }
 @media (prefers-reduced-motion: reduce) { #root, .orbit-power { animation: none; } }
+/* On the setup page the home button lives in the top-left of the sticky
+   header instead of floating bottom-left; the floating one stays for the
+   results page, which has no header bar. */
+body[data-view="setup"] > .orbit-power { display: none; }
+.orbit-power.orbit-power-bar {
+  position: static; flex: 0 0 auto; width: 44px; height: 44px;
+  border-width: 2px; box-shadow: none; animation: none;
+}
+.orbit-power.orbit-power-bar img { width: 28px; }
+@media (max-width: 480px) {
+  .orbit-power.orbit-power-bar { width: 38px; height: 38px; }
+  .orbit-power.orbit-power-bar img { width: 24px; }
+}
 
 </style>
 </head>
@@ -52,14 +65,25 @@
 
   <section id="page-setup" class="page">
     <div class="setup-topbar" id="setup-topbar">
-      <nav class="topnav" aria-label="Setup sections">
-        <a class="topnav-link" href="#sec-twists" data-target="sec-twists">Twists</a>
-        <a class="topnav-link" href="#sec-cast" data-target="sec-cast">Current Cast</a>
-        <a class="topnav-link" href="#sec-roster" data-target="sec-roster">Full Roster</a>
-      </nav>
+      <div class="topbar-left">
+        <a class="orbit-power orbit-power-bar" href="../index.html?cart=drag-race-simulator#console-section" aria-label="Power off and return to the Orbit console" title="Back to Orbit">
+          <img src="../../images/logo.svg" alt="" width="28" height="28">
+        </a>
+        <div class="topnav-wrap" id="topnav-wrap">
+          <button type="button" class="topnav-toggle" id="topnav-toggle" aria-expanded="false" aria-controls="topnav">
+            <span id="topnav-toggle-label">Sections</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <nav class="topnav" id="topnav" aria-label="Setup sections">
+            <a class="topnav-link" href="#sec-twists" data-target="sec-twists">Twists</a>
+            <a class="topnav-link" href="#sec-cast" data-target="sec-cast">Current Cast</a>
+            <a class="topnav-link" href="#sec-roster" data-target="sec-roster">Full Roster</a>
+          </nav>
+        </div>
+      </div>
       <div class="continue-group continue-group-top">
-        <div class="mismatch-msg hidden" id="mismatch-msg"></div>
-        <button class="btn-continue btn-continue-bar" id="continue-btn" data-action="runSimulation">Start Race &rarr;</button>
+        <button class="btn-continue btn-continue-bar" id="continue-btn" data-action="runSimulation"><span class="btn-word">Start</span> <span class="btn-word">Race&nbsp;&rarr;</span></button>
+        <div class="mismatch-pop" id="mismatch-pop" role="status" aria-live="polite" hidden></div>
       </div>
     </div>
 

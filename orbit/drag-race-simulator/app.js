@@ -1117,6 +1117,7 @@ function renderTrackRecord(sim, cast, namesById) {
 }
 
 function render() {
+  document.body.dataset.view = state.view;
   const setupPage = document.getElementById('page-setup');
   const resultsPage = document.getElementById('page-results');
   if (state.view === 'setup') {
@@ -1173,13 +1174,15 @@ function renderSetup() {
   document.getElementById('progress-count').textContent = `${d.selectedCount} / ${d.targetSize}`;
   document.getElementById('progress-fill').style.width = `${d.targetSize > 0 ? Math.min(100, Math.round(d.selectedCount / d.targetSize * 100)) : 0}%`;
 
+  // Start Race stays clickable while the cast isn't ready (aria-disabled
+  // rather than disabled) so a press can explain why via the popup.
   const continueBtn = document.getElementById('continue-btn');
   continueBtn.classList.toggle('ready', d.readyToContinue);
-  continueBtn.disabled = d.hasMismatch;
+  continueBtn.setAttribute('aria-disabled', d.hasMismatch ? 'true' : 'false');
 
-  const mismatchEl = document.getElementById('mismatch-msg');
-  mismatchEl.classList.toggle('hidden', !d.hasMismatch);
-  mismatchEl.textContent = d.mismatchMessage;
+  const mismatchPop = document.getElementById('mismatch-pop');
+  if (!d.hasMismatch) hideMismatchPop();
+  else if (!mismatchPop.hidden) mismatchPop.textContent = d.mismatchMessage;
 
   const selectedIdSet = new Set(state.selected);
   const selectedQueens = ALL_QUEENS.filter((qn) => selectedIdSet.has(qn.id));
@@ -1344,7 +1347,7 @@ function attachHandlers() {
       state.editingCastId = null;
       render();
     } else if (action === 'runSimulation') {
-      if (el.disabled) return;
+      if (el.getAttribute('aria-disabled') === 'true') { showMismatchPop(); return; }
       const cast = ALL_QUEENS.filter((q) => state.selected.includes(q.id))
         .map((q) => ({ id: q.id, name: q.name, charisma: q.c, uniqueness: q.u, nerve: q.n, talent: q.t }));
       const seed = Math.floor(Math.random() * 1e9);
@@ -1430,6 +1433,29 @@ function attachHandlers() {
   };
 }
 
+// "Not enough queens" popup under Start Race: shown when Start Race is
+// pressed before the cast is ready, gone after a few seconds or the next tap.
+let mismatchPopTimer = null;
+function showMismatchPop() {
+  const pop = document.getElementById('mismatch-pop');
+  if (!pop) return;
+  pop.textContent = computeDerived().mismatchMessage;
+  pop.hidden = false;
+  requestAnimationFrame(() => pop.classList.add('show'));
+  clearTimeout(mismatchPopTimer);
+  mismatchPopTimer = setTimeout(hideMismatchPop, 3000);
+}
+function hideMismatchPop() {
+  const pop = document.getElementById('mismatch-pop');
+  if (!pop || pop.hidden) return;
+  clearTimeout(mismatchPopTimer);
+  pop.classList.remove('show');
+  pop.hidden = true;
+}
+document.addEventListener('pointerdown', (e) => {
+  if (!e.target.closest('#continue-btn')) hideMismatchPop();
+});
+
 // Back-to-top button: fades in once the page has scrolled down a bit,
 // rather than sitting on screen (and in the way) right from the start.
 function initScrollTopButton() {
@@ -1449,12 +1475,29 @@ function initSetupNav() {
   if (!links.length) return;
   const targets = links.map((l) => document.getElementById(l.dataset.target));
   const bar = document.getElementById('setup-topbar');
+  // Narrow screens: the links live in a dropdown; its toggle shows the
+  // current section's name.
+  const wrap = document.getElementById('topnav-wrap');
+  const toggle = document.getElementById('topnav-toggle');
+  const toggleLabel = document.getElementById('topnav-toggle-label');
+  const setOpen = (open) => {
+    if (!wrap || !toggle) return;
+    wrap.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+  if (toggle) toggle.addEventListener('click', () => setOpen(!wrap.classList.contains('open')));
+  links.forEach((l) => l.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('pointerdown', (e) => { if (wrap && !wrap.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && wrap && wrap.classList.contains('open')) { setOpen(false); toggle.focus(); }
+  });
   const update = () => {
     const offset = (bar ? bar.offsetHeight : 0) + 24;
     let active = -1;
     targets.forEach((t, i) => { if (t && t.getBoundingClientRect().top <= offset) active = i; });
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) active = targets.length - 1;
     links.forEach((l, i) => l.classList.toggle('active', i === active));
+    if (toggleLabel) toggleLabel.textContent = active >= 0 ? links[active].textContent : 'Sections';
   };
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);

@@ -469,9 +469,40 @@ html { scroll-behavior: smooth; }
 }
 .topnav-link:hover { color: #F3E4EC; background: #2C0A2E; border-color: #6B4A66; }
 .topnav-link.active { background: #D6006F; border-color: #D6006F; color: #FFF8DC; }
-.continue-group-top { flex-direction: row; align-items: center; justify-content: flex-end; gap: 14px; min-width: 0; }
-.continue-group-top .mismatch-msg { max-width: 340px; text-align: right; line-height: 1.25; }
+/* Layout, left to right: [home] [section nav] ......... [Start Race].
+   Start Race never shrinks; the left group takes whatever space is left. */
+.topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 auto; }
+.topnav-wrap { position: relative; min-width: 0; }
+/* Dropdown toggle -- only shown on narrow screens (see media query below). */
+.topnav-toggle {
+  display: none; align-items: center; gap: 8px;
+  color: #FFF8DC; font-size: 13px; font-weight: 600; letter-spacing: .4px;
+  padding: 9px 16px; border-radius: 999px; border: 1px solid #D6006F; background: #2C0A2E; white-space: nowrap;
+}
+.topnav-toggle:hover { background: #3B1A38; }
+.topnav-toggle svg { transition: transform .15s ease; }
+.topnav-wrap.open .topnav-toggle svg { transform: rotate(180deg); }
+
+.continue-group-top { position: relative; flex: 0 0 auto; flex-direction: row; align-items: center; justify-content: flex-end; gap: 14px; }
 .btn-continue-bar { padding: 12px 30px; font-size: 16px; border-radius: 12px; letter-spacing: .6px; }
+.btn-continue[aria-disabled="true"] { cursor: not-allowed; }
+
+/* "Not enough queens" quick-info popup, anchored under Start Race. Shown
+   when Start Race is pressed before the cast is ready. */
+.mismatch-pop {
+  position: absolute; top: calc(100% + 12px); right: 0; z-index: 130;
+  width: max-content; max-width: min(280px, calc(100vw - 28px));
+  background: #2A0F26; border: 1px solid #E2574C; border-radius: 10px;
+  padding: 9px 13px; font-size: 12px; line-height: 1.3; color: #FFD9D5; text-align: left;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .5);
+  opacity: 0; transform: translateY(-4px); transition: opacity .15s ease, transform .15s ease;
+}
+.mismatch-pop::before {
+  content: ''; position: absolute; top: -6px; right: 28px; width: 10px; height: 10px;
+  background: #2A0F26; border-left: 1px solid #E2574C; border-top: 1px solid #E2574C; transform: rotate(45deg);
+}
+.mismatch-pop.show { opacity: 1; transform: translateY(0); }
+.mismatch-pop[hidden] { display: none; }
 
 /* Jump targets land below the sticky bar instead of underneath it. */
 #sec-twists, #sec-cast { scroll-margin-top: calc(var(--topbar-h) + 12px); }
@@ -482,7 +513,32 @@ html { scroll-behavior: smooth; }
   .topnav { gap: 4px; }
   .topnav-link { padding: 8px 10px; font-size: 12px; }
   .btn-continue-bar { padding: 10px 16px; font-size: 14px; }
-  .continue-group-top .mismatch-msg { max-width: 140px; font-size: 11px; }
   .roster-toolbar { padding: 10px 14px; }
+  .setup-header { padding: 24px 16px 20px; }
+  .roster-grid { padding: 8px 16px 24px; }
+  .page-title { font-size: 42px; }
+}
+
+/* Narrow screens: section links fold into a dropdown under one toggle,
+   using the same pill style. */
+@media (max-width: 640px) {
+  .topbar-left { gap: 10px; }
+  .topnav-toggle { display: inline-flex; padding: 8px 14px; font-size: 12px; }
+  .topnav {
+    display: none; position: absolute; top: calc(100% + 10px); left: 0; z-index: 120;
+    flex-direction: column; align-items: stretch; gap: 6px; min-width: 180px;
+    background: #1F0819; border: 1px solid #3B1A38; border-radius: 14px; padding: 8px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .55);
+  }
+  .topnav-wrap.open .topnav { display: flex; }
+  .topnav-link { padding: 10px 16px; font-size: 13px; text-align: left; }
+}
+
+/* Phones: "Start" stacks over "Race", and Current Cast cards shrink so at
+   least two sit side by side before wrapping. */
+@media (max-width: 480px) {
+  .btn-continue-bar { padding: 7px 14px; font-size: 13px; line-height: 1.15; text-align: center; }
+  .btn-continue-bar .btn-word { display: block; }
+  .cast-cards { --cc: 1.2; }
 }
 @media (max-height: 560px) { .roster-toolbar { position: static; } }
